@@ -1,0 +1,218 @@
+<?php
+
+module_load_include('inc', 'ckan_publisher_tree', 'ckan_publisher_tree.widget');
+
+/**
+ * Implements hook_element_info().
+ */
+function ckan_publisher_tree_element_info() {
+  $types = array(
+    'publisher_tree' => array(
+      '#input' => TRUE,
+      '#process' => array('ckan_publisher_tree_process_publisher_tree'),
+      '#theme' => array('publisher_tree'),
+      '#pre_render' => array('form_pre_render_conditional_form_element'),
+    ),
+    'publisher_tree_level' => array(
+      '#input' => FALSE,
+      '#theme' => array('publisher_tree_level'),
+      '#pre_render' => array('form_pre_render_conditional_form_element'),
+    ),
+    'publisher_tree_item' => array(
+      '#input' => FALSE,
+      '#theme' => array('publisher_tree_item'),
+      '#pre_render' => array('form_pre_render_conditional_form_element'),
+    ),
+  );
+  return $types;
+}
+
+/**
+ * Implements hook_field_info().
+ */
+function ckan_publisher_tree_field_info() {
+  return array(
+    'ckan_publisher_reference' => array(
+      'label' => t('Publisher reference'),
+      'description' => t('Provides a field type for referencing CKAN publishers.'),
+      'default_widget' => 'ckan_publisher_reference_tree',
+      'default_formatter' => 'ckan_publisher_reference_default',
+    )
+  );
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function ckan_publisher_tree_field_is_empty($item, $field) {
+  return empty($item['id']);
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function ckan_publisher_tree_field_formatter_info() {
+  return array(
+    'ckan_publisher_reference_default' => array(
+      'label' => t('Default'),
+      'field types' => array('ckan_publisher_reference'),
+    )
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function ckan_publisher_tree_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  if(isset($items[0]['id'])) {
+    $publisher = ckan_publisher_load($items[0]['id']);
+    return array(
+      '0' => array(
+        '#type' => 'link',
+        '#title' => $publisher->title,
+        '#href' => 'publisher/' . $publisher->name,
+      )
+    );
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function ckan_publisher_tree_theme() {
+  return array(
+    'publisher_tree' => array(
+      'render element' => 'element',
+      'file' => 'ckan_publisher_tree.theme.inc',
+),
+    'publisher_tree_level' => array(
+      'render element' => 'element',
+      'file' => 'ckan_publisher_tree.theme.inc',
+    ),
+    'publisher_tree_item' => array(
+      'render element' => 'element',
+      'file' => 'ckan_publisher_tree.theme.inc',
+    ),
+  );
+}
+
+/**
+ * This function returns an array of publisher objects.
+ *
+ * @return
+ *   An array of the publisher objects.
+ */
+function ckan_publisher_get_publishers(){
+  $publishers = &drupal_static('ckan_publishers');
+  if (!isset($publishers)) {
+    $publishers = db_select('ckan_publisher', 'cp')
+      ->fields('cp', array('id', 'parent_id', 'title'))
+      ->condition('cp.status', 1)
+      ->orderBy('name')
+      ->execute()->fetchAll();
+  }
+  return $publishers;
+}
+
+/**
+ * This function returns a taxonomy publisher hierarchy in a nested array.
+ *
+ * @param $default
+ *   The array containing the default value.
+ *
+ * @return
+ *   A nested hierarchy array of the publisher objects.
+ */
+function _ckan_publisher_tree_get_publisher_hierarchy($default = array()) {
+  $publishers = ckan_publisher_get_publishers();
+  $tree = array();
+  foreach ($publishers as $publisher) {
+    if ($publisher->parent_id) {
+      // Put all publishers with a parent in to array with parent id key.
+      $children[$publisher->parent_id][$publisher->id] = $publisher;
+    }
+    else {
+      // Put all top level publishers in to $tree array.
+      $tree[$publisher->id] = $publisher;
+    }
+  }
+
+  foreach($tree as &$node) {
+    $node_children = _ckan_publisher_get_children($children, $node->id, $default);
+    $node->children = $node_children;
+    $node->children_selected = _ckan_publisher_tree_children_selected($node, $default);
+  }
+return $tree;
+
+}
+
+/**
+ * Helper function for getting children of parent publisher.
+ *
+ * @return
+ *   A nested array of the publisher's child objects.
+ */
+function _ckan_publisher_get_children(&$children, $parent_id, $default) {
+  if (isset($children[$parent_id])) {
+    $node_children = $children[$parent_id];
+    foreach ($node_children as &$node) {
+      if ($node_children2 = _ckan_publisher_get_children($children, $node->id, $default)) {
+        $node->children = $node_children2;
+        $node->children_selected = _ckan_publisher_tree_children_selected($node, $default);
+      }
+    }
+    return $node_children;
+  }
+}
+
+/**
+ * This function checks if a publisher is currently selected.
+ *
+ * @return
+ *   TRUE if publisher passed to the function is selected, FALSE otherwise.
+ */
+function _ckan_publisher_tree_children_selected($node, $default) {
+  if(count($node->children)) {
+    foreach ($node->children as $child) {
+      if (isset($default[$child->id]) || (isset($child->children_selected) && $child->children_selected)) {
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Return an array of options.
+ *
+ * This function converts a list of publishers to a key/value list of options.
+ *
+ * @return
+ *   A key/value array of publishers (id => title)
+ */
+function _ckan_publisher_tree_get_options() {
+  $publishers = ckan_publisher_get_publishers();
+  $options = array();
+  foreach ($publishers as $publisher) {
+    $options[$publisher->id] = $publisher->title;
+  }
+  return $options;
+}
+
+/**
+ * Recursively go through the option tree and return a flat array of options
+ */
+function _ckan_publisher_tree_flatten($element, &$form_state) {
+  $output = array();
+  $children = element_children($element);
+  foreach ($children as $child) {
+    $child_element = $element[$child];
+    if (array_key_exists('#type', $child_element) && ($child_element['#type'] == 'radio')) {
+      $output[] = $child_element;
+    }
+    else {
+      $output = array_merge($output, _ckan_publisher_tree_flatten($child_element, $form_state));
+    }
+  }
+  return $output;
+}

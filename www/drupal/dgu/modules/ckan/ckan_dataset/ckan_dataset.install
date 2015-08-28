@@ -1,0 +1,121 @@
+<?php
+
+/**
+ * @file
+ * Sets up the base table for CKAN Datasets
+ */
+
+
+/**
+ * Implements hook_schema().
+ */
+function ckan_dataset_schema() {
+  $schema = array();
+
+  $schema['ckan_dataset'] = array(
+    'description' => 'The base table for CKAN Datasets.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary Key: Drupal id for a CKAN Dataset.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'ckan_id' => array(
+        'description' => 'CKAN GUID',
+        'type' => 'char',
+        'length' => 36,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'type' => array(
+        'description' => 'Redundant, but required by Entity API.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'publisher_id' => array(
+        'description' => 'The {ckan_publisher}.id that owns this dataset.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'title' => array(
+        'description' => 'The title of the CKAN Dataset.',
+        'type' => 'varchar',
+        'length' => 4000,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'name' => array(
+        'description' => 'The name of the CKAN Dataset - a human-readable identifier.',
+        'type' => 'varchar',
+        'length' => 4000,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'notes' => array(
+        'description' => 'The description of the CKAN Dataset.',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+      ),
+      'created' => array(
+        'description' => 'The Unix timestamp when the CKAN Dataset was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'changed' => array(
+        'description' => 'The Unix timestamp when the CKAN Dataset was most recently saved.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'status' => array(
+        'description' => 'Boolean indicating whether the dataset is published (visible to non-administrators).',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'inventory' => array(
+        'description' => 'Boolean indicating whether the dataset is only an inventory item.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'data' => array(
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE,
+        'description' => 'A serialized array of additional data.',
+      ),
+      'uid' => array(
+        'description' => 'The {users}.uid that created this dataset.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(
+      'ckan_id' => array('ckan_id'),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Add uid field to {ckan_dataset} table.
+ */
+function ckan_dataset_update_7100() {
+  $spec = array(
+    'description' => 'The {users}.uid that created this dataset.',
+    'type' => 'int',
+    'not null' => TRUE,
+    'default' => 0,
+  );
+  db_add_field( 'ckan_dataset', 'uid', $spec);
+}

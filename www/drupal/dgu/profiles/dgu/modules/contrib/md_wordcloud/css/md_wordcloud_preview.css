@@ -1,0 +1,16 @@
+.cloud-preview {border: 1px solid #000;}
+.cloud-preview text {cursor: pointer}
+.cloud-preview text:hover {opacity: 0.7;}
+
+#edit-words-scale,
+.md-angle {overflow: hidden}
+#edit-words-scale .form-item {float: left; width: 80px;}
+#md-preview-wrap {float: right; margin-left: 20px;}
+.md-angle .form-item {width: 130px; float: left;}
+.md-angle input.form-text {width: 68%}
+
+#angles line, #angles path, #angles circle {stroke: #666666;}
+#angles text {fill: #333333;}
+#angles path.drag {cursor: move; fill: #666666;}
+#angles {text-align: center; width: 350px;}
+#angles input, #max {width: 42px;}

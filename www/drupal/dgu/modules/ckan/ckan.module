@@ -1,0 +1,132 @@
+<?php
+
+function ckan_menu() {
+  $items = array();
+  $items['admin/config/system/ckan'] = array(
+    'title' => 'CKAN',
+    'description' => 'CKAN module settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ckan_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+function ckan_settings() {
+  $form['ckan']['connection'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Connection Settings'),
+    '#collapsible' => FALSE,
+    '#description' => 'Details of the CKAN REST API.',
+  );
+
+  $form['ckan']['connection']['ckan_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('CKAN API URL'),
+    '#default_value' => variable_get('ckan_url', ''),
+    '#size' => 60,
+    '#maxlength' => 150,
+    '#required' => TRUE,
+    '#description' => t('URL for CKAN API - starting http:// and ending / <br />
+    For the api at http://www.ckan.net/api the url is http://www.ckan.net/api/'),
+  );
+
+  $form['ckan']['connection']['ckan_apikey'] = array(
+    '#type' => 'textfield',
+    '#title' => t('API key'),
+    '#default_value' => variable_get('ckan_apikey', ''),
+    '#maxlength' => 36,
+    '#required' => TRUE,
+    '#description' => t('CKAN API key'),
+  );
+
+  $form['ckan']['connection']['ckan_apikey'] = array(
+    '#type' => 'textfield',
+    '#title' => t('API key'),
+    '#default_value' => variable_get('ckan_apikey', ''),
+    '#maxlength' => 36,
+    '#required' => TRUE,
+    '#description' => t('CKAN API key'),
+  );
+
+  $form['ckan']['other'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Other Settings'),
+    '#collapsible' => FALSE,
+  );
+
+  $form['ckan']['other']['ckan_publisher_role'] = array(
+    '#type' => 'radios',
+    '#options' => user_roles(),
+    '#default_value' => variable_get('ckan_publisher_role', array()),
+    '#title' => t('CKAN editor role'),
+    '#description' => t('Please select which role should be used to synchronise editor users from CKAN.'),
+  );
+
+  $form['ckan']['other']['ckan_admin_role'] = array(
+    '#type' => 'radios',
+    '#options' => user_roles(),
+    '#default_value' => variable_get('ckan_admin_role', array()),
+    '#title' => t('CKAN admin role'),
+    '#description' => t('Please select which role should be used to synchronise admin users from CKAN.'),
+  );
+
+  $form['ckan']['other']['ckan_last_revision'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Last Update Revison '),
+    '#default_value' => variable_get('ckan_last_revision', ''),
+    '#size' => 60,
+    '#maxlength' => 150,
+    '#required' => TRUE,
+  );
+
+  $form['ckan']['other']['ckan_max_number_of_revisions_in_single_update'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Number of revisions processed in single update'),
+    '#default_value' => variable_get('ckan_max_number_of_revisions_in_single_update', 100),
+    '#size' => 60,
+    '#maxlength' => 150,
+    '#required' => TRUE,
+  );
+
+  $form['ckan']['info'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Status'),
+    '#collapsible' => FALSE,
+  );
+
+  if($status = variable_get('ckan_update_status', FALSE)) {
+    $form['ckan']['info']['ckan_update_status'] = array(
+      '#type' => 'markup',
+      '#markup' => '<p>' . $status . '</p>',
+    );
+  }
+
+  if($date = variable_get('ckan_update_started', FALSE)) {
+    $form['ckan']['info']['ckan_last_updated'] = array(
+      '#type' => 'markup',
+      '#markup' => '<p>Last update: ' . format_date($date) . '</p>',
+    );
+  }
+
+  if($date = variable_get('ckan_resync_datasets_started', FALSE)) {
+    $form['ckan']['info']['ckan_last_resync_datasets'] = array(
+      '#type' => 'markup',
+      '#markup' => '<p>Last dataset resync: ' . format_date($date) . '</p>',
+    );
+  }
+
+  if($date = variable_get('ckan_resync_publishers_started', FALSE)) {
+    $form['ckan']['info']['ckan_last_resync_publishers'] = array(
+      '#type' => 'markup',
+      '#markup' => '<p>Last publisher resync: ' . format_date($date) . '</p>',
+    );
+  }
+
+
+
+
+  return system_settings_form($form);
+}
+

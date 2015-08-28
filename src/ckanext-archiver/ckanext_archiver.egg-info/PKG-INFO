@@ -1,0 +1,17 @@
+Metadata-Version: 1.1
+Name: ckanext-archiver
+Version: 0.1
+Summary: Archive ckan resources
+Home-page: http://ckan.org/wiki/Extensions
+Author: Open Knowledge Foundation
+Author-email: info@okfn.org
+License: MIT
+Description: Archive ckan resources
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

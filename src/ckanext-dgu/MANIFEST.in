@@ -1,0 +1,7 @@
+
+recursive-include ckanext *.html
+recursive-include ckanext *.js
+recursive-include ckanext *.png
+recursive-include ckanext *.gif
+recursive-include ckanext *.css
+include setup.py

@@ -1,0 +1,11 @@
+
+    [ckan.plugins]
+    # dgu_local will provide any UI/search enhancements
+    dgu_local=ckanext.dgulocal.plugin:LocalPlugin
+
+    # inventory_harvester is used for harvesting from the Inventory format.
+    inventory_harvester=ckanext.dgulocal.harvester:InventoryHarvester
+
+    [paste.paster_command]
+    dgulocal=ckanext.dgulocal.commands:Command
+    

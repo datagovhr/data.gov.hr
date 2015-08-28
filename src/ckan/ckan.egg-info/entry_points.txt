@@ -1,0 +1,91 @@
+[babel.extractors]
+ckan = ckan.lib.extract:extract_ckan
+
+[ckan.forms]
+group = ckan.forms.group:get_group_fieldset
+package = ckan.forms.package:get_standard_fieldset
+package_group = ckan.forms.group:get_package_group_fieldset
+standard = ckan.forms.package:get_standard_fieldset
+
+[ckan.plugins]
+datapusher = ckanext.datapusher.plugin:DatapusherPlugin
+datastore = ckanext.datastore.plugin:DatastorePlugin
+example_iauthfunctions = ckanext.example_iauthfunctions.plugin:ExampleIAuthFunctionsPlugin
+example_iauthfunctions_v1 = ckanext.example_iauthfunctions.plugin_v1:ExampleIAuthFunctionsPlugin
+example_iauthfunctions_v2 = ckanext.example_iauthfunctions.plugin_v2:ExampleIAuthFunctionsPlugin
+example_iauthfunctions_v3 = ckanext.example_iauthfunctions.plugin_v3:ExampleIAuthFunctionsPlugin
+example_idatasetform = ckanext.example_idatasetform.plugin:ExampleIDatasetFormPlugin
+example_itemplatehelpers = ckanext.example_itemplatehelpers.plugin:ExampleITemplateHelpersPlugin
+multilingual_dataset = ckanext.multilingual.plugin:MultilingualDataset
+multilingual_group = ckanext.multilingual.plugin:MultilingualGroup
+multilingual_tag = ckanext.multilingual.plugin:MultilingualTag
+organizations = ckanext.organizations.forms:OrganizationForm
+organizations_dataset = ckanext.organizations.forms:OrganizationDatasetForm
+pdf_preview = ckanext.pdfpreview.plugin:PdfPreview
+publisher_dataset_form = ckanext.publisher_form.forms:PublisherDatasetForm
+publisher_form = ckanext.publisher_form.forms:PublisherForm
+recline_preview = ckanext.reclinepreview.plugin:ReclinePreview
+resource_proxy = ckanext.resourceproxy.plugin:ResourceProxy
+stats = ckanext.stats.plugin:StatsPlugin
+synchronous_search = ckan.lib.search:SynchronousSearchPlugin
+test_tag_vocab_plugin = ckanext.test_tag_vocab_plugin:MockVocabTagsPlugin
+text_preview = ckanext.textpreview.plugin:TextPreview
+
+[ckan.search]
+solr = ckan.lib.search.solr_backend:SolrSearchBackend
+sql = ckan.lib.search.sql:SqlSearchBackend
+
+[ckan.system_plugins]
+domain_object_mods = ckan.model.modification:DomainObjectModificationExtension
+
+[ckan.test_plugins]
+action_plugin = tests.ckantestplugins:ActionPlugin
+auth_plugin = tests.ckantestplugins:AuthPlugin
+authorizer_plugin = tests.ckantestplugins:AuthorizerPlugin
+mapper_plugin = tests.ckantestplugins:MapperPlugin
+mapper_plugin2 = tests.ckantestplugins:MapperPlugin2
+routes_plugin = tests.ckantestplugins:RoutesPlugin
+session_plugin = tests.ckantestplugins:SessionPlugin
+test_group_plugin = tests.ckantestplugins:MockGroupControllerPlugin
+test_json_resource_preview = tests.ckantestplugins:JsonMockResourcePreviewExtension
+test_observer_plugin = tests.ckantestplugins:PluginObserverPlugin
+test_package_controller_plugin = tests.ckantestplugins:MockPackageControllerPlugin
+test_resource_preview = tests.ckantestplugins:MockResourcePreviewExtension
+
+[console_scripts]
+ckan-admin = bin.ckan_admin:Command
+
+[nose.plugins.0.10]
+main = ckan.ckan_nose_plugin:CkanNose
+
+[paste.app_factory]
+main = ckan.config.middleware:make_app
+
+[paste.app_install]
+main = ckan.config.install:CKANInstaller
+
+[paste.paster_command]
+celeryd = ckan.lib.cli:Celery
+check-po-files = ckan.i18n.check_po_files:CheckPoFiles
+color = ckan.lib.cli:CreateColorSchemeCommand
+create-test-data = ckan.lib.cli:CreateTestDataCommand
+dataset = ckan.lib.cli:DatasetCmd
+datastore = ckanext.datastore.commands:SetupDatastoreCommand
+db = ckan.lib.cli:ManageDb
+front-end-build = ckan.lib.cli:FrontEndBuildCommand
+less = ckan.lib.cli:LessCommand
+minify = ckan.lib.cli:MinifyCommand
+notify = ckan.lib.cli:Notification
+plugin-info = ckan.lib.cli:PluginInfo
+profile = ckan.lib.cli:Profile
+ratings = ckan.lib.cli:Ratings
+rdf-export = ckan.lib.cli:RDFExport
+search-index = ckan.lib.cli:SearchIndexCommand
+sysadmin = ckan.lib.cli:Sysadmin
+tracking = ckan.lib.cli:Tracking
+trans = ckan.lib.cli:TranslationsCommand
+user = ckan.lib.cli:UserCmd
+
+[paste.paster_create_template]
+ckanext = ckan.pastertemplates:CkanextTemplate
+

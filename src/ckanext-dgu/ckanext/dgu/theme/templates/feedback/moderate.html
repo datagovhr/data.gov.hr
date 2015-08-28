@@ -1,0 +1,45 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+
+<xi:include href="_feedback_util.html" />
+
+  <py:def function="page_title">Moderate feedback</py:def>
+
+ <py:match path="breadcrumbs">
+    <li><a href="/data/search">Skupovi podataka</a></li>
+    <li><a href="/data/system_dashboard">Kontrolna plo&#269;a sustava</a></li>
+    <li><a href="/data/feedback/moderation">Moderiranje povratnih informacija</a></li>
+  </py:match>
+
+
+  <div py:match="content" class="dataset">
+    <h1>Moderiranje povratnih informacija</h1>
+    <!--
+          <h4>Reports</h4>
+                <a href="${h.url_for(controller='ckanext.dgu.controllers.reports:ReportsController', action='feedback')}">Povratne informacije skupova podataka</a>
+                -->
+
+      <p>Ovo je stranica moderiranja. Navedene stavke su prijavljene kao uvredljive/spam od korisnika i zahtijevaju pa&#382;nju.</p>
+      <p>Molimo koristite tipke ispod svakog elementa za moderiranje svakog komentara</p>
+
+      <p>
+        <ul>
+          <li><strong>Izdavanje</strong> &#263;e obilje&#382;iti predmet kao moderiran i u&#269;initi ga vidljivim, ako to nije</li>
+          <li><strong>Brisanje</strong> &#263;e ukloniti komentare iz sustava</li>
+          <li><strong>Brisanje i zabrana</strong> &#263;e ukloniti komentare i zaustaviti korisnika koji je komentar objavio od ponovne objave</li>
+        </ul>
+      </p>
+
+        <h3 py:if="c.items.count() == 0">Trenutno nema ni&#353;ta za moderiranje.</h3>
+
+        <py:for each="pos, item in enumerate(c.items)">
+          ${feedback_item_moderation(item, h.get_package_from_id(item.package_id))}
+        </py:for>
+  </div>
+
+  <xi:include href="../layout_base.html" />
+</html>
+

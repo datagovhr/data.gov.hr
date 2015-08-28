@@ -1,0 +1,68 @@
+.item-list .field-widget-ckan-publisher-tree ul,
+.block .field-widget-ckan-publisher-tree ul,
+.field-widget-ckan-publisher-tree ul
+{
+  list-style-type: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+
+.item-list .field-widget-ckan-publisher-tree ul ul,
+.block .field-widget-ckan-publisher-tree ul ul,
+.field-widget-ckan-publisher-tree ul ul
+{
+  margin-left: 1.5em;
+}
+
+.item-list .field-widget-ckan-publisher-tree ul .form-item,
+.block .field-widget-ckan-publisher-tree ul .form-item,
+.field-widget-ckan-publisher-tree ul .form-item {
+  margin: 0;
+  padding: 0;
+}
+
+.ckan-publisher-tree-button,
+.no-ckan-publisher-tree-button {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.ckan-publisher-tree-button {
+  background-image: url('images/bullet_toggle_minus.png');
+}
+
+.no-ckan-publisher-tree-button {
+  background-color: #ddd;
+}
+
+.ckan-publisher-tree-button.ckan-publisher-tree-collapsed {
+  background-image: url('images/bullet_toggle_plus.png');
+}
+
+.field-widget-ckan-publisher-tree .form-item {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+}
+
+.field-widget-ckan-publisher-tree .disabled {
+  opacity: .5;
+}
+
+.form-type-checkbox-tree .error {
+  background-image: none;
+  border: 2px solid red;
+  padding: 3px;
+}
+
+.region-content ul.ckan-publisher-tree-level,
+.ckan-publisher-tree-level
+{
+  padding: 0;
+}

@@ -1,0 +1,13 @@
+logreporter.egg-info/PKG-INFO
+logreporter.egg-info/SOURCES.txt
+logreporter.egg-info/dependency_links.txt
+logreporter.egg-info/entry_points.txt
+logreporter.egg-info/namespace_packages.txt
+logreporter.egg-info/not-zip-safe
+logreporter.egg-info/requires.txt
+logreporter.egg-info/top_level.txt
+src/__init__.py
+src/logreporter.py
+src/reporter.py
+src/template.py
+src/varnish_watch.py

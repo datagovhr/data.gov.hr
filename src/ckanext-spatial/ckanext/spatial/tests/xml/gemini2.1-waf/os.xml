@@ -1,0 +1,1078 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<!--startindex-->
+<title>Product and service metadata</title>
+<!--stopindex-->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<meta name="verify-v1" content="59v7HBkvBRiBcFBnD6EjCBGgnfYvfPZzY9+sS51VHAU=" />
+<meta name="google-site-verification" content="VLwjvHpdPZMhwsmemZWo1zOaRilo37CHAeNzAEr2pyE" />
+<meta name="DC.subject" scheme="eGMS.IPSV" content="Civil Service" />
+<meta name="eGMS.accessibility" scheme="eGMS.WCAG10" content="Double-A" />
+<meta name="DC.coverage" content="GB" />
+<meta name="DC.language" scheme="DCTERMS.ISO639-2" content="eng" />
+<meta name="DC.creator" content="Ordnance Survey, http://www.ordnancesurvey.co.uk/oswebsite/support/contact-us.html" />
+<meta name="DC.publisher" content="Ordnance Survey, Adanac Drive, Southampton, SO16 0AS, 023 8005 5257, customerservices@ordnancesurvey.co.uk" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+<meta name="DC.title" content="Product and service metadata" />
+<meta name="DC.date" scheme="DCTERMS.W3CDTF" content="2013-04-08" />
+<!--startindex-->
+<meta name="description" content="Product and service metadata" />
+<meta name="keywords" content="ordnance survey,os" />
+<!--stopindex-->
+<meta name="DC.identifier" scheme="DCTERMS.URI" content="website_2011/xml/products/index.html" />
+<meta name="copyright" content="Ordnance Survey 2013" />
+
+<link rel="P3Pv1" href="http://www.ordnancesurvey.co.uk/oswebsite/w3c/p3p.xml" />
+<link rel="stylesheet" type="text/css" href="/oswebsite/css/printer.min.css" media="print,aural,braille,embossed" />
+<link rel="stylesheet" type="text/css" href="/oswebsite/css/desktop.min.css" media="screen,projection" title="desktop" />
+<link rel="alternate stylesheet" type="text/css" href="/oswebsite/css/mobile.min.css" media="screen,handheld" title="mobile" />
+<link rel="apple-touch-icon" href="/oswebsite/images/ui/apple-touch-icon.png" />
+<link rel="icon" href="http://www.ordnancesurvey.co.uk/oswebsite/favicon.ico" type="image/x-icon" />
+
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" href="/oswebsite/css/ie6.min.css" media="screen,projection" title="desktop" />
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" href="/oswebsite/css/ie7.min.css" media="screen,projection" title="desktop" />
+<![endif]-->
+
+
+
+<link rel="stylesheet" type="text/css" href="/oswebsite/css/responsive.min.css" media="screen" />
+
+<script type="text/javascript" src="/oswebsite/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="/oswebsite/scripts/global.min.js"></script>
+
+<!--[if (IE 6)|(IE 7)|(IE 8)]>
+<script type="text/javascript" src="/oswebsite/scripts/ie.min.js"></script>
+<![endif]-->
+
+
+
+
+		<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+  //Add mouse and keyboard handlers to links going back to the leisure domain.
+  $("a[href*='ordnancesurveyleisure.co.uk']").bind('click', function() {
+	  _gaq.push(['_link', this.href]);
+	  //return false;
+  });
+});
+//]]>
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	//Master account
+	_gaq.push(['_setAccount', 'UA-33522501-1']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_trackPageview']);
+</script>
+
+	
+
+</head>
+
+<body id="none" class="textSize1">
+
+<div><a name="pageStart" id="pageStart"></a></div>
+
+
+<div class="offScreen">
+	<p>Jump to the following:</p>
+	<ul>
+		<li><a href="#contentStart" accesskey="J" title="Main content [Accesskey: J]">Main content</a></li>
+		<li><a href="#primaryNavigationStart" accesskey="K" title="Primary navigation [Accesskey: K]">Primary navigation</a></li>
+		
+		<li><a href="#supplementaryNavigationStart" accesskey="M" title="Supplementary navigation [Accesskey: M]">Supplementary navigation</a></li>
+		<li><a href="#primaryNavigationEnd" accesskey="4" title="Site search [Accesskey: 4]">Site search</a></li>
+		<li><a href="/site/help/index.html" accesskey="6" title="Help [Accesskey: 6]">Help</a></li>
+	</ul>
+</div>
+
+
+<div id="wrapper">
+
+	
+	<div id="osNavBar">
+		<h1><a href="/oswebsite/index.html" title="Ordnance Survey home page"><img src="/oswebsite/images/ui/logo.png" width="154" height="40" alt="Ordnance Survey logo" /></a></h1>
+		<p><a href="/oswebsite/sitemap.html">Discover Ordnance Survey</a></p>
+	</div>
+	
+
+	
+	<div id="pageOptions"></div>
+	
+	
+	<div id="pageContainer">
+	
+		
+		<div id="masthead">
+		
+			
+			<div id="primaryNavigation">
+
+				<a name="primaryNavigationStart" id="primaryNavigationStart"></a>
+				
+				<div id="primaryNavigationMobile"></div>
+				
+				<div class="offScreen"><a href="#primaryNavigationEnd" accesskey="S" title="Skip primary navigation [Accesskey: S]">Skip primary navigation</a></div>
+				
+				
+				
+				
+						
+
+
+
+<ul id="primaryNavigationLinks">
+	
+
+
+	
+	
+	<li>
+	
+	
+	
+	
+			<a href="/index.html" id="section1" accesskey="1" title="Home [Accesskey: 1]">Home</a>
+		
+
+	
+	</li>
+		
+
+
+	
+	
+	<li>
+	
+	
+	
+	
+			<a href="/public-sector/index.html" id="section2">Public Sector</a>
+		
+
+	
+		
+			<div class="primaryNavigationSubMenu">
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+					<h2>Public Sector</h2>
+					
+					<ul>
+					
+						
+						<li><a href="/public-sector/index.html">Public Sector home</a></li>
+					
+						
+						<li><a href="/public-sector/mapping-agreement/index.html">Public Sector Mapping Agreement (PSMA)</a></li>
+					
+						
+						<li><a href="/public-sector/scotland/index.html">One Scotland Mapping Agreement (OSMA)</a></li>
+					
+						
+						<li><a href="/case-studies/index.html">Case studies</a></li>
+					
+						
+						<li><a href="/public-sector/public-sector-customers.html">Public sector customers</a></li>
+					
+						
+						<li><a href="/public-sector/faq/index.html">Frequently asked questions</a></li>
+					
+						
+						<li><a href="/public-sector/products/index.html">Using our products</a></li>
+					
+						
+						<li><a href="/public-sector/solution-providers.html">Software for mapping</a></li>
+					
+						
+						<li><a href="/public-sector/events/index.html">News and Events</a></li>
+					
+						
+						<li><a href="/public-sector/public-sector-learning-resources.html">Learning resources</a></li>
+					
+						
+						<li><a href="/public-sector/support.html">Support</a></li>
+					
+					</ul>
+				
+				</div>
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+						
+						
+						<h2>Quick links to popular content</h2>
+						
+						<ul>
+						
+							
+							<li><a href="https://www.ordnancesurvey.co.uk/psma/">Log in - members area</a></li>
+						
+							
+							<li><a href="https://www.ordnancesurvey.co.uk/psmaapply/application.do">Join the PSMA</a></li>
+						
+							
+							<li><a href="/public-sector/public-sector-customers.html">Public sector customers</a></li>
+						
+							
+							<li><a href="/public-sector/central-government/index.html">Central Government</a></li>
+						
+							
+							<li><a href="/public-sector/emergency-services/index.html">Emergency services</a></li>
+						
+							
+							<li><a href="/public-sector/health/index.html">Health</a></li>
+						
+							
+							<li><a href="/public-sector/local-government/index.html">Local Government</a></li>
+						
+							
+							<li><a href="/public-sector/town-and-parish-councils/index.html">Town, Parish and Community Councils</a></li>
+						
+							
+							<li><a href="/public-sector/third-sector/index.html">Third Sector</a></li>
+						
+							
+							<li><a href="/public-sector/mapping-agreement/licensing.html">PSMA licensing</a></li>
+						
+							
+							<li><a href="/public-sector/scotland/licensing.html">OSMA licensing</a></li>
+						
+						</ul>
+						
+					
+				
+				</div>
+				
+				
+				
+				<p><a href="/public-sector/index.html">Public Sector homepage</a></p>
+			
+			</div>
+			
+		
+	</li>
+		
+
+
+	
+	
+	<li>
+	
+	
+	
+	
+			<a href="/business/index.html" id="section3">Business</a>
+		
+
+	
+		
+			<div class="primaryNavigationSubMenu">
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+					<h2>Business</h2>
+					
+					<ul>
+					
+						
+						<li><a href="/products/index.html">Products</a></li>
+					
+						
+						<li><a href="/web-services/index.html">Web services</a></li>
+					
+						
+						<li><a href="/business/markets.html">Markets </a></li>
+					
+						
+						<li><a href="/business/partners/index.html">Partners</a></li>
+					
+						
+						<li><a href="/using-our-data/index.html">Using our data</a></li>
+					
+						
+						<li><a href="/licensing/index.html">Licences and agreements</a></li>
+					
+						
+						<li><a href="/business/accreditations/index.html">Accreditation programme</a></li>
+					
+					</ul>
+				
+				</div>
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+						
+						
+						<h2>Quick links to popular content</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/products/os-mastermap/index.html">OS MasterMap</a></li>
+						
+							
+							<li><a href="/products/os-vectormap.html">OS VectorMap</a></li>
+						
+							
+							<li><a href="/web-services/os-openspace/index.html">OS OpenSpace</a></li>
+						
+							
+							<li><a href="/products/os-opendata.html">OS OpenData</a></li>
+						
+							
+							<li><a href="/products/addressbase-products.html">AddressBase</a></li>
+						
+							
+							<li><a href="/business/land-and-property/index.html">Land and property</a></li>
+						
+							
+							<li><a href="/business/energy-and-infrastructure/index.html">Energy and infrastructure</a></li>
+						
+							
+							<li><a href="/business/financial-services/index.html">Financial services</a></li>
+						
+						</ul>
+						
+					
+				
+				</div>
+				
+				
+				
+				<p><a href="/business/index.html">Business homepage</a></p>
+			
+			</div>
+			
+		
+	</li>
+		
+
+
+	
+	
+	<li>
+	
+	
+	
+	
+			<a href="http://www.ordnancesurveyleisure.co.uk" id="section4">Leisure</a>
+		
+
+	
+		
+			<div class="primaryNavigationSubMenu">
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+					<h2>Leisure</h2>
+					
+					<ul>
+					
+						
+						<li><a href="http://www.magazine.ordnancesurveyleisure.co.uk/magazine/tscontent/editorials/getamap/index.html">OS getamap</a></li>
+					
+						
+						<li><a href="http://www.shop.ordnancesurveyleisure.co.uk/osselect">Custom made maps</a></li>
+					
+						
+						<li><a href="http://www.shop.ordnancesurveyleisure.co.uk">Shop</a></li>
+					
+						
+						<li><a href="http://www.magazine.ordnancesurveyleisure.co.uk">Magazine</a></li>
+					
+					</ul>
+				
+				</div>
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+						
+						
+						<h2>OS getamap &ndash; print your route</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/getamap/index.html">OS getamap &ndash; home</a></li>
+						
+							
+							<li><a href="http://www.getamap.ordnancesurveyleisure.co.uk/">Launch getamap</a></li>
+						
+						</ul>
+						
+					
+					
+						
+						
+						<h2>Have your map custom made</h2>
+						
+						<ul>
+						
+							
+							<li><a href="http://www.shop.ordnancesurveyleisure.co.uk/osselect">Custom made maps</a></li>
+						
+						</ul>
+						
+					
+					
+						
+						
+						<h2>Visit our shop</h2>
+						
+						<ul>
+						
+							
+							<li><a href="http://www.shop.ordnancesurveyleisure.co.uk/">Shop &ndash; home</a></li>
+						
+							
+							<li><a href="http://www.shop.ordnancesurveyleisure.co.uk/products/tourist-areas">Popular maps</a></li>
+						
+							
+							<li><a href="http://www.shop.ordnancesurveyleisure.co.uk/products/paper-maps/paper-maps-ordnance-survey-great-britain/paper-maps-ordnance-survey-great-britain-os-explorer-map">OS Explorer Map</a></li>
+						
+							
+							<li><a href="http://www.shop.ordnancesurveyleisure.co.uk/products/paper-maps/paper-maps-ordnance-survey-great-britain/paper-maps-ordnance-survey-great-britain-os-landranger-map">OS Landranger Map</a></li>
+						
+						</ul>
+						
+					
+					
+						
+						
+						<h2>Read our magazine</h2>
+						
+						<ul>
+						
+							
+							<li><a href="http://www.magazine.ordnancesurveyleisure.co.uk/">Magazine &ndash; home</a></li>
+						
+						</ul>
+						
+					
+				
+				</div>
+				
+				
+				
+				<p><a href="http://www.ordnancesurveyleisure.co.uk">Leisure homepage</a></p>
+			
+			</div>
+			
+		
+	</li>
+		
+
+
+	
+	
+	<li>
+	
+	
+	
+	
+			<a href="/education-and-research/index.html" id="section5">Education &amp; Research</a>
+		
+
+	
+		
+			<div class="primaryNavigationSubMenu">
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+					<h2>Education &amp; Research</h2>
+					
+					<ul>
+					
+						
+						<li><a href="/education-and-research/teaching-resources/index.html">Teaching resources for schools</a></li>
+					
+						
+						<li><a href="/education-and-research/map-data-for-schools/index.html">Map data for schools</a></li>
+					
+						
+						<li><a href="/education-and-research/higher-education/index.html">Higher education</a></li>
+					
+						
+						<li><a href="/education-and-research/research/index.html">Research</a></li>
+					
+					</ul>
+				
+				</div>
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+						
+						
+						<h2>Schools</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/education-and-research/teaching-resources/mapping-news.html">Mapping News</a></li>
+						
+							
+							<li><a href="/education-and-research/map-data-for-schools/digimap-for-schools.html">Digimap for schools</a></li>
+						
+						</ul>
+						
+					
+					
+						
+						
+						<h2>Further &amp; Higher Education</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/education-and-research/higher-education/msc-dissertation-programme.html">MSc dissertation projects</a></li>
+						
+							
+							<li><a href="/education-and-research/higher-education/doctoral-research.html">Postgraduates</a></li>
+						
+							
+							<li><a href="/education-and-research/teaching-resources/copyright/index.html">Copyright for Education</a></li>
+						
+						</ul>
+						
+					
+					
+						
+						
+						<h2>Research</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/education-and-research/research/index.html">Current projects</a></li>
+						
+						</ul>
+						
+					
+					
+						
+						
+						<h2>General interest</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/gisfiles/index.html">GIS files</a></li>
+						
+							
+							<li><a href="/freefun/understandingmapping.html">Understanding maps</a></li>
+						
+							
+							<li><a href="/support/knowledgebase/grid-north-magnetic-north-and-true-north.html">Grid, magnetic and true North</a></li>
+						
+							
+							<li><a href="/support/gps/beginners-guide.html">Beginner's guide to GPS</a></li>
+						
+						</ul>
+						
+					
+				
+				</div>
+				
+				
+				
+				<p><a href="/education-and-research/index.html">Education &amp; Research homepage</a></p>
+			
+			</div>
+			
+		
+	</li>
+		
+
+
+	
+	
+	<li>
+	
+	
+	
+	
+			<a href="/about-us/index.html" id="section6">About us</a>
+		
+
+	
+		
+			<div class="primaryNavigationSubMenu">
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+					<h2>About us</h2>
+					
+					<ul>
+					
+						
+						<li><a href="/about-us/media-centre/index.html">Media Centre</a></li>
+					
+						
+						<li><a href="/about-us/our-history/index.html">Our history</a></li>
+					
+						
+						<li><a href="/careers/index.html">Careers</a></li>
+					
+						
+						<li><a href="/about-us/our-directors/index.html">Our Directors</a></li>
+					
+						
+						<li><a href="/about-us/global/index.html">Global</a></li>
+					
+						
+						<li><a href="/about-us/corporate-responsibility/index.html">Corporate responsibility</a></li>
+					
+						
+						<li><a href="/freedom-of-information/index.html">Freedom of information</a></li>
+					
+						
+						<li><a href="/about-us/annual-reports/index.html">Annual reports</a></li>
+					
+						
+						<li><a href="/about-us/our-policies/index.html">Our policies</a></li>
+					
+						
+						<li><a href="/about-us/governance/index.html">Governance</a></li>
+					
+						
+						<li><a href="/about-us/procurement/index.html">Procurement</a></li>
+					
+						
+						<li><a href="/about-us/public-task/index.html">Public task</a></li>
+					
+					</ul>
+				
+				</div>
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+						
+						
+						<h2>Quick links</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/news/index.html">Latest news</a></li>
+						
+							
+							<li><a href="/careers/vacancies/index.html">Job vacancies</a></li>
+						
+							
+							<li><a href="/about-us/how-to-find-us.html">How to find us</a></li>
+						
+							
+							<li><a href="/support/contact-us.html">How to contact us</a></li>
+						
+							
+							<li><a href="/about-us/governance/transparency-agenda.html">Government transparency agenda</a></li>
+						
+							
+							<li><a href="/about-us/governance/eu-inspire-directive.html">EU INSPIRE Directive and UK Location</a></li>
+						
+						</ul>
+						
+					
+				
+				</div>
+				
+				
+				
+				<p><a href="/about-us/index.html">About us homepage</a></p>
+			
+			</div>
+			
+		
+	</li>
+		
+
+
+	
+	
+	<li>
+	
+	
+	
+	
+			<a href="/support/index.html" id="section7">Support</a>
+		
+
+	
+		
+			<div class="primaryNavigationSubMenu">
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+					<h2>Support</h2>
+					
+					<ul>
+					
+						
+						<li><a href="/support/contact-us.html">Contact us</a></li>
+					
+						
+						<li><a href="/support/knowledgebase/mapping-for-emergencies.html">Mapping for emergencies</a></li>
+					
+						
+						<li><a href="/support/developers/index.html">Developers</a></li>
+					
+						
+						<li><a href="/support/web-services/index.html">Web services</a></li>
+					
+						
+						<li><a href="/support/os-net/index.html">OS Net</a></li>
+					
+						
+						<li><a href="/support/gps/index.html">GPS</a></li>
+					
+						
+						<li><a href="/support/os-orders/index.html">OS Orders</a></li>
+					
+						
+						<li><a href="/support/how-to-pay.html">How to pay us</a></li>
+					
+						
+						<li><a href="/support/products/pai-programme/index.html">Positional Accuracy Improvement (PAI)</a></li>
+					
+					</ul>
+				
+				</div>
+				
+				<div class="primaryNavigationColumn">
+					
+					
+					
+						
+						
+						<h2>FAQ</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/support/free-resources.html">Free resources</a></li>
+						
+							
+							<li><a href="/support/how-where-buy-maps.html">How and where to buy maps</a></li>
+						
+							
+							<li><a href="/oswebsite/support/osopenspace.html">OS OpenSpace</a></li>
+						
+							
+							<li><a href="/support/the-national-grid.html">The National Grid</a></li>
+						
+							
+							<li><a href="/support/property-boundaries.html">Property boundaries</a></li>
+						
+							
+							<li><a href="/support/historical-mapping.html">Historical mapping</a></li>
+						
+							
+							<li><a href="/support/geography-map-facts.html">Geography and map facts</a></li>
+						
+							
+							<li><a href="/support/products-services.html">Products and services.html</a></li>
+						
+							
+							<li><a href="/support/gnss-positioning-services.html">GNSS and positioning services</a></li>
+						
+							
+							<li><a href="/support/satellite-navigation-gps-devices.html">Satellite navigation and GPS devices</a></li>
+						
+							
+							<li><a href="/support/licensing.html">Licensing</a></li>
+						
+						</ul>
+						
+					
+					
+						
+						
+						<h2>Top picks</h2>
+						
+						<ul>
+						
+							
+							<li><a href="/support/knowledgebase/grid-north-magnetic-north-and-true-north.html">Grid North, magnetic north and true north</a></li>
+						
+							
+							<li><a href="/freefun/outlinemaps/index.html">Outline maps</a></li>
+						
+							
+							<li><a href="/support/knowledgebase/place-name-origins/index.html">Origins of place names in Scotland and Wales</a></li>
+						
+							
+							<li><a href="/freefun/wallpaper/index.html">Desktop wallpaper</a></li>
+						
+							
+							<li><a href="/freefun/understandingmapping.html">Understanding maps</a></li>
+						
+						</ul>
+						
+					
+				
+				</div>
+				
+				
+				
+				<p><a href="/support/index.html">Support homepage</a></p>
+			
+			</div>
+			
+		
+	</li>
+		
+
+	
+</ul>
+
+
+					
+
+				<a name="primaryNavigationEnd" id="primaryNavigationEnd"></a>
+				
+				
+				<form action="http://search.ordnancesurvey.co.uk/query.html" id="siteSearch">
+					<fieldset>
+						<legend><span class="offScreen">Site Search</span></legend>
+						<label for="query"><span class="offScreen">Search</span></label>
+						<input type="text" name="qt" id="query" maxlength="256" value="Site search" />
+						<input type="hidden" name="col" value="osweb" />
+						<input type="hidden" name="qc" value="osweb" />
+						<input type="submit" name="siteSearchSubmit" id="siteSearchSubmit" value="Search" />
+					</fieldset>
+				</form>
+				
+
+			</div>
+			
+	
+			
+			
+			
+		
+		</div>
+		
+
+		
+		<div id="main">
+		
+			<div id="breadcrumbs"></div>
+			
+			
+			
+			
+
+			<div id="pageContent">
+				<!--startindex-->
+			
+				<a name="contentStart" id="contentStart"></a>
+				
+				<!-- CMS Copy start -->
+				
+				
+				
+						<div id="intro">
+							<h1>Product and service metadata</h1>
+							<div class="clearing"></div>
+						</div>
+					
+				
+				
+				
+				<div id="columns">
+				
+					
+					
+					
+					
+					
+						
+						
+						<div class="columnRow columns100">
+						
+						
+						
+						
+						
+							
+							
+							<!-- Column 1 start -->
+							<div class="column1">
+								<div class="container">
+								
+									<p><a href="10kBlackandWhiteRaster.xml">10kBlackandWhiteRaster.xml</a></p>
+<p><a href="10kcolRas.xml">10kcolRas.xml</a></p>
+<p><a href="250colRas.xml">250colRas.xml</a></p>
+<p><a href="25kColRas.xml">25kColRas.xml</a></p>
+<p><a href="50colRas.xml">50colRas.xml</a></p>
+<p><a href="50kGaz.xml">50kGaz.xml</a></p>
+<p><a href="AddressBase.xml">AddressBase.xml</a></p>
+<p><a href="AddressBasePlus.xml">AddressBasePlus.xml</a></p>
+<p><a href="AddressBasePremium.xml">AddressBasePremium.xml</a></p>
+<p><a href="AddressLayer.xml">AddressLayer.xml</a></p>
+<p><a href="AddressLayer2.xml">AddressLayer2.xml</a></p>
+<p><a href="BoundaryLine.xml">BoundaryLine.xml</a></p>
+<p><a href="CodePoint.xml">CodePoint.xml</a></p>
+<p><a href="CodePointOpen.xml">CodePointOpen.xml</a></p>
+<p><a href="CodePointwithPolygons.xml">CodePointwithPolygons.xml</a></p>
+<p><a href="Imagery.xml">Imagery.xml</a></p>
+<p><a href="ITN.xml">ITN.xml</a></p>
+<p><a href="Meridian2.xml">Meridian2.xml</a></p>
+<p><a href="OSLocator.xml">OSLocator.xml</a></p>
+<p><a href="OSMMSitesLayer.xml">OSMMSitesLayer.xml</a></p>
+<p><a href="OSSVras.xml">OSSVras.xml</a></p>
+<p><a href="PanoramaContours.xml">PanoramaContours.xml</a></p>
+<p><a href="PanoramaDTM.xml">PanoramaDTM.xml</a></p>
+<p><a href="ProfileContours.xml">ProfileContours.xml</a></p>
+<p><a href="ProfileDTM.xml">ProfileDTM.xml</a></p>
+<p><a href="Strategi.xml">Strategi.xml</a></p>
+<p><a href="Topo.xml">Topo.xml</a></p>
+<p><a href="VMD.xml">VMD.xml</a></p>
+<p><a href="VML.xml">VML.xml</a></p>
+<p><a href="OSOnDemandService.xml">OSOnDemandService.xml</a></p>
+<p><a href="UKLPCPS.xml">UKLPCPS.xml</a></p>
+<p><a href="OrdnanceSurveyAtomFeed.xml">OrdnanceSurveyAtomFeed.xml</a></p>
+									
+									
+								
+								</div>
+							</div>
+							
+						
+						
+						</div>
+						
+						
+					
+					
+					<div class="clearing"></div>
+				
+				</div>
+				
+
+				
+				
+				
+				
+				<!-- CMS Copy end -->
+				
+				<!--stopindex-->
+			</div>
+	
+		</div>
+		
+	
+		
+		<div id="supplementaryNavigation">
+			
+			
+			
+			<a name="supplementaryNavigationStart" id="supplementaryNavigationStart"></a>
+			
+			<div class="offScreen"><a href="#supplementaryNavigationEnd" accesskey="R" title="Skip supplementary navigation [Accesskey: R]">Skip supplementary navigation</a></div>
+			
+			
+								<div id="follow">				<h2><a href="#follow" title="Follow Ordnance Survey online"><span class="offScreen">Follow</span></a></h2>				<ul>					<li><a href="http://www.youtube.com/user/OSMapping" id="keepInTouch1" title="YouTube &#174;"><span class="offScreen">YouTube &#174;</span></a></li>					<li><a href="http://www.facebook.com/pages/Ordnance-Survey/33622410535?ref=ts" id="keepInTouch2" title="Facebook &#174;"><span class="offScreen">Facebook &#174;</span></a></li>					<li><a href="http://blog.ordnancesurvey.co.uk/" id="keepInTouch3" title="Ordnance Survey blog"><span class="offScreen">Ordnance Survey blog</span></a></li>					<li><a href="http://twitter.com/OrdnanceSurvey" id="keepInTouch4" title="Twitter &#174;"><span class="offScreen">Twitter &#174;</span></a></li>				</ul>			</div>						<div id="share"></div>			<script type="text/javascript" src="/oswebsite/scripts/share.min.js"></script>
+				
+			
+			
+					
+
+<div id="supplementaryNavigationLinks">
+			
+	<p>Also from Ordnance Survey:</p>
+
+	<ul>
+	
+		
+				<li><a href="/accessibility.html" accesskey="0" title="Accessibility [Accesskey: 0]">Accessibility</a></li>
+			
+	
+		
+				<li><a href="/sitemap.html" accesskey="3" title="Site map [Accesskey: 3]">Site map</a></li>
+			
+	
+		
+				<li><a href="/terms-of-use.html" accesskey="8" title="Website terms of use [Accesskey: 8]">Website terms of use</a></li>
+			
+	
+		
+				<li><a href="/privacy-policy.html">Privacy policy</a></li>
+			
+	
+		
+				<li><a href="/cookies/index.html">Cookies</a></li>
+			
+	
+		
+				<li><a href="http://cymraeg.ordnancesurvey.co.uk/cymraeg/">Cymraeg</a></li>
+			
+	
+		
+				<li><a href="/support/contact-us.html" accesskey="C" title="Contact us [Accesskey: C]">Contact us</a></li>
+			
+	
+	</ul>
+			
+</div>
+
+
+				
+
+			<p id="contactDetails">For general enquiries, complaints, feedback or suggestions, email: <a href="mailto:customerservices@ordnancesurvey.co.uk" class="os-mail">customerservices@ordnancesurvey.co.uk</a> or call us on <strong class="os-tel">08456 05 05 05</strong></p>
+			
+			<a name="supplementaryNavigationEnd" id="supplementaryNavigationEnd"></a>
+			
+		</div>
+		
+	
+	</div>
+	
+	
+				<div id="copyright">		<p>Ordnance Survey &#169; Crown copyright <span id="copyrightYear">2012</span></p>	</div>
+		
+
+	
+
+</div>
+
+
+		<script type="text/javascript">   (function() {    var ga = document.createElement('script');    ga.type = 'text/javascript';    ga.async = true;    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';    var s = document.getElementsByTagName('script')[0];    s.parentNode.insertBefore(ga, s);  })();</script>
+	
+
+</body>
+</html>

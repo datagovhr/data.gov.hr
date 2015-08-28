@@ -1,0 +1,114 @@
+.calendar-calendar .month-view .full td.multi-day div.colors-taxonomy-term-14,
+.calendar-calendar .week-view .full td.multi-day div.colors-taxonomy-term-14,
+.calendar-calendar .day-view .full td.multi-day div.colors-taxonomy-term-14 {
+  background: none repeat scroll 0 0 #bad629;
+  color: #FFFFFF;
+  height: 1.9em;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+.calendar-calendar .month-view .full td.single-day div.colors-taxonomy-term-14,
+.calendar-calendar .week-view .full td.single-day div.colors-taxonomy-term-14,
+.calendar-calendar .day-view .full td.single-day div.colors-taxonomy-term-14 {
+  background: none repeat scroll 0 0 #bad629;
+  overflow: hidden;
+  padding: 0 3px;
+  width: auto;
+}
+.calendar-calendar .month-view .full td.multi-day .inner .colors-taxonomy-term-14 .continues,
+.calendar-calendar .month-view .full td.multi-day .inner .colors-taxonomy-term-14 .cutoff,
+.calendar-calendar .week-view .full td.multi-day .inner .colors-taxonomy-term-14 .continues, 
+.calendar-calendar .week-view .full td.multi-day .inner .colors-taxonomy-term-14 .cutoff {
+  background: none repeat scroll 0 0 #bad629;
+  border-radius: 0 5px 5px 0;
+  height: 1.9em;
+  padding-left: 6px;
+  position: absolute;
+  right: 0 !important;
+  text-align: left;
+  width: 10px;
+  z-index: 1;
+}
+.calendar-calendar .week-view .full div.single-day div.colors-taxonomy-term-14, .calendar-calendar .day-view .full div.single-day div.colors-taxonomy-term-14 {
+  background: none repeat scroll 0 0 #bad629 !important;
+  overflow: hidden;
+  padding: 0 3px;
+  width: auto;
+}
+.calendar-calendar .month-view .full td.multi-day div.colors-taxonomy-term-15,
+.calendar-calendar .week-view .full td.multi-day div.colors-taxonomy-term-15,
+.calendar-calendar .day-view .full td.multi-day div.colors-taxonomy-term-15 {
+  background: none repeat scroll 0 0 #cde40c;
+  color: #FFFFFF;
+  height: 1.9em;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+.calendar-calendar .month-view .full td.single-day div.colors-taxonomy-term-15,
+.calendar-calendar .week-view .full td.single-day div.colors-taxonomy-term-15,
+.calendar-calendar .day-view .full td.single-day div.colors-taxonomy-term-15 {
+  background: none repeat scroll 0 0 #cde40c;
+  overflow: hidden;
+  padding: 0 3px;
+  width: auto;
+}
+.calendar-calendar .month-view .full td.multi-day .inner .colors-taxonomy-term-15 .continues,
+.calendar-calendar .month-view .full td.multi-day .inner .colors-taxonomy-term-15 .cutoff,
+.calendar-calendar .week-view .full td.multi-day .inner .colors-taxonomy-term-15 .continues, 
+.calendar-calendar .week-view .full td.multi-day .inner .colors-taxonomy-term-15 .cutoff {
+  background: none repeat scroll 0 0 #cde40c;
+  border-radius: 0 5px 5px 0;
+  height: 1.9em;
+  padding-left: 6px;
+  position: absolute;
+  right: 0 !important;
+  text-align: left;
+  width: 10px;
+  z-index: 1;
+}
+.calendar-calendar .week-view .full div.single-day div.colors-taxonomy-term-15, .calendar-calendar .day-view .full div.single-day div.colors-taxonomy-term-15 {
+  background: none repeat scroll 0 0 #cde40c !important;
+  overflow: hidden;
+  padding: 0 3px;
+  width: auto;
+}
+.calendar-calendar .month-view .full td.multi-day div.colors-taxonomy-term-16,
+.calendar-calendar .week-view .full td.multi-day div.colors-taxonomy-term-16,
+.calendar-calendar .day-view .full td.multi-day div.colors-taxonomy-term-16 {
+  background: none repeat scroll 0 0 #e30d0d;
+  color: #FFFFFF;
+  height: 1.9em;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+.calendar-calendar .month-view .full td.single-day div.colors-taxonomy-term-16,
+.calendar-calendar .week-view .full td.single-day div.colors-taxonomy-term-16,
+.calendar-calendar .day-view .full td.single-day div.colors-taxonomy-term-16 {
+  background: none repeat scroll 0 0 #e30d0d;
+  overflow: hidden;
+  padding: 0 3px;
+  width: auto;
+}
+.calendar-calendar .month-view .full td.multi-day .inner .colors-taxonomy-term-16 .continues,
+.calendar-calendar .month-view .full td.multi-day .inner .colors-taxonomy-term-16 .cutoff,
+.calendar-calendar .week-view .full td.multi-day .inner .colors-taxonomy-term-16 .continues, 
+.calendar-calendar .week-view .full td.multi-day .inner .colors-taxonomy-term-16 .cutoff {
+  background: none repeat scroll 0 0 #e30d0d;
+  border-radius: 0 5px 5px 0;
+  height: 1.9em;
+  padding-left: 6px;
+  position: absolute;
+  right: 0 !important;
+  text-align: left;
+  width: 10px;
+  z-index: 1;
+}
+.calendar-calendar .week-view .full div.single-day div.colors-taxonomy-term-16, .calendar-calendar .day-view .full div.single-day div.colors-taxonomy-term-16 {
+  background: none repeat scroll 0 0 #e30d0d !important;
+  overflow: hidden;
+  padding: 0 3px;
+  width: auto;
+}

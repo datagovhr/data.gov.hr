@@ -1,0 +1,14 @@
+name = Conditional Fields test
+description = Provides hooks for testing Conditional Fields.
+package = Fields
+core = 7.x
+dependencies[] = conditional_fields
+files[] = conditional_fields.test
+hidden = TRUE
+
+
+; Information added by drush on 2014-10-02
+version = "cd29b003a592d375f3fdb4c46f5639d0f26ed0be"
+project = "conditional_fields"
+datestamp = "1412232470"
+

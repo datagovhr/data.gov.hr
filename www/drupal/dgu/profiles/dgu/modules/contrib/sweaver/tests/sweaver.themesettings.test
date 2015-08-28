@@ -1,0 +1,599 @@
+<?php
+
+/**
+ * @file
+ * Advanced tests for sweaver editor + theme settings.
+ *
+ * For some particular reason, when trying to enable theme setting all
+ * other tests start failing. So we will not test via posting values into
+ * the browser but by directly using the submit methods in the plugin classes.
+ *
+ * IMPORTANT
+ *
+ * These tests will fail (71 fails) when in your own Drupal installation the
+ * themesettings plugin is not enabled. I have no clue yet why this happens,
+ * however be assured, the tests are really doing their job :)
+ */
+
+class sweaverThemeSettings extends DrupalWebTestCase {
+  /**
+   * Implementation of getInfo().
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('Sweaver theme settings'),
+      'description' => t('Tests for the theme settings.'),
+      'group' => t('Sweaver'),
+    );
+  }
+
+  /**
+   * Implementation of setUp().
+   */
+  function setUp() {
+    parent::setUp('ctools', 'sweaver');
+  }
+
+  /**
+   * Debug helper function. Writes values away to a text file in the files directory.
+   */
+  function _debugHelper($value, $writetype = 'a+') {
+    $debug = fopen($this->originalFileDirectory .'/simpletestdebug.txt', 'a+');
+    fwrite($debug, print_r($value, TRUE) ."\n");
+    fclose($debug);
+  }
+
+  /**
+   * Scan the files directory.
+   */
+  function sweaver_filesdir_scan() {
+    $files = scandir($this->sweaver_public_path() . '/sweaver');
+    $this->_debugHelper($files);
+  }
+
+  /**
+   * Return public path helper function.
+   */
+  function sweaver_public_path() {
+    return variable_get('file_public_path', conf_path() . '/files');
+  }
+
+  /**
+   * Enable sweaver plugins.
+   */
+  function enableSweaverData() {
+    $path = $this->sweaver_public_path() . '/sweaver';
+    if (!file_exists($path)) {
+      $return = mkdir($path);
+      $this->assertTrue($return, 'File directory has been created.');
+    }
+    variable_set('sweaver_styles_delete_tab', TRUE);
+    variable_set('sweaver_plugin_status_sweaver_plugin_themesettings', TRUE);
+    $this->refreshVariables();
+  }
+
+  /**
+   * Build form, form_state values and copy files when necessary.
+   *
+   * @param $scenario
+   *   The id of the scenario.
+   * @param $size
+   *   The size of the pixels.
+   * @param $style_id
+   *   The id of the style.
+   * @param $upload
+   *   Whether we need to upload or not.
+   * @param $logo
+   *   The logo to upload.
+   * @param $favicon
+   *   The favicon to upload.
+   * @param $debug
+   *   Whether to write debug info or not.
+   */
+  function buildStyleConfiguration($scenario, $size = FALSE, $style_id = '', $upload = TRUE, $logo = NULL, $favicon = NULL, $save_type = 0, $debug = FALSE) {
+    $form = array();
+    $values = array();
+    $this->enableSweaverData();
+    $sweaver = Sweaver::get_instance();
+    $sweaver_style = $sweaver->get_plugin('sweaver_plugin_styles');
+    // Rebuild configuration because themesettings isn't looaded in install.
+    $sweaver->register_plugins_configuration();
+    $sweaver_ts = $sweaver->get_plugin('sweaver_plugin_themesettings');
+
+    $form['#current_theme'] = 'bartik';
+    $form['sweaver_plugin_themesettings']['form'] = $sweaver_ts->sweaver_get_theme_settings_form('bartik', array());
+    $form['sweaver_plugin_themesettings']['form']['#sweaver_other_themesettings'] = array();
+    $form['sweaver_plugin_styles']['form'] = $sweaver_style->sweaver_form();
+
+    // Submit values.
+    if ($size) {
+      $edit = array(
+        // Style editor.
+        'sweaver-css' => '{"#center ":{"font-size":'. $size .'}}',
+        'css-rendered' => '<style type="text/css">#center { font-size: '. $size .'px; } </style>',
+        'sweaver_plugin_custom_css' => '',
+        'save_style' => 'Bartik '. $style_id,
+        'save_type' => $save_type,
+
+        // Theme settings.
+        'toggle_name' => FALSE,
+        'style_existing_id' => ($save_type) ? $style_id : 0,
+        'var' => 'theme_bartik_settings',
+      );
+    }
+    else {
+      $edit = array();
+    }
+
+    // Favicon.
+    if (!is_null($favicon)) {
+      if (!$upload) {
+        $edit['default_favicon'] = 0;
+        $edit['favicon_path'] = $this->sweaver_public_path() . '/sweaver/favicon_bartik_' . $style_id . '_draft.ico';
+      }
+      else {
+        $source = drupal_get_path('module', 'sweaver') .'/tests/'. $favicon;
+        $parts = pathinfo($source);
+        $dest = 'public://sweaver/temp_favicon.' . $parts['extension'];
+        $return = file_unmanaged_copy($source, $dest, FILE_EXISTS_REPLACE);
+        $this->assertTrue($return, 'Favicon file copied to '. $dest .' for style id '. $style_id .' in scenario '. $scenario);
+        $form['sweaver_plugin_themesettings']['form']['#favicon_path'] = $dest;
+        $form['sweaver_plugin_themesettings']['form']['#favicon_path_extension'] = $parts['extension'];
+        $edit['default_favicon'] = 0;
+        $edit['favicon_path'] = $dest;
+      }
+    }
+
+    // Logo.
+    if (!is_null($logo)) {
+      if (!$upload) {
+        $edit['default_logo'] = 0;
+        $edit['logo_path'] = $this->sweaver_public_path() . '/sweaver/logo_bartik_' . $style_id . '_draft.' . $logo;
+      }
+      else {
+        $source = drupal_get_path('module', 'sweaver') .'/tests/'. $logo;
+        $parts = pathinfo($source);
+        $dest = 'public://sweaver/temp_logo.' . $parts['extension'];
+        $return = file_unmanaged_copy($source, $dest, FILE_EXISTS_REPLACE);
+        $this->assertTrue($return, 'Favicon file copied to '. $dest .' for style id '. $style_id .' in scenario '. $scenario);
+        $form['sweaver_plugin_themesettings']['form']['#logo_path'] = $dest;
+        $form['sweaver_plugin_themesettings']['form']['#logo_path_extension'] = $parts['extension'];
+        $edit['default_logo'] = 0;
+        $edit['logo_path'] = $dest;
+      }
+    }
+
+    if ($debug) {
+      $this->sweaver_filesdir_scan();
+    }
+
+    $values['form'] = $form;
+    $values['edit'] = $edit;
+    return $values;
+  }
+
+  /**
+   * Call submit methods.
+   *
+   * @param $op
+   *   The name of the submit button on the Load/save tab.
+   * @param $form_state
+   *   A (small) version of the form_state.
+   * @param $form
+   *   The form array.
+   */
+  function performStyleAction($op, $form_state, $form = array()) {
+    $sweaver = Sweaver::get_instance();
+    $sweaver_plugin = $sweaver->get_plugin('sweaver_plugin');
+
+    // Additional form_state properties
+    $form_state['clicked_button']['#value'] = t($op);
+
+    // Call submit methods.
+    foreach (array_keys($sweaver->get_plugins_registry(TRUE)) as $plugin_name) {
+      $sweaver_plugin = $sweaver->get_plugin($plugin_name);
+      $sweaver_plugin->sweaver_form_submit($form, $form_state);
+    }
+  }
+
+  /**
+   * Get css from table.
+   *
+   * @param $style_id
+   *   The number of the style.
+   * @param $draft
+   *   Whether to query the draft or live table.
+   */
+  function getCSS($style_id, $draft = TRUE) {
+    $table = ($draft) ? 'sweaver_style_draft' : 'sweaver_style';
+    return db_query("SELECT * FROM {". $table ."} where style_id = :style_id AND theme = :theme", array(':style_id' => $style_id, ':theme' => 'bartik'))->fetchObject();
+  }
+
+  /**
+   * Save a style.
+   *
+   * @param $scenario
+   *   The id of the scenario.
+   * @param $configuration
+   *   A collection of configuration options.
+   * @param $style_id
+   *   The id of the style.
+   * @param $live
+   *   Whether the live should exist or not.
+   * @param $equal_check
+   *   Whether to check on both files.
+   * @param $equal
+   *   Whether they have to be equal or not.
+   * @param $debug
+   *   Whether to write debug info or not.
+   */
+  function sweaverSaveStyle($scenario, $configuration, $style_id, $live = FALSE, $check = FALSE, $equal = FALSE, $debug = FALSE) {
+
+    $form_state['values'] = $configuration['edit'];
+    $form = $configuration['form'];
+    $this->performStyleAction('Save and continue', $form_state, $form);
+    $css = $this->getCSS($style_id);
+
+    // Assert CSS is equal.
+    $this->assertEqual($configuration['edit']['sweaver-css'], $css->css, t('CSS is equal for style id '. $css->style_id .' in scenario '. $scenario));
+
+    // Assert draft css is written, live not.
+    $this->assertCSSFiles($scenario, $style_id, TRUE, $live, $check, $equal);
+
+    if ($debug) {
+      $this->sweaver_filesdir_scan();
+    }
+  }
+
+  /**
+   * Publish a style.
+   *
+   * @param $scenario
+   *   The id of the scenario.
+   * @param $configuration
+   *   A collection of configuration options.
+   * @param $style_id
+   *   The id of the style.
+   */
+  function sweaverPublishStyle($scenario, $configuration, $style_id) {
+
+    $form_state['values'] = $configuration['edit'];
+    $form_state['values']['publish_id'] = $style_id;
+    $this->performStyleAction('Publish style', $form_state, $configuration['form']);
+    $css = $this->getCSS($style_id, FALSE);
+
+    // Assert CSS is equal.
+    $this->assertEqual($configuration['edit']['sweaver-css'], $css->css, t('CSS is equal for style id '. $css->style_id .' in scenario '. $scenario));
+
+    // Assert draft css is written, live too and css filesize are equal.
+    $this->assertCSSFiles($scenario, $style_id, TRUE, TRUE, TRUE, TRUE);
+  }
+
+  /**
+   * Delete a style.
+   *
+   * @param $scenario
+   *   The id of the scenario.
+   * @param $configuration
+   *   A collection of configuration options.
+   * @param $style_id
+   *   The id of the style to delete.
+   */
+  function sweaverDeleteStyle($scenario, $configuration, $style_id) {
+    $form_state['values']['delete_style'] = $style_id;
+    $form_state['values']['var'] = 'theme_bartik_settings';
+    $this->performStyleAction('Delete style', $form_state, $configuration['form']);
+
+    // Assert no entries are found in database.
+    $css_draft = $this->getCSS($style_id, FALSE);
+    $css_live = $this->getCSS($style_id, FALSE);
+    $this->assertFalse($css_draft, t('No draft css record found for style id '. $style_id .' in scenario '. $scenario));
+    $this->assertFalse($css_live, t('No live css file found for style id '. $style_id .' in scenario '. $scenario));
+
+    // Assert draft & live are gone.
+    $this->assertCSSFiles($scenario, $style_id, FALSE, FALSE);
+  }
+
+  /**
+   * Asserts for css files.
+   *
+   * @param $scenario
+   *   The id of the scenario.
+   * @param $style_id
+   *   The id of the style.
+   * @param $live
+   *   Whether the draft should exist or not.
+   * @param $live
+   *   Whether the live should exist or not.
+   * @param $equal_check
+   *   Whether to check on both files.
+   * @param $equal
+   *   Whether they have to be equal or not.
+   */
+  function assertCSSFiles($scenario, $style_id, $draft, $live, $equal_check = FALSE, $equal = FALSE) {
+    $draft_filename = $this->sweaver_public_path() . '/sweaver/sweaver_bartik_' . $style_id . '_draft.css';
+    $live_filename = $this->sweaver_public_path() . '/sweaver/sweaver_bartik_' . $style_id . '_live.css';
+
+    if ($draft) {
+      $this->assertTrue(file_exists($draft_filename), t('Draft css file exists for style id '. $style_id .' in scenario '. $scenario));
+    }
+    else {
+      $this->assertFalse(file_exists($draft_filename), t('Draft css file does not exist for style id '. $style_id .' in scenario '. $scenario));
+    }
+
+    if ($live) {
+      $this->assertTrue(file_exists($live_filename), t('Live css file exists for style id '. $style_id .' in scenario '. $scenario));
+    }
+    else {
+      $this->assertFalse(file_exists($live_filename), t('Live css file does not exist for style id '. $style_id .' in scenario '. $scenario));
+    }
+
+    if ($equal_check) {
+      $draft_file_size = filesize($draft_filename);
+      $live_file_size = filesize($live_filename);
+      $this->assertNotEqual($draft_file_size, 0, t('Draft CSS filesize is not 0 for style _id '. $style_id .' in scenario '. $scenario .' ('. $draft_file_size .')'));
+      $this->assertNotEqual($live_file_size, 0, t('Live CSS filesize is not 0 for style _id '. $style_id .' in scenario '. $scenario .' ('. $live_file_size .')'));
+      if ($equal) {
+        $this->assertEqual($draft_file_size, $live_file_size, t('CSS files are equal for style id '. $style_id .' in scenario '. $scenario .' ('. $draft_file_size .')'));
+      }
+      else {
+        $this->assertNotEqual($draft_file_size, $live_file_size, t('CSS files are not equal for style id '. $style_id .' in scenario '. $scenario .'(d: '. $draft_file_size .' l: '. $live_file_size .')'));
+      }
+    }
+  }
+
+  /**
+   * Asserts for Logo & Favicon writes on file system.
+   *
+   * @param $scenario
+   *   The id of the scenario.
+   * @param $style_id
+   *   The if of the style.
+   * @param $gone
+   *   Whether the files should be gone or not.
+   * @param $draft
+   *   Whether the draft version should exist or not.
+   * @param $live
+   *   Whether the live version should exist or not.
+   * @param $logo
+   *   The exentension of the logo.
+   * @param $favicon_check
+   *   Whether we need to assert for the favicon.
+   */
+  function assertLogoFavicon($scenario, $style_id, $gone, $draft = '', $live = '', $logo = '', $favicon_check = TRUE) {
+
+    if ($gone) {
+
+      $draft_logo_png = $this->sweaver_public_path() . '/sweaver/logo_bartik_' . $style_id . '_draft.png';
+      $live_logo_png = $this->sweaver_public_path() . '/sweaver/logo_bartik_' . $style_id . '_live.png';
+      $draft_logo_gif = $this->sweaver_public_path() . '/sweaver/logo_bartik_' . $style_id . '_draft.gif';
+      $live_logo_gif = $this->sweaver_public_path() . '/sweaver/logo_bartik_' . $style_id . '_live.gif';
+      $draft_favicon = $this->sweaver_public_path() . '/sweaver/favicon_bartik_' . $style_id . '_draft.ico';
+      $live_favicon = $this->sweaver_public_path() . '/sweaver/favicon_bartik_' . $style_id . '_live.ico';
+
+      $this->assertFalse(file_exists($draft_logo_png), t('Draft png logo is gone for style id '. $style_id .' in scenario '. $scenario .' ('. $draft_logo_png .') '));
+      $this->assertFalse(file_exists($live_logo_png), t('Live png logo is gone for style id '. $style_id .' in scenario '. $scenario .' ('. $live_logo_png .') '));
+      $this->assertFalse(file_exists($draft_logo_gif), t('Draft gif logo is gone for style id '. $style_id .' in scenario '. $scenario .' ('. $draft_logo_gif .') '));
+      $this->assertFalse(file_exists($live_logo_gif), t('Live gif logo is gone for style id '. $style_id .' in scenario '. $scenario .' ('. $live_logo_gif .') '));
+      $this->assertFalse(file_exists($draft_favicon), t('Draft favicon is gone for style id '. $style_id .' in scenario '. $scenario .' ('. $draft_favicon .') '));
+      $this->assertFalse(file_exists($live_favicon), t('Live favicon is gone for style id '. $style_id .' in scenario '. $scenario .' ('. $live_favicon .') '));
+    }
+
+    else {
+
+      $draft_logo = $this->sweaver_public_path() . '/sweaver/logo_bartik_' . $style_id . '_draft.' . $logo;
+      $live_logo = $this->sweaver_public_path() . '/sweaver/logo_bartik_' . $style_id . '_live.' . $logo;
+      $draft_favicon = $this->sweaver_public_path() . '/sweaver/favicon_bartik_' . $style_id . '_draft.ico';
+      $live_favicon = $this->sweaver_public_path() . '/sweaver/favicon_bartik_' . $style_id . '_live.ico';
+
+      // Draft.
+      if ($draft) {
+        $this->assertTrue(file_exists($draft_logo), t('Draft logo exists for style id '. $style_id .' in scenario '. $scenario));
+        $this->assertTrue(file_exists($draft_favicon), t('Draft Favicon exists for style id '. $style_id .' in scenario '. $scenario));
+      }
+      else {
+        $this->assertFalse(file_exists($draft_logo), t('Draft logo does not exist for style id '. $style_id .' in scenario '. $scenario));
+        $this->assertFalse(file_exists($draft_favicon), t('Draft Favicon does not exist for style id '. $style_id .' in scenario '. $scenario));
+      }
+
+      // Live
+      if ($live) {
+        $this->assertTrue(file_exists($live_logo), t('Live logo exists for style id '. $style_id .' in scenario '. $scenario));
+        $this->assertTrue(file_exists($live_favicon), t('Live Favicon exists for style id '. $style_id .' in scenario '. $scenario));
+      }
+      else {
+        $this->assertFalse(file_exists($live_logo), t('Live logo does not exist for style id '. $style_id .' in scenario '. $scenario));
+        if ($favicon_check) {
+          $this->assertFalse(file_exists($live_favicon), t('Live Favicon does not exist for style id '. $style_id .' in scenario '. $scenario));
+        }
+      }
+    }
+  }
+
+  /**
+   * Asserts for theme settings.
+   *
+   * @param $scenario
+   *   The id of the scenario.
+   * @param $style_id
+   *   The id of the style.
+   * @param $site_name
+   *   Whether the $site_name is visible or not.
+   * @param $logo
+   *   The extension of the logo.
+   * @param $favicon
+   *   The name of the favicon.
+   * @param $original
+   *   Whether we need to look for the original logo/favicon.
+   */
+  function assertThemeSettings($scenario, $style_id, $site_name, $original = TRUE, $logo = '', $favicon = '') {
+    $this->drupalGet('node');
+
+    // Test on site name.
+    if ($site_name) {
+      $this->assertNoRaw('<div id="site-name" class="element-invisible">', t('Site name is visible for style id ' . $style_id . ' in scenario ' . $scenario));
+    }
+    else {
+      $this->assertRaw('<div id="site-name" class="element-invisible">', t('Site name is not visible for style id ' . $style_id . ' in scenario ' . $scenario));
+    }
+
+    if ($original) {
+      $this->assertRaw('/themes/bartik/logo.png', t('Logo is original bartik for style id ' . $style_id . ' in scenario '. $scenario));
+      $this->assertRaw('/misc/favicon.ico', t('Favicon is original druplicon for style id ' . $style_id . ' in scenario '. $scenario));
+    }
+    else {
+      $this->assertNoRaw('/themes/bartik/logo.png', t('Logo is not original bartik for style id '. $style_id .' in scenario '. $scenario));
+      $this->assertNoRaw('/misc/favicon.ico', t('Favicon is not original druplicon for style id '. $style_id .' in scenario '. $scenario));
+      $live_logo = '/sweaver/logo_bartik_' . $style_id .'_live.' . $logo;
+      $live_favicon = '/sweaver/favicon_bartik_' . $style_id . '_live.'. $favicon;
+      $this->assertRaw($live_logo, t('Logo is uploaded logo for style id ' . $style_id . ' in scenario '. $scenario . ' ('. $live_logo .')'));
+      $this->assertRaw($live_favicon, t('Favicon is uploaded logo for style id ' . $style_id . ' in scenario '. $scenario . ' (' . $live_favicon . ')'));
+    }
+  }
+
+  /**
+   * Scenario A.
+   *
+   * 1: Save realize favicon, google logo & Site name off
+   * 2: Publish 1
+   * 3: Delete 1
+   */
+  function testScenarioA() {
+    $scenario = 'A';
+
+    $scenario_action = 'Save '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30', 1, TRUE, 'google.png', 'realize.ico', 0, FALSE);
+    $this->sweaverSaveStyle($scenario_action, $configuration, 1, FALSE, FALSE, FALSE, FALSE);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, FALSE, 'png');
+    $this->assertThemeSettings($scenario_action, 1, TRUE, TRUE);
+
+    $scenario_action = 'Publish '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30', 1,  TRUE, 'google.png', 'realize.ico');
+    $this->sweaverPublishStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, TRUE, 'png');
+    $this->assertThemeSettings($scenario_action, 1, FALSE, FALSE, 'png', 'ico');
+
+    $scenario_action = 'Delete '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, 0, FALSE);
+    $this->sweaverDeleteStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, TRUE);
+  }
+
+  /**
+   * Scenario B.
+   *
+   * 1: Save realize favicon, google logo & Site name off
+   * 1: Save dummi favicon, jw logo & Site name off
+   * 2: Publish 1
+   * 2: Publish 2
+   * 3: Delete 1
+   * 3: Delete 2
+   */
+  function testScenarioB() {
+    $scenario = 'B';
+
+    $scenario_action = 'Save '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30', 1,  TRUE, 'google.png', 'realize.ico');
+    $this->sweaverSaveStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, FALSE, 'png');
+    $this->assertThemeSettings($scenario_action, 1, TRUE, TRUE);
+
+    $scenario_action = 'Save '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '40', 2,  TRUE, 'jw.gif', 'dummy.ico');
+    $this->sweaverSaveStyle($scenario_action, $configuration, 2);
+    $this->assertLogoFavicon($scenario_action, 2, FALSE, TRUE, FALSE, 'gif');
+    $this->assertThemeSettings($scenario_action, 2, TRUE, TRUE);
+
+    $scenario_action = 'Publish '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30', 1,  TRUE, 'google.png', 'realize.ico');
+    $this->sweaverPublishStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, TRUE, 'png');
+    $this->assertThemeSettings($scenario_action, 1, FALSE, FALSE, 'png', 'ico');
+
+    $scenario_action = 'Publish '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '40', 2,  TRUE, 'jw.gif', 'dummy.ico');
+    $this->sweaverPublishStyle($scenario_action, $configuration, 2);
+    $this->assertLogoFavicon($scenario_action, 2, FALSE, TRUE, TRUE, 'gif');
+    $this->assertThemeSettings($scenario_action, 2, FALSE, FALSE, 'gif', 'ico');
+
+    $scenario_action = 'Delete '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, 0, 1, FALSE);
+    $this->sweaverDeleteStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, TRUE);
+
+    $scenario_action = 'Delete '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, 0, 2, FALSE);
+    $this->sweaverDeleteStyle($scenario_action, $configuration, 2);
+    $this->assertLogoFavicon($scenario_action, 2, TRUE);
+  }
+
+  /**
+   * Scenario C.
+   *
+   * 1: Save realize favicon, google logo & Site name off
+   * 2: Publish 1 (without logo & realize).
+   * 3: Delete 1
+   */
+  function testScenarioC() {
+    $scenario = 'C';
+
+    $scenario_action = 'Save '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30', 1, TRUE, 'google.png', 'realize.ico');
+    $this->sweaverSaveStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, FALSE, 'png');
+    $this->assertThemeSettings($scenario_action, 1, TRUE, TRUE);
+
+    $scenario_action = 'Publish '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30', 1, FALSE, 'png', 'ico');
+    $this->sweaverPublishStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, TRUE, 'png');
+    $this->assertThemeSettings($scenario_action, 1, FALSE, FALSE, 'png', 'ico');
+
+    $scenario_action = 'Delete '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, 0, 1, FALSE);
+    $this->sweaverDeleteStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, TRUE);
+  }
+
+  /**
+   * Scenario D.
+   *
+   * 1: Save realize favicon, google logo & Site name off
+   * 3: Publish 1 (without logo & realize).
+   * 2: Save 1 dummi favicon, jw logo & Site name off
+   * 3: Publish 1 (without logo & dummi).
+   * 4: Delete 1
+   */
+  function testScenarioD() {
+    $scenario = 'D';
+
+    $scenario_action = 'Save '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30', 1, TRUE, 'google.png', 'realize.ico');
+    $this->sweaverSaveStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, FALSE, 'png');
+    $this->assertThemeSettings($scenario_action, 1, TRUE, TRUE);
+
+    $scenario_action = 'Publish '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30', 1, FALSE, 'png', 'ico');
+    $this->sweaverPublishStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, TRUE, 'png');
+    $this->assertThemeSettings($scenario_action, 1, FALSE, FALSE, 'png', 'ico');
+
+    $scenario_action = 'Save '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30000', 1, TRUE, 'jw.gif', 'dummy.ico', TRUE);
+    $this->sweaverSaveStyle($scenario_action, $configuration, 1, TRUE, TRUE, FALSE);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, FALSE, 'gif', FALSE);
+    $this->assertThemeSettings($scenario_action, 1, FALSE, FALSE, 'png', 'ico');
+
+    $scenario_action = 'Publish '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, '30000', 1, FALSE, 'gif', 'ico');
+    $this->sweaverPublishStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, FALSE, TRUE, TRUE, 'gif');
+    $this->assertThemeSettings($scenario_action, 1, FALSE, FALSE, 'gif', 'ico');
+
+    $scenario_action = 'Delete '. $scenario;
+    $configuration = $this->buildStyleConfiguration($scenario_action, 0, 1, FALSE);
+    $this->sweaverDeleteStyle($scenario_action, $configuration, 1);
+    $this->assertLogoFavicon($scenario_action, 1, TRUE);
+  }
+}

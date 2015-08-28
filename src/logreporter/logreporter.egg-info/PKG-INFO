@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: logreporter
+Version: 1.0
+Summary: Collection of scripts for processing log files in DGUK
+Home-page: UNKNOWN
+Author: Ross Jones
+Author-email: ross@servercode.co.uk
+License: AGPL
+Description: UNKNOWN
+Keywords: varnish logging
+Platform: UNKNOWN

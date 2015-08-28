@@ -1,0 +1,23 @@
+name = dguk
+description = data.gov.uk theme
+version = 7.x-1.0
+core = 7.x
+base theme = bootstrap
+plugins[panels][layouts] = layouts
+engine = phptemplate
+
+regions[navigation]     = 'Navigation'
+regions[highlighted]    = 'Highlighted'
+regions[help]           = 'Help'
+regions[content]        = 'Content'
+regions[sidebar_first]  = 'Primary'
+regions[sidebar_second] = 'Secondary'
+regions[footer]         = 'Footer'
+
+; Disables Bootstrap parent theme from using bootstrapcdn
+settings[bootstrap_cdn] = ''
+
+; Breadcrumbs
+settings[bootstrap_breadcrumb] = 1
+settings[bootstrap_breadcrumb_home] = 1
+settings[bootstrap_breadcrumb_title] = 0

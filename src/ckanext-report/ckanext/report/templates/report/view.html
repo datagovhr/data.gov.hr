@@ -1,0 +1,77 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">${c.report_title} - Izvje&#353;&#263;e</py:def>
+  <py:match path="breadcrumbs">
+    <li><a href="${h.url_for('reports')}">Izvje&#353;&#263;a</a></li>
+    <li><a href="${request.url}">${c.report_title}</a></li>
+  </py:match>
+
+  <div py:match="content" py:strip="">
+      <h1>${c.report_title}</h1>
+      <p>${c.report_description}</p>
+      <p>
+          Generirano: ${h.render_datetime(c.report_date, '%d.%m.%Y. %H:%M')}
+      </p>
+      <div py:if="h.is_sysadmin()" class="panel panel-info" style="width=700px">
+          <div class="panel-heading"><strong>Osvje&#382;i izvje&#353;&#263;e</strong></div>
+          <div class="panel-body">
+            <form action="" method="POST">
+              <button type="submit" value="Refresh" class="btn btn-info pull-right" style="margin-left: 15px">Osvje&#382;i</button>
+            </form>
+            <p>Kao sistemski administrator mo&#382;ete osvje&#382;iti izvje&#353;&#263;e na zahtjev klikom na 'Osvje&#382;i' tipku.</p>
+          </div>
+      </div>
+
+      <h3>Opcije</h3>
+      <form action="">
+          <div py:for="(key, value) in c.options.items()">
+            <py:if test="key in c.options_html">${c.options_html[key]}</py:if>
+            <py:if test="key not in c.options_html">
+              ${key}: ${value}
+              <input type="hidden" name="${key}" value="${value}"/>
+            </py:if>
+          </div>
+      </form>
+
+      <h3>Rezultati</h3>
+      <py:if test="not c.are_some_results">
+        <p>Nema rezultata.</p>
+      </py:if>
+
+      <py:if test="c.are_some_results">
+        <div class="pull-right">
+            Preuzmi:
+            <a class="btn btn-primary" href="${h.report__relative_url_for(format='csv')}">CSV</a>
+            <!--<a class="btn btn-primary" href="${h.report__relative_url_for(format='json')}">JSON</a>-->
+        </div>
+        <div>
+          ${c.report_snippet}
+        </div>
+      </py:if>
+  </div>
+
+  <py:def function="optional_footer">
+    <!--! Tablesorter allows table sorting by clicking on each column -->
+    <script type="text/javascript" src="/scripts/vendor/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript">
+      //<![CDATA[
+      $(document).ready(function()
+        {
+          $("#report-table").tablesorter({
+              dateFormat: "uk",
+          });
+          $(".js-auto-submit").change(function () {
+              $(this).closest("form").submit();
+          });
+        }
+      );
+    // ]]>
+    </script>
+  </py:def>
+
+  <xi:include href="../layout_base.html" />
+
+</html>

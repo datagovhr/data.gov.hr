@@ -1,0 +1,20 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">New - Publisher</py:def>
+
+  <py:match path="breadcrumbs">
+    <li><a href="/publisher">Publishers</a></li>
+    <li><a href="/publisher/new">New Publisher</a></li>
+  </py:match>
+
+  <div py:match="content">
+    <h1>New Publisher</h1>
+    ${c.form}
+  </div>
+
+  <xi:include href="../layout_base.html" />
+</html>
+

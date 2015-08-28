@@ -1,0 +1,26 @@
+CKAN API PHP Client
+
+External libraries are required to use the CKAN client.  This software uses composer http://getcomposer.org/ to install and manage dependencies.
+
+1) Composer is required to install all the dependencies.  To install composer, you need to run:
+	curl http://getcomposer.org/installer | php 
+	in the root of the project.
+	You may get an error saying that you need to disable detect_unicode to install composer.  If this happens, add
+	detect_unicode=off to your php.ini
+
+2) To install the project dependencies, you should run:
+	php composer.phar install
+	in the root of the project.
+
+3) CKAN PHP client uses a PSR-0 compliant autoloader (supplied by composer). In order to use the library, you should require vendor/autoload.php or use your own PSR-0 compliant autoloader.
+
+To run the acceptance tests from the command line run:
+
+bin/behat 
+
+To run the unit tests from the command line run:
+
+bin/phpunit
+
+
+

@@ -1,0 +1,252 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dcat="http://www.w3.org/ns/dcat#"
+  typeof="dcat:Dataset"
+  about=""
+  py:strip="">
+
+  <py:def function="page_title">${c.pkg_dict.get('title', c.pkg_dict['name'])} - Skupovi podataka</py:def>
+
+  <xi:include href="../inventory/inventory_util.html" />
+
+  <py:match path="breadcrumbs">
+    <li><a href="/data/search">Skupovi podataka</a></li>
+    <li><a href="${h.url_for(controller='package',action='read',id=c.pkg_dict['name'])}">${c.pkg_dict.get('title', c.pkg_dict['name'])}</a></li>
+  </py:match>
+
+  <py:def function="package_content">
+    <!-- Warn if reading old revision -->
+    <div py:if="c.pkg_revision_id" class="panel panel-warning">
+      <div class="panel-heading">Pregled revizije skupa podataka</div>
+      <div class="panel-body" py:if="c.pkg_revision_not_latest">
+        This is an old revision of this dataset, as edited at ${h.render_datetime(c.pkg_revision_timestamp)}. It may differ significantly from the <a href="${h.url(controller='package', action='read', id=c.pkg.name)}">current revision</a>.
+      </div>
+      <div class="panel-body" py:if="not c.pkg_revision_not_latest">
+        This is the current revision of this dataset, as edited at ${h.render_datetime(c.pkg_revision_timestamp)}.
+      </div>
+    </div>
+
+
+    <div id="dataset">
+      <!--! id=dataset for ckanext-spatial -->
+    </div>
+
+    <div class="dataset-resources" py:if="not h.is_unpublished_item(c.pkg_dict)">
+      <!-- Resources -->
+      <py:if test="h.individual_resources()">
+        <h2>Resursi podataka (${len(h.individual_resources())})</h2>
+        ${resource_table(h.individual_resources())}
+      </py:if>
+      <py:if test="h.timeseries_resources()">
+        <h2>Resursi podataka (${len(h.timeseries_resources())} u vremenskom nizu)</h2>
+	<py:for each="year, items in h.groupby(reversed(h.timeseries_resources()), lambda x: h.parse_date(x.get('date')).year)">
+	  <div class="year">
+            <h3>${year} <span class="showyear"></span><span class="hideyear"></span></h3>
+            <div class="year_items">
+            ${resource_table(items)}
+            </div>
+          </div>
+	</py:for>
+      </py:if>
+    </div>
+    <div class="dataset-resources-additional" py:if="not h.is_unpublished_item(c.pkg_dict)">
+      <py:if test="h.additional_resources() or h.gemini_resources()">
+        <h2>Dodatne poveznice (${len(h.additional_resources()) + len(h.gemini_resources())})</h2>
+        ${resource_table(h.additional_resources() + h.gemini_resources())}
+      </py:if>
+
+      <py:if test="not (h.dataset_type(c.pkg_extras) == 'uklp' or h.individual_resources() or h.timeseries_resources() or h.additional_resources())">
+        <em>(none)</em>
+      </py:if>
+    </div>
+
+    <div class="dataset-additional-information" py:if="not h.is_unpublished_item(c.pkg_dict)">
+      <!-- Dataset Information Section -->
+      <h2>Dodatne informacije</h2>
+      <table class="table table-bordered table-condensed table-dgu-fixed-size dgu-table" style="margin-bottom: 45px;">
+        <tbody>
+          <py:with vars="metadata=h.get_package_mini_metadata(c.pkg)">
+            <tr>
+              <td class="key">Dodano na data.gov.hr</td>
+              <td class="value" id="dateGov">${metadata['date-added-computed']}</td>
+            </tr>
+          <!-- Hidden while QA/archiver changes are removed from taskstatus, if not revisions.
+            <tr>
+              <td class="key">Modificirano na data.gov.hr</td>
+              <td class="value">${metadata['date-updated-computed']}</td>	     
+            </tr>
+          -->
+          </py:with>
+
+
+          <tr class="detailView" py:for="field_dict, label_attributes, value_attributes in h.get_package_fields(c.pkg, dict(c.pkg_extras),h.dataset_type(c.pkg_extras))">		
+            <td class="key" py:attrs="label_attributes">${field_dict.get('label') or field_dict['name']}</td>
+            <td class="value" py:attrs="value_attributes">${field_dict.get('value') or '-'}</td>			
+          </tr>
+		  
+		  <tr>
+			<td class="key">Oznake</td>	
+			<td class="value">${dict(c.pkg_dict).get('tag_string') or  ', '.join(h.free_tags(c.pkg_dict))}</td>
+		  </tr>
+
+          <tr py:if="h.dataset_type(c.pkg_extras) == 'uklp' and dict(c.pkg_extras).get('resource-type') in ('dataset', 'series', 'service')">
+            <py:with vars="is_service=dict(c.pkg_extras).get('resource-type')=='service'">
+            <td class="key">Coupled ${if_(is_service,'Skupovi podataka','Services')}</td>
+            <td class="value">
+              <ul py:if="h.coupled_pkg_tuples(c.pkg)">
+                <li py:for="name, title in h.coupled_pkg_tuples(c.pkg)">
+                  <a href="/dataset/${name}">${title}</a>
+                </li>
+              </ul>
+              <span py:if="not h.coupled_pkg_tuples(c.pkg)">(none)</span>
+            </td>
+            </py:with>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--<a href="${h.url_for(controller='ckanext.dgu.controllers.feedback:FeedbackController',action='add',id=c.pkg.name)}" class="btn btn-primary btn-mini add-feedback-button pull-right">
+      <py:if test="c.user">Dodaj povratnu informaciju &raquo;</py:if>
+      <py:if test="not c.user">Prijavite se za dodavanje &raquo;</py:if>
+    </a>-->
+
+    <py:if test="h.has_related_apps(c.pkg_dict.get('id'))">
+    <h2>Povezane aplikacije</h2>
+    <ul>
+      <li py:for="rel in h.get_related_apps(c.pkg_dict.get('id'))">
+        <a href="${rel.url}">${rel.title}</a>
+      </li>
+    </ul>
+    </py:if>
+  
+
+    <div id="comments-container">
+      <!-- TODO do not use id=comments! It's a duplicate id with Drupal's content. -->
+      <div style="height: 50px;" class="comments-spinner"></div>
+    </div>
+  </py:def>
+
+
+  <!--<py:def function="package_optional_head">
+    <py:if test="h.get_extent() and not h.is_unpublished_item(c.pkg_dict)">
+      <script src="http://osinspiremappingprod.ordnancesurvey.co.uk/libraries/openlayers-openlayers-56e25fc/OpenLayers.js" type="text/javascript"></script>
+      <script type="text/javascript" src="${h.url_for_static('/scripts/dgu-dataset-map.min.js')}"></script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          CKAN.DguDatasetMap.tiles_url = "${h.get_tiles_url()}";
+          CKAN.DguDatasetMap.map_type = 'os';
+          CKAN.DguDatasetMap.extent = '${h.get_extent()}';
+          CKAN.DguDatasetMap.setup();
+        })
+      </script>
+      <style type="text/css">
+        /* Make sure we don't break the tiles in the map */
+        #dataset-map-container img { max-width: inherit; }
+      </style>
+    </py:if>
+  </py:def>-->
+
+
+  <div py:def="resource_table(resources)" class="row">
+    <div class="col-sm-6" py:for="res in resources">
+    <div class="dataset-resource">
+      <div class="dataset-resource-format">
+        <i class="icon-3x icon-file-text"></i>
+        <span class="format-name">
+          <py:if test="res.get('gemini',False)">
+            ${res.get('type','')}
+          </py:if>
+          <py:if test="not res.get('gemini',False)">
+            ${res.get('format','')}
+          </py:if>
+        </span>
+      </div>
+      <div class="dataset-resource-text">
+        <div class="inner">
+          <div class="inner2">
+            <py:if test="h.is_resource_broken(res['id'])">
+              <a class="js-tooltip" data-toggle="tooltip" data-placement="right" title="There is an error with this resource" href="${h.url_for(controller='package', action='resource_read', id=c.pkg_dict['name'], resource_id=res['id'])}#qualitycheck" style="text-decoration:none;color:#D43F3A;">
+                <i class="icon-exclamation-sign"></i>
+              </a>
+            </py:if>
+
+            <py:if test="res.get('scraped') or res.get('scraper_url')">
+              ${h.scraper_icon(res, alt=if_(res.get('scraper_url'), "This URL leads to data files which are being added automatically, using the scraper at: https://scraperwiki.com/scrapers/%s" % res.get('scraper_url'), ""))}
+            </py:if>
+            ${res.get('date','')}
+            ${h.resource_display_name(res)}
+          </div>
+        </div>
+      </div>
+      <div class="dropdown" style="pointer-events:none;">
+        <a href="#" class="dataset-resource-chevron" data-toggle="dropdown" style="pointer-events:auto;">
+          <i class="icon-chevron-down"></i>
+        </a>
+        <ul class="dropdown-menu" role="menu" style="pointer-events:auto;" py:with="gemini = res.get('gemini',False)">
+          <li py:if="gemini">
+            <a href="${res.get('url', '')}" rel="dcat: distribution" target="_blank" onclick="${h.ga_download_tracking(res)}">
+              <i class="icon-search"></i>&nbsp; ${res['action']}
+            </a>
+          </li>
+          <li py:if="not gemini">
+            <a href="${h.url_for(controller='package', action='resource_read', id=c.pkg_dict['name'], resource_id=res['id'])}">
+              <i class="icon-search"></i>&nbsp; ${'Pregledaj' if h.predict_if_resource_will_preview(res) else 'Detalji'}
+            </a>
+          </li>
+          <li py:if="not gemini">
+            <a href="${res.get('url', '')}" onclick="${h.ga_download_tracking(res)}">
+              <i class="icon-download-alt"></i>&nbsp;
+              <py:if test="h.dataset_type(c.pkg_extras)!='uklp'">Preuzmi</py:if>
+              <py:if test="h.dataset_type(c.pkg_extras)=='uklp'">Izravna poveznica</py:if>
+            </a>
+          </li>
+          <py:with vars="cache_url, cache_timestamp = h.get_cache(res)">
+            <li py:if="not gemini and cache_url">
+              <a href="${cache_url}" class="js-tooltip" data-placement="bottom" title="Predmemorirano ${cache_timestamp.strftime('%d.%m.%Y.') if cache_timestamp else 'nepoznat datum'} na Portalu otvorenih podataka" onclick="${h.ga_download_tracking(res, 'download-cache')}">
+                <i class="icon-save"></i>&nbsp;
+                Preuzmi iz predmemorije
+              </a>
+            </li>
+          </py:with>
+          <li py:if="not gemini and not h.get_cache(res)[0]">
+            <a class="disabled">
+              <i class="icon-save"></i>&nbsp;
+              (nema dostupne predmemorije)
+            </a>
+          </li>
+        </ul><!-- /dropdown-mnu-->
+      </div><!--/dropdown-->
+    </div><!-- /dataset-resource -->
+    </div><!-- /col-sm-6 -->
+  </div>
+
+  <xi:include href="read_common.html" />
+<script type="text/javascript">
+	$(function (){
+		$(".detailView").each(function (){
+			var tema = $(this).children().get(0).outerText;
+			if(tema.indexOf('Tema') == -1 ){
+				if(tema.indexOf('Vremensko razdoblje') == -1 ){
+					if(tema.indexOf('Sekundarna tema(e)') == -1 ){
+						$(this).remove();
+					}
+					else {
+						$(this).children().get(1).innerText = $(this).children().get(1).outerText.replace(/\\u0106/g, 'Ć').replace(/\\u0107/g,'ć').replace(/\\u010c/g,'Č').replace(/\\u011d/g,'č').replace(/\\u0110/g,'Đ').replace(/\\u0111/g,'đ').replace(/\\u0160/g,'Š').replace(/\\u0161/g,'š').replace(/\\u017d/g,'Ž').replace(/\\u017e/g,'ž').replace(/u\'/g, '').replace(/[\[\]\']/g, '');	
+					}
+				}
+				else {
+					$(this).children().get(1).innerText === '-' ? '-' : $(this).children().get(1).innerText = $(this).children().get(1).outerText.replace(/\//g, '.');
+				}				
+			}
+		});
+	});
+</script>
+</html>
+

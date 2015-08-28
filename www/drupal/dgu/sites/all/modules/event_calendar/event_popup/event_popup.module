@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @file
+ * Implemening event popup calender on click event.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function event_popup_init() {
+  $perm_string = 'create ' . variable_get('event_calendar_node_type', 'event_calendar') . ' content';
+  // Add js for show pop up on calendar.
+  drupal_add_library('system', 'ui.dialog');
+  drupal_add_js(drupal_get_path('module', 'event_popup') . '/js/event_popup.js');
+  drupal_add_js(drupal_get_path('module', 'event_popup') . '/js/event_popup_validate.js');
+  _event_popup_add_jscss();
+  
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function event_popup_form_alter(&$form, &$form_state, $form_id) {
+  $event_form_id = variable_get('event_calendar_node_type', 'event_calendar') . '_node_form';
+  if ( $form_id == $event_form_id ) {
+    $field_lang_code = field_language('node', $form['#node'], 'event_calendar_date', LANGUAGE_NONE);
+    $date_default_value = $form['event_calendar_date'][$field_lang_code][0]['#default_value']['value'];
+    $date = explode(' ', $date_default_value);
+    if ( @$_GET['date'] != "" ) {
+      $form['event_calendar_date'][$field_lang_code][0]['#default_value']['value'] = @$_GET['date'] . ' ' . $date[1];
+      $form['event_calendar_date'][$field_lang_code][0]['#default_value']['value2'] = @$_GET['date'] . ' ' . $date[1];
+    }
+    $form['actions']['submit']['#submit'][] = 'event_popup_custom_submit';
+  }
+}
+
+/**
+ * Custom submit handler.
+ */
+function event_popup_customize_node_form(&$form) {
+
+  $form[LANGUAGE_NONE][0]['format']['guidelines']['#access'] = FALSE;
+  $form[LANGUAGE_NONE][0]['format']['format']['#access'] = FALSE;
+  $form[LANGUAGE_NONE][0]['format']['help']['#access'] = FALSE;
+  $form[LANGUAGE_NONE][0]['format']['#theme_wrappers'] = NULL;
+  return $form;
+}
+
+/**
+ * Custom redirection popup.
+ */
+function event_popup_custom_submit($form, &$form_state) {
+  // $form_state['rebuild'] = TRUE;
+  //$destination = $_SERVER['HTTP_REFERER'];
+  //drupal_goto($destination);
+  $form_state['redirect'] = 'event-created';
+}
+
+/**
+ *  Add js and css.
+ */
+function _event_popup_add_jscss() {
+  $perm_string = 'create ' . variable_get('event_calendar_node_type', 'event_calendar') . ' content';
+  if (user_access($perm_string)) {
+    $access_perm = TRUE;
+  }
+  else {
+    $access_perm = FALSE;
+  }
+  if ($classes = variable_get('event_popup_classes', '')) {
+    $classes = str_replace(' ', ', .', $classes);
+  }
+  drupal_add_js(array('event_popup' => array(
+    'classes' => $classes,
+    'defaults' => variable_get('event_popup_defaults', 'width:300;height:auto;position:[center,60]'),
+    'selector' => variable_get('event_popup_default_target_selector', 'content'),
+    'content_type' => variable_get('event_calendar_node_type', 'event_calendar'),
+    'op' => $access_perm,
+  )), 'setting');
+  drupal_add_css(drupal_get_path('module', 'event_popup') . '/css/event_popup.css');
+  drupal_add_js("jQuery(document).ready(function($) { 
+    $.expr[':'].regex = function(elem, index, match) {
+            var matchParams = match[3].split(','),
+            validLabels = /^(data|css):/,
+            attr = {
+                method: matchParams[0].match(validLabels) ? 
+                matchParams[0].split(':')[0] : 'attr',
+                property: matchParams.shift().replace(validLabels,'')
+            },
+            regexFlags = 'ig',
+            regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g,''), regexFlags);
+            return regex.test(jQuery(elem)[attr.method](attr.property));
+        }
+    });", array('type' => 'inline', 'scope' => 'header'));
+}

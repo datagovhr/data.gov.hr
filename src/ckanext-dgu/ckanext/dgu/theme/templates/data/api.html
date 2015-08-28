@@ -1,0 +1,25 @@
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">API Podataka</py:def>
+  <py:def function="page_heading">API Katalog Podataka</py:def>
+
+<py:match path="breadcrumbs">
+    <li><a href="/data/api">CKAN API</a></li>
+  </py:match>
+
+  <div py:match="content">
+    <h1>CKAN API Bilje&#353;ke</h1>
+    <p>Programeri mogu pristupiti katalogu podataka pomo&#263;u API, kao alternativa data.gov.hr web su&#269;elja. API pru&#382;a RESTful i funkcionalna su&#269;elja, sve u JSON formatu, &#353;to ga &#269;ini pogodnim za &#353;irok raspon klijenata.</p>
+
+    <!--<p py:with="url=g.site_url+('/' if g.site_url[-1]!='/' else '')+'api'">The base URL for the API is: <a href="${url}">${url}</a></p>-->
+
+    <p>API je omogu&#263;en od strane CKAN-a i instrukcije su dostupne ovdje: <a href="http://docs.ckan.org/en/ckan-2.2/api.html" class="ext">http://docs.ckan.org/en/ckan-2.2/api.html</a>.</p>
+  </div>
+  <xi:include href="../layout.html" />
+
+</html>

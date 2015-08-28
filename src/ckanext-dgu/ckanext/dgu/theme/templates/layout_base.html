@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <!--[if IE 8 ]>    <html class="no-js ie8" lang="hr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+    > <![endif]-->
+  <!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="hr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      > <!--<![endif]-->
+<xi:include href="_util.html" />
+<xi:include href="_dgu_util.html" />
+<head>
+  <py:if test="h.asbool(config.get('dgu.chartbeat_enabled', 'false'))">
+    <!-- Chartbeat tracking: Page-load start time -->
+    <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+  </py:if>
+  <!--! IE=edge tells IE8 not to be tempted to use IE7 compatibility/quirks modes.
+        chrome=IE7 tells IE7 to use the Chrome Frame if available - good for Flex machines.
+        Should be the first meta tag in the head. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE7" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>${page_title()} | data.gov.hr</title>
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <link rel="shortcut icon" href="/assets/img/favicon.ico" />
+  <py:choose>
+    <py:when test="defined('optional_feed')">
+      ${optional_feed()}
+    </py:when>
+    <py:otherwise>
+      <link rel="alternate" type="application/atom+xml" title="${g.site_title} - Recent Revision History" href="${h.url_for(controller='revision', action='list', format='atom', days=1)}" />
+    </py:otherwise>
+  </py:choose>
+
+  <link rel="stylesheet" href="/assets/css/datagovuk.min.css?${h.get_shared_assets_timestamp()}" />
+  <link rel="stylesheet" href="${h.url_for_static('/css/dgu-ckan.min.css')}?${h.ckan_asset_timestamp()}" />
+   <link rel="stylesheet" href="/assets/css/datagovhr.min.css?${h.get_shared_assets_timestamp()}" />
+   <link rel="stylesheet" href="/assets/fonts/fonts.css?${h.get_shared_assets_timestamp()}" />
+
+
+  <!-- Python-generated JS values -->
+  <script type="text/javascript">
+    CKAN = {};
+    // later use will add offsets with leading '/' so ensure no trailing slash
+    CKAN.SITE_URL = '${h.url('/')}'.replace(/\/$/, '');
+    CKAN.SITE_URL_NO_LOCALE = '${h.url('/', locale='default')}'.replace(/\/$/, '');
+    CKAN.USER = '${c.user}';
+  </script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script>
+    //<![CDATA[ 
+    window.jQuery || document.write('<script src="/assets/js/jquery-1.8.3.min.js"><\/script>')
+    // ]]>
+  </script>
+
+  <!-- Vendor scripts -->
+  <script type="text/javascript" src="/assets/js/vendor.min.js?${h.get_shared_assets_timestamp()}"></script>
+  <!-- CKAN DGU scripts -->
+  <script type="text/javascript" src="/assets/js/dgu-shared.min.js?${h.ckan_asset_timestamp()}"></script>
+  <script type="text/javascript" src="${h.url_for_static('/scripts/dgu-ckan-application.min.js')}?${h.ckan_asset_timestamp()}"></script>
+
+  <py:if test="defined('optional_head')">
+    ${optional_head()}
+  </py:if>
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!-- font-awesome ie7 shim -->
+  <!--[if IE 7]>
+    <link rel="stylesheet" media="all" href="/assets/css/font-awesome-ie7.min.css" />
+  <![endif]-->
+
+  <!--[if lt IE 9]>
+      <link href="/assets/css/dgu-ie7.css" rel="stylesheet" />
+  <![endif]-->
+
+  ${h.literal(getattr(g, 'template_head_end', ''))}
+</head>
+
+${h.top_level_init()}
+
+<body class="action-${request.environ.get('pylons.routes_dict', {}).get('action')}
+             controller-${request.environ.get('pylons.routes_dict', {}).get('controller').split(':')[0].split('.')[-1]}
+             ${request.environ.get('pylons.routes_dict', {}).get('action')}
+             ${request.environ.get('pylons.routes_dict', {}).get('controller').split(':')[-1]}
+             ${if_(defined('sidebar'),'with-sidebar','no-sidebar')}
+             "
+      id="${(defined('body_id') and body_id()) or ''}"
+      py:with="breakout = defined('break_out_page') and break_out_page"
+  >  
+  <div py:if="bool(c.userobj)" id="toolbar" class="toolbar overlay-displace-top clearfix toolbar-processed">
+    <div class="toolbar-menu clearfix">
+      <ul id="toolbar-home">
+        <li class="home first last">
+          <a href="/" title="Home"><span class="home-link">Home</span></a>
+        </li>
+      </ul>
+      <ul id="toolbar-user">
+        <li class="account first">
+          <a href="/user" title="User account">Pozdrav <strong>${c.userobj.display_name}</strong></a>
+        </li>
+        <li class="logout last">
+          <a href="${if_('dgu_drupal_auth' in config['ckan.plugins'],'/user/logout',h.url_for('/data/user/logout'))}">Odjava</a>
+        </li>
+      </ul>
+      <ul id="toolbar-menu">
+        <li class="menu-211 path-admin-workbench first last">
+          <a href="/admin/workbench" id="toolbar-link-admin-workbench" title="My Workbench area">
+            <span class="icon"></span>
+            Uredi moje sadržaje
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="toolbar-drawer clearfix">
+    </div>
+  </div>
+  
+  
+  <style type="text/css">
+	a.helper {
+color:#fff;
+}
+
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+</style>
+
+   <div id="mitzbar" class="without-publisher" style="background-color:gray !important;color:white !important;height:40px;line-height:40px;">
+    <div class="container mitzDown">
+		Ove internetske stranice su u ranoj (beta) fazi. <a class="helper" href="/contact">Javite nam svoje prijedloge i komentare, hvala!</a>
+    </div>
+  </div>
+
+	<div class="head_nav">
+	<div class="container">					
+		<a href="https://gov.hr/" class="logoSmall" title="Središnji državni portal" target="_blank"> </a>                                     
+		 <ul class="languages">                     	
+				<li><a href="https://pretinac.gov.hr" target="_blank" title="Korisnički pretinac">e-Građani</a></li>                  	                
+		</ul>            
+	</div>
+	<div class="clear"></div>
+	</div>
+
+   <div id="mitzbar" class="${if_(h.check_access('package_create'),'with-publisher','without-publisher')}">
+    <div class="container">
+      <a class="brand" href="/" rel="home"></a>
+	 <br/>
+	  <div class="chevron position1"></div>
+      <nav id="dgu-nav" class="mitzNav">
+       
+		<div class="nav-search" style="max-width: 42%;margin-left: 45%;">		
+          <form action="/data/search" class="input-group input-group-sm">
+            <input type="text" name="q" class="form-control search mitzSearch" placeholder="Pretražite podatke..." />
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </span>
+          </form>
+        </div>	
+		
+		<py:if test="bool(c.user)">
+			<a id="userLogin" href="/user" class="nav-user btn-default btn btn-primary js-tooltip" title="Pregledajte svoj profil"><i class="icon-user"></i>&nbsp;Profil</a>	
+		</py:if>
+		
+		<py:if test="not(bool(c.user))">
+			<a id="userLogin" href="/saml_login?ReturnTo=hr/user" class="nav-user btn-default btn btn-primary js-tooltip" title="Prijavite se"><i class="icon-user"></i>&nbsp;Prijava</a>		 
+		</py:if>
+		
+        <py:with vars="
+          url='/user' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for(controller='user',action='me');
+          destination='' if c.user else '?destination=%s'%request.path[1:];
+        ">
+          
+		  
+        </py:with>
+        <py:if test="bool(c.user)">
+		
+          <!-- Publisher dropdown -->
+          <span py:if="h.check_access('package_create')" class="dropdown">           
+			 <a class="nav-publisher btn btn-info dropdown-button" data-toggle="dropdown" title="Odaberite akciju" href="#"><i class="icon-lock"></i></a>
+            <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
+              <li role="presentation" class="dropdown-header">Alati</li>
+              <li><a href="${h.url_for('dataset_new')}">Dodaj skup podataka</a></li>
+              <li py:if="h.is_sysadmin()"><a href="${h.url_for('publisher_new')}">Dodaj izdavača</a></li>
+              <!--<li><a href="${h.url_for('harvest')}">Prikupljanje podataka</a></li>-->
+
+              <li role="presentation" class="dropdown-header">Moji izdavači</li>
+              <py:for each="group in h.groups_for_current_user()">
+                  <li><a class="${'active' if c.environ.get('CKAN_CURRENT_URL').startswith('/data/%s' % group.name) else ''}" href="/publisher/${group.name}">${group.title}</a></li>
+              </py:for>
+            </ul>
+          </span>
+        </py:if>	
+	
+      </nav>
+    </div>
+  </div>
+
+  <div id="blackbar" class="${if_(h.check_access('package_create'),'with-publisher','without-publisher')}">
+    <div class="container">
+       <a class="brand" href="/" rel="home"></a>
+	  
+      <div class="chevron position2"></div>
+      <nav id="dgu-nav">
+        <div class="text-links">
+           <a href="/data" class="trigger-subnav nav-data">${_('Podaci')}</a>
+           <a href="/apps" class="trigger-subnav nav-apps">Aplikacije</a>
+           <a href="/interact" class="trigger-subnav nav-interact">Dodatni sadržaji</a>
+	   <a href="/kontakti">Kontakti</a>
+         </div>       
+        <py:with vars="
+          url='/user' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for(controller='user',action='me');
+          destination='' if c.user else '?destination=%s'%request.path[1:];
+        ">
+          
+        </py:with>
+        <py:if test="bool(c.user)">
+          <!-- Publisher dropdown -->
+         
+        </py:if>
+      </nav>
+    </div>
+  </div>
+  <div id="greenbar">
+    <div class="container">
+      <ul class="subnav subnav-data active" py:with="url=c.environ.get('CKAN_CURRENT_URL')">
+        <li><a class="${if_(url.startswith('/data/search') or url.startswith('/dataset/'),'active')}" href="${h.url_for(controller='package', action='search')}">Skupovi podataka</a></li>
+        <!--<li><a class="${if_(url.startswith('/data/map-based-search'),'active')}" href="/data/map-based-search">Pretraga karte</a></li>-->
+        <li><a class="" href="/data-request">Prijedlozi za objavu</a></li>
+        <li><a class="${if_(url.startswith('/publisher'),'active')}" href="/publisher">Izdavači</a></li>
+       <!--<li><a class="" href="/organogram/cabinet-office">Javne uloge i Plaće</a></li>-->
+        <py:if test="config.get('dgu.openspending_reports_enabled')">
+        <!--  <li><a class="${if_(url.startswith('/data/openspending-report'),'active')}" href="/data/openspending-report/index">Potroši izvješća</a></li>-->
+        </py:if>
+        <py:if test="h.is_sysadmin()">
+          <span class="divider-section">&nbsp; Sistem administrator:&nbsp;</span>
+          <li><a class="${if_(url.startswith('/data/system_dashboard'),'active')}" href="${h.url_for(controller='ckanext.dgu.controllers.data:DataController', action='system_dashboard')}">Kontrolna ploča</a></li>
+          <!--<li><a class="${if_(url.startswith('/harvest'),'active')}" href="${h.url_for(controller='ckanext.harvest.controllers.view:ViewController', action='index')}">Prikupi izvore</a></li>-->
+	      <li><a class="${if_(url.startswith('/data/report'),'active')}" href="/data/report">Izvješća</a></li>
+         <!-- <li><a class="${if_(url.startswith('/data/feedback/moderation'),'active')}" href="${h.url_for(controller='ckanext.dgu.controllers.feedback:FeedbackController', action='moderation')}">Povratne informacije moderiranja</a></li>-->
+
+        <py:if test="h.ga_report_installed()">
+          <li><a class="${if_(url.startswith('/data/site-usage'),'active')}" href="/data/site-usage">Analiza web sjedišta</a></li>   
+        </py:if>	
+        </py:if>
+      </ul>
+
+      <ul class="subnav subnav-interact">       
+        <li><a href="/library_content">Knjižnica</a></li>
+        <li><a href="/glossary">Pojmovnik</a></li>
+        <!--<li><a href="/search/everything">Pretraži sadržaj</a></li>-->
+      </ul>
+    </div>
+  </div>
+
+  <div id="pre-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <ul id="breadcrumbs">
+            <li><a href="/"><i class="icon-home"></i></a></li>
+            <breadcrumbs>
+            </breadcrumbs>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Flash Messages -->
+  <py:with vars="messages = list(h.flash.pop_messages())">
+    <div class="flash-messages container">
+      <div class="panel ${m.category.replace('alert','panel').replace('error','danger')}" py:for="m in messages">
+        <div class="panel-heading">${h.literal(m)}</div>
+      </div>
+    </div>
+  </py:with>
+
+  <div id="main-content">
+    <div class="container">
+      <div py:if="defined('sidebar')" class="sidebar">
+        ${sidebar()}
+      </div>
+      <div class="content">
+        <content>
+        <!-- Content goes here -->
+        </content>
+      </div>
+    </div>
+  </div><!-- /main-content -->
+<div class="footer_datagov">
+<div class="container">
+  <div class="panels-flexible-row panels-flexible-row-12-21 panels-flexible-row-last clearfix row">
+  <div class="inside panels-flexible-row-inside panels-flexible-row-12-21-inside panels-flexible-row-inside-last clearfix">
+<div class="panels-flexible-region panels-flexible-region-12-leftfooter panels-flexible-region-first col-sm-4">
+  <div class="inside panels-flexible-region-inside panels-flexible-region-12-leftfooter-inside panels-flexible-region-inside-first">
+<div class="panel-pane pane-custom pane-3 boxed">
+  
+         <h2 class="pane-title">Portal otvorenih podataka</h2>
+    
+  
+  <div class="pane-content">
+    <p>
+	<a href="/o-portalu-cijeli" target="_blank">O portalu otvorenih podataka</a><br />
+	<a href="/faq" target="_blank">Često postavljana pitanja</a><br />
+	<a href="uvjeti-koristenja" target="_blank">Uvjeti korištenja</a><br />
+	<a href="/contact" target="_blank">Kontakt obrazac</a><br />
+	<a href="https://www.gov.hr" target="_blank">Središnji državni portal</a><br />
+	<a href="https://vlada.gov.hr" target="_blank">Vlada Republike Hrvatske</a>
+	</p>
+  </div>
+
+  
+  </div>
+  </div>
+</div>
+<div class="panels-flexible-region panels-flexible-region-12-centerfooter col-sm-4">
+  <div class="inside panels-flexible-region-inside panels-flexible-region-12-centerfooter-inside">
+<div class="panel-pane pane-custom pane-1 boxed">
+  
+        <h2 class="pane-title">Adresar</h2>
+    
+  
+  <div class="pane-content">
+    <p>
+	<a href="http://www.digured.hr/" target="_blank">Središnji katalog službenih dokumenata RH</a><br />
+	<a href="http://www.digured.hr/Adresari-i-imenici/(active)/tab210" target="_blank">Adresar tijela javne vlasti</a><br />
+	<a href="http://www.digured.hr/Politicke-stranke-i-izbori/(active)/tab229" target="_blank">Adresar političkih stranaka u RH</a><br />
+	<a href="http://www.digured.hr/Adresari-i-imenici/(active)/tab264" target="_blank">Popis dužnosnika u RH</a><br />
+	<a href="/dataset/besplatni-telefoni-javne-uprave" target="_blank">Besplatni telefoni javne uprave</a><br />
+	<a href="/dataset/pozivi-za-urnu-pomo" target="_blank">Pozivi za žurnu pomoć</a>
+	</p>
+  </div>
+
+  
+  </div>
+  </div>
+</div>
+<div class="panels-flexible-region panels-flexible-region-12-rigthfooter panels-flexible-region-last col-sm-4">
+  <div class="inside panels-flexible-region-inside panels-flexible-region-12-rigthfooter-inside panels-flexible-region-inside-last">
+<div class="panel-pane pane-custom pane-4 boxed">
+  
+        <h2 class="pane-title">Korisne poveznice</h2>
+    
+  
+  <div class="pane-content">
+     <p>
+	
+	<a href="http://www.pristupinfo.hr" target="_blank" class="non-ext">Povjerenik za informiranje</a><br />
+	<a href="http://ec.europa.eu/digital-agenda/en/open-data-0" target="_blank" class="non-ext">Europska komisija i otvoreni podaci</a><br />
+	<a href="http://publicdata.eu/" target="_blank" class="non-ext">Europski portal otvorenih podataka</a><br />
+	<a href="https://open-data.europa.eu/" target="_blank" class="non-ext">Portal otvorenih podataka Europske unije</a><br />
+	<a href="http://opendatasupport.eu" target="_blank" class="non-ext">Projekt Open Data Support</a><br />
+	<a href="http://www.w3.org/2013/share-psi/" target="_blank" class="non-ext">Tematska mreža Share-PSI</a>
+	</p>
+  </div>
+  </div>
+  </div>
+  </div>
+</div>
+  </div>
+</div>
+</div>
+<!--footer-->
+
+<footer class="footer_gov">
+		
+						
+				<div class="container">
+					<a href="javascript:;" onclick="$('html, body').animate({ scrollTop: 0 }, 'slow');" >Povratak na vrh</a>
+					<span>Copyright &copy; 2015 Vlada Republike Hrvatske. <a href="/uvjeti-koristenja">Uvjeti kori&#353;tenja</a>.</span>
+			<ul>
+				<li><a target="_blank" href="https://www.linkedin.com/groups/Open-data-HR-7483080" title="LinkedIn" class="linkedInIcon"><img style="-webkit-user-select: none" src="/assets/img/icon_linkedIn.png" /></a></li>
+				<li><a target="_blank" href="https://www.facebook.com/wwwvladahr" title="Facebook"><img style="-webkit-user-select: none" src="/assets/img/icon_facebook.png" /></a></li>
+				<li><a target="_blank" href="https://twitter.com/VladaRH" title="Twitter"><img style="-webkit-user-select: none" src="/assets/img/icon_twitter.png" /></a></li>
+				<li><a target="_blank" href="https://www.youtube.com/user/wwwvladahr" title="YouTube"><img style="-webkit-user-select: none" src="/assets/img/icon_youtube.png" /></a></li>
+				<li><a target="_blank" href="https://www.flickr.com/photos/wwwvladahr" title="Flickr"><img style="-webkit-user-select: none" src="/assets/img/icon_flickr.png" /></a></li>
+				<li><a target="_blank" href="https://www.scribd.com/Vlada_RH" title="Scribd"><img style="-webkit-user-select: none" src="/assets/img/icon_scribd.png" /></a></li>
+			</ul>
+				</div>
+				
+				 
+				
+			
+			
+			<div class="clear"></div>
+			
+		</footer>
+ <!-- /footer -->
+
+  <py:if test="h.asbool(config.get('ckan.tracking_enabled', 'false'))">
+  <script type="text/javascript">
+         $(function (){
+                 // Tracking
+                 var url = location.pathname;
+                 // remove any site root from url
+                 url = url.substring(CKAN.SITE_URL.length, url.length - 1);
+                 $.ajax({url : CKAN.SITE_URL_NO_LOCALE + '/_tracking',
+                         type : 'POST',
+                         data : {url:url, type:'page'},
+                         timeout : 300 });
+                 $('a.resource-url-analytics').click(function (e){
+                         var url = $(e.target).closest('a').attr('href');
+                         $.ajax({url : CKAN.SITE_URL_NO_LOCALE + '/_tracking',
+                                 data : {url:url, type:'resource'},
+                                 type : 'POST',
+                                 complete : function () {location.href = url;},
+                                 timeout : 30});
+                         e.preventDefault();
+                         });
+                 });
+  </script>
+  </py:if>
+  <py:if test="h.asbool(config.get('dgu.chartbeat_enabled', 'false'))">
+  <script type="text/javascript">
+    var _sf_async_config = { uid: 47170, domain: 'data.gov.hr', useCanonical: true };
+    (function() {
+      function loadChartbeat() {
+        window._sf_endpt = (new Date()).getTime();
+        var e = document.createElement('script');
+        e.setAttribute('language', 'javascript');
+        e.setAttribute('type', 'text/javascript');
+        e.setAttribute('src','//static.chartbeat.com/js/chartbeat.js');
+        document.body.appendChild(e);
+      };
+      var oldonload = window.onload;
+      window.onload = (typeof window.onload != 'function') ?
+        loadChartbeat : function() { oldonload(); loadChartbeat(); };
+    })();
+  </script>
+  </py:if>
+
+  <py:if test="defined('optional_footer')">
+    ${optional_footer()}
+  </py:if>
+
+  ${h.literal(getattr(g, 'template_footer_end', ''))}
+</body>
+</html>

@@ -1,0 +1,113 @@
+<form id="source-new" class="form form-vertical" method="post" role="form"
+  py:attrs="{'class':'has-errors'} if errors else {}"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <div class="alert alert-danger" py:if="error_summary">
+    <h2>Pogre&#353;ke izvora</h2>
+    <p>Forma sadr&#382;ava pogre&#353;ne unose:</p>
+    <ul>
+        <li py:for="key, error in error_summary.items()">${"%s: %s" % (key, error)}</li>
+    </ul>
+  </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>Informacije o izvoru</strong></div>
+            <div class="panel-body">
+                <div class="control-group">
+                    <label class="field_req" for="url">URL za metapodatke izvora *</label>
+                    <input id="url" name="url" size="40" class="form-control" type="url" value="${data.get('url', '')}" />
+                    <span class="field_error" py:if="errors.get('url', '')">${errors.get('url', '')}</span>
+                    <div class="instructions basic">Treba uklju&#269;ivati <tt>http://</tt> dio URLa</div>
+                </div>
+
+                <div class="control-group" style="margin-top:8px">
+                    <label class="field_req" for="type">Tip izvora *</label>
+                    <select id="type" name="type" class="form-control">
+                        <py:for each="harvester in harvesters">
+                         <option value="${harvester.name}" py:attrs="{'selected': 'selected' if data.get('type', '') == harvester.name else None, 'data-config': harvester.show_config}" >${harvester.title}</option>
+                        </py:for>
+                    </select>
+                    <span class="field_error" py:if="errors.get('type', '')">${errors.get('type', '')}</span>
+                    <div class="instructions basic">
+                        <p>Koji tip izvora URL predstavlja?</p>
+                        <ul>
+                            <py:for each="harvester in harvesters">
+                            <li><span class="harvester-title">${harvester.title}</span>: ${harvester.description}</li>
+                            </py:for>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="control-group" style="margin-top:8px">
+                    <label class="field_req" for="title">Naslov</label>
+                    <input id="title" name="title" size="80" class="form-control" type="text" value="${data.get('title', '')}" />
+                    <span class="harvest-source-title field_error" py:if="errors.get('title', '')">${errors.get('title', '')}</span>
+                    <div class="harvest-source-title instructions basic">Biti &#263;e prikazano kao izvor skupa podataka.</div>
+                </div>
+
+                <div class="control-group" style="margin-top:8px">
+                    <label class="field_opt" for="description">Opis</label>
+                    <textarea id="description" class="form-control" name="description" cols="30" rows="2" style="height:75px">${data.get('description', '')}</textarea>
+                    <div class="instructions basic">Mo&#382;ete dodati vlastite bilje&#353;ke ovdje &#353;to URL predstavlja kako bi se mogli podsjetiti kasnije.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>Vlasni&#353;tvo/Konfiguracija</strong></div>
+            <div class="panel-body">
+                <div class="control-group">
+                    <label class="field_opt" for="groups__${len(data.get('groups', []))}__id">Izdava&#269;</label>
+                    <py:if test="c.groups">
+                      <select id="publisher_id" name="publisher_id" class="form-control">
+                        <py:for each="group in c.groups">
+                        <option value="${group['id']}" py:attrs="{'selected': 'selected' if group['id'] == data.get('publisher_id',None) else None}">${group['title']}</option>
+                        </py:for>
+                      </select>
+                    </py:if>
+                    <span py:if="not c.groups"><em>Ne mo&#382;e se dodati nijedan izdava&#269;.</em></span>
+                </div>
+
+                <div class="control-group" style="margin-top:8px">
+                    <label class="field_opt" for="config">Konfiguracija</label>
+                    <textarea class="form-control" id="config" name="config" cols="30" rows="4">${data.get('config', '')}</textarea>
+                </div>
+
+                <div class="control-group" style="margin-top:8px">
+                    <label class="field_opt" for="active">Stanje</label>
+                    <select id="active" name="active" class="form-control">
+                        <option py:attrs="{'selected': 'selected' if data.get('active') or not 'active' in data else None}" value="True">aktivno</option>
+                        <option py:attrs="{'selected': 'selected' if 'active' in data and not data.get('active') else None}" value="False">neaktivno</option>
+                    </select>
+                    <py:if test="data.get('active') or not 'active' in data">
+                        <div>Ovo prikupljanje izvora je <span class="source-state-active">Aktivno</span></div>
+                    </py:if>
+                    <py:if test="'active' in data and not data.get('active')">
+                         <div>Ovo prikupljanje izvora je <span class="source-state-inactive">Neaktivno</span></div>
+                    </py:if>
+                </div>
+            </div>
+        </div>
+
+                <div class="form-actions">
+            <input id="save" name="save" value="Spremi" type="submit" class="btn btn-primary"/> ili <a href="/harvest">Povratak na popis prikupljenih izvora</a>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+       $("#type").change(function(){
+            var show_config = ($("#type option:selected").attr("data-config") == "True");
+            if (!show_config) $("#config").val("");
+            $("#config").attr("disabled", !show_config);
+        });
+       $("#type").trigger("change");
+    });
+    </script>
+</form>

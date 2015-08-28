@@ -1,0 +1,21 @@
+name = CKAN Publisher
+description = Provides CKAN Publisher entites and related functionality
+core = 7.x
+version = "7.x-1.0"
+package = "CKAN"
+
+dependencies[] = entity
+dependencies[] = views
+dependencies[] = ckan
+
+files[] = ckan_publisher.admin.inc
+files[] = views/ckan_publisher.views.inc
+files[] = views/ckan_publisher_handler_link_field.inc
+files[] = views/ckan_publisher_handler_timestamp_field.inc
+
+
+; Information added by drush on 2014-10-02
+version = "ckan_dgu_7.x-1.x-dev"
+project = "ckan"
+datestamp = "1412232482"
+

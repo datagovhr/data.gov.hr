@@ -1,0 +1,104 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">Prikupljanje izvora</py:def>
+  <py:def function="page_heading">Prikupljanje izvora</py:def>
+
+  <py:def function="optional_head">
+    <link type="text/css" rel="stylesheet" media="all" href="/ckanext/harvest/style.css" />
+  </py:def>
+  <py:def function="optional_footer">
+      <script>$("#show-inactive-sources").click(function(){$("#harvest-sources .inactive").toggle()});</script>
+  </py:def>
+
+  <py:match path="breadcrumbs">
+    <li><a href="/data/search">Skupovi podataka</a></li>
+    <li><a href="/harvest">Prikupi izvore</a></li>
+  </py:match>
+
+  <py:def function="harvest_source_table(sources, can_edit)">
+       <table id="harvest-sources" class="table table-bordered ${'publishers'}" >
+        <tr>
+            <th></th>
+            <th>URL</th>
+            <th>Tip</th>
+            <th>Aktivan</th>
+            <th>Kreiran</th>
+        </tr>
+        <?python old_publisher = None ?>
+        <py:for each="source in (sources if can_edit else (s for s in sources if s.active))">
+            <tr class="publisher" py:if="old_publisher != source['publisher_id']">
+                <py:choose>
+                    <py:when test="source.get('publisher_title')">
+                        <td colspan="9">${source['publisher_title']}</td>
+                    </py:when>
+                    <py:otherwise>
+                        <td colspan="9">${source['publisher_id']}</td>
+                    </py:otherwise>
+                </py:choose>
+
+            </tr>
+            <?python old_publisher = source['publisher_id'] ?>
+            <tr class="${'active' if source.active else 'inactive'}">
+                <td align="center">
+                  <a href="harvest/${source.id}">Prikaz</a>&nbsp;&nbsp;
+                  <a py:if="h.check_access('harvest_source_update', {'id':source.id})" href="harvest/edit/${source.id}">Uredi</a>&nbsp;&nbsp;
+                  <a py:if="h.check_access('harvest_job_create', {'source_id':source.id})" href="harvest/refresh/${source.id}">Osvje&#382;i</a>
+                </td>
+                <td title="${source.url}">${h.truncate(source.url, 60)}</td>
+                <td>${source.type}</td>
+                <td class="state">${source.active}</td>
+                <td>${h.render_datetime(source.created)}</td>
+             </tr>
+         </py:for>
+    </table>
+
+  </py:def>
+
+    <div py:match="content" py:with="can_edit=h.check_access('harvest_source_create'); org_ids=[o.id for o in c.userobj.get_groups('organization')] if c.userobj else []">
+
+        <a py:if="can_edit" class="btn btn-primary pull-right" id="xnew-harvest-source" href="harvest/new">
+            <i class="icon-plus"></i>
+            Dodaj prikupljanje izvora
+        </a>
+
+        <h1>Prikupljanje izvora</h1>
+
+        <div class="harvest-content boxed">
+
+
+          <!--<div py:if="can_edit and c.status" class="status">
+            <h3>Status:</h3>
+            ${h.literal(c.status)}
+          </div>-->
+
+          <div py:if="org_ids">
+              <div py:if="can_edit" id="show-inactive-sources-content">
+                <input type="checkbox" id="show-inactive-sources" />
+                <label for="show-inactive-sources"> Prika&#382;i neaktivne izvore</label>
+              </div>
+              <h3>Moje organizacije</h3>
+              ${harvest_source_table((s for s in c.sources if s.publisher_id in org_ids), can_edit)}
+          </div>
+          <py:choose>
+            <py:when test="c.sources">
+              <div py:if="can_edit" id="show-inactive-sources-content">
+                <input type="checkbox" id="show-inactive-sources" />
+                <label for="show-inactive-sources"> Prika&#382;i neaktivne izvore</label>
+              </div>
+
+              <h3>Sve organizacije</h3>
+              ${harvest_source_table(c.sources, can_edit)}
+
+            </py:when>
+            <py:otherwise>
+                <div id="no-harvest-sources">Nema nijednog trenutno.</div>
+            </py:otherwise>
+          </py:choose>
+
+  </div>
+</div>
+<xi:include href="layout_base.html" />
+</html>

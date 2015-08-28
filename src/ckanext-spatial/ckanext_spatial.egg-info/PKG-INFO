@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: ckanext-spatial
+Version: 0.2
+Summary: Geo-related plugins for CKAN
+Home-page: http://okfn.org
+Author: Open Knowledge Foundation
+Author-email: info@okfn.org
+License: AGPL
+Description: 	
+Platform: UNKNOWN

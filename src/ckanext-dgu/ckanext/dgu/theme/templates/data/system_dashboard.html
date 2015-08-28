@@ -1,0 +1,117 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">Kontrolna plo&#269;a sustava</py:def>
+
+  <py:match path="breadcrumbs">
+    <li><a href="/data/system_dashboard">Kontrolna plo&#269;a sustava</a></li>
+  </py:match>
+
+
+  <py:match path="content">
+    <h1>Kontrolna plo&#269;a sustava</h1>
+    <p>"Ova stranica uklju&#269;uje izvje&#353;&#263;a i administracijske alate za kori&#353;tenje od strane data.gov.hr administratora."</p>
+
+    <div class="row">
+      <div class="col-md-6">
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Skupovi podataka</div>
+      <div class="panel-body">
+        <ul>
+          <li><a href="/dataset/new">Kreiraj skup podataka</a></li>
+          <li>Uredi skup podataka <a href="/data/search">putem pretrage</a> klikom na 'Uredi'</li>
+          <li>${h.link_to("Izvje&#353;&#263;e - Pokvarene poveznice", h.url_for('report', report_name='broken-links'))}</li>
+          <li>${h.link_to("Izvje&#353;&#263;e - 5 zvjezdica otvorenosti rezultata", h.url_for('report', report_name='openness'))}</li>
+          <li>${h.link_to("Izvje&#353;&#263;e - Resursi izdava&#269;a", h.url_for('report', report_name='publisher-resources'))}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!--<div class="panel panel-info">
+      <div class="panel-heading">Povratne informacije (povezano sa NII/inventar)</div>
+      <div class="panel-body">
+        <ul>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.reports:ReportsController', action='view', report_name='feedback')}">Izvje&#353;&#263;e povratnih informacija</a></li>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.feedback:FeedbackController', action='moderation')}">Moderiranje povratnih informacija</a></li>
+        </ul>
+      </div>
+    </div>-->
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Izvje&#353;&#263;a</div>
+      <div class="panel-body">
+        <ul>
+          <li>${h.link_to("Pokvarene poveznice", h.url_for('report', report_name='broken-links'))}</li>
+          <li>${h.link_to("5 zvjezdica otvorenosti rezultata", h.url_for('report', report_name='openness'))}</li>
+          <li>${h.link_to("Aktivnost izdava&#269;a", h.url_for('report', report_name='publisher-activity'))}</li>
+          <li>${h.link_to("Resursi izdava&#269;a", h.url_for('report', report_name='publisher-resources'))}</li>
+          <li>${h.link_to("NII", h.url_for('report', report_name='nii'))}</li>
+          <li>${h.link_to("Povratne informacije", h.url_for('report', report_name='feedback'))}</li>
+          <li><a href="${h.url_for('commitments')}">Obveze objavljivanja podataka</a></li>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.publisher:PublisherController', action='report_publishers_and_users')}">Urednici/Administratori izdava&#269;a</a></li>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.publisher:PublisherController', action='report_groups_without_admins')}">Izdava&#269;i bez Urednika/Administratora</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Prikupljanje</div>
+      <div class="panel-body">
+        <ul>
+          <li><a href="${h.url_for(controller='ckanext.harvest.controllers.view:ViewController', action='index')}">Prikupi izvore</a></li>
+        </ul>
+      </div>
+    </div>
+
+    </div>
+    <div class="col-md-6">
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Izdava&#269;i</div>
+      <div class="panel-body">
+        <ul>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.publisher:PublisherController', action='new')}">Kreiraj novog izdava&#269;a</a></li>
+          <li>Uredi izdava&#269;a <a href="/publisher">pretragom</a> i odabirom 'Uredi'</li>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.publisher:PublisherController', action='report_publishers_and_users')}">Izvje&#353;&#263;e - Izdava&#269;i i njihovi urednici/administratori</a></li>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.publisher:PublisherController', action='report_groups_without_admins')}">Izvje&#353;&#263;e - Izdava&#269;i bez urednika/administratora</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Korisnici</div>
+      <div class="panel-body">
+        <ul>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.publisher:PublisherController', action='report_users')}">Korisnici</a></li>
+          <li>Dodavanje prava <a href="/publisher">pretragom </a> i odabirom 'Uredi korisnicka prava'</li>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.publisher:PublisherController', action='report_groups_without_admins')}">Izvje&#353;&#263;e - Korisnici koji su administratori/urednici za izdava&#269;e</a></li>
+          <li><a href="${h.url_for(controller='ckanext.dgu.controllers.publisher:PublisherController', action='report_users_not_assigned_to_groups')}">Izvje&#353;&#263;e - Korisnici koji nisu dodjeljeni izdava&#269;u</a></li>
+          <li><a href="${h.url_for('ckanadmin_index')}">Sistem administrator</a></li>
+        </ul>
+      </div>
+    </div>
+    <py:if test="h.ga_report_installed()">
+    <div class="panel panel-info">
+      <div class="panel-heading">Kori&#353;tenje web sjedi&#353;ta</div>
+      <div class="panel-body">
+        <ul>
+          <li py:if="h.ga_report_installed()"><a href="${h.url_for(controller='ckanext.ga_report.controller:GaReport',action='index')}">Site-wide</a></li>
+          <li py:if="h.ga_report_installed()"><a href="${h.url_for(controller='ckanext.ga_report.controller:GaDatasetReport',action='publishers')}">Lista vode&#263;ih izdava&#269;a</a></li>
+          <li py:if="h.ga_report_installed()"><a href="${h.url_for(controller='ckanext.ga_report.controller:GaDatasetReport',action='read')}">Skupovi podataka</a></li>
+          <li><a href="http://www.google.com/analytics/">Google Analiza</a></li>
+        </ul>
+      </div>
+    </div>
+    </py:if>
+    </div>
+    </div>
+  </py:match>
+
+
+
+  <xi:include href="../layout.html" />
+</html>
+

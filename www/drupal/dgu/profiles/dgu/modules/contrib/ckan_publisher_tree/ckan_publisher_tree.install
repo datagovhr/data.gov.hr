@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Schema for Publisher reference field.
+ */
+
+/**
+ * Implements hook_field_schema();
+ */
+function ckan_publisher_tree_field_schema($field) {
+  $columns = array(
+    'id' => array(
+      'type' => 'int',
+      'unsigned' => TRUE,
+      'not null' => FALSE,
+    ),
+  );
+  return array(
+    'columns' => $columns,
+    'indexes' => array('id' => array('id')),
+    'foreign keys' => array(
+      'id' => array(
+        'table' => 'ckan_publisher',
+        'columns' => array('id' => 'id'),
+      ),
+    ),
+  );
+}

@@ -1,0 +1,4 @@
+
+    [console_scripts]
+    varnish-watch = src.varnish_watch:watch
+    log-reporter = src.logreporter:main

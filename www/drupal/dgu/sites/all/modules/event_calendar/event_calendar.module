@@ -1,0 +1,329 @@
+<?php
+
+/**
+ * @file
+ * The module file that allows events to be created and required admin approval.
+ */
+
+// Machine name for our custom taxonomy.
+define('TAXONOMY_NAME', 'event_calendar_status');
+
+/**
+ * Implements hook_views_api().
+ */
+function event_calendar_views_api() {
+  return array('api' => 3.0);
+}
+
+/**
+ * Implements hook_menu().
+ */
+function event_calendar_menu() {
+  // Creating menu for configuration and event management pages.
+  $items['admin/config/date/manage-events'] = array(
+    'title' => 'Manage Events',
+    'description' => 'Find and manage Events.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('event_calendar_content'),
+    'access arguments' => array('administer event status'),
+    'weight' => -10,
+    'file' => 'event_calendar.list.inc',
+  );
+  $items['admin/config/date/event-settings'] = array(
+    'title' => 'Events Settings',
+    'description' => 'Configure default behavior of users, including registration requirements, e-mails, fields, and user pictures.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('event_calendar_settings'),
+    'access arguments' => array('administer nodes'),
+    'weight' => -10,
+    'file' => 'event_calendar.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function event_calendar_permission() {
+  $perms = array(
+    'administer event status' => array(
+      'title' => t('Administer event status'),
+      'restrict access' => TRUE,
+    ),
+  );
+  return $perms;
+}
+
+/**
+ * Implements hook_node_insert().
+ *
+ * Sending mail to admins.
+ * @see drupal_mail()
+ * @see token_replace()
+ */
+function event_calendar_node_insert($node) {
+  $all_reciepents = variable_get('event_calendar_email_reciepents_list', array());
+  $admin_rid = db_query("SELECT rid FROM {role} where name like :id", array(':id' => 'administrator'))->fetchField(0);
+  $node_type = variable_get('event_calendar_node_type', 'event_calendar');
+  // Collect parameters for sending email.
+  if ($node->type == $node_type) {
+    $to = implode(",", _event_calendar_email_reciepents('admin'));
+    if (!empty($to)) {
+      // From e-mail address.
+      $from = (string) variable_get('site_mail', '');
+      $language = language_default();
+      $subject = _event_calendar_email_text('admin_subject');
+      $body = _event_calendar_email_text('admin_body');
+      $params['subject'] = token_replace($subject, array('event_calendar' => $node, 'node' => $node));
+      $params['body'] = token_replace($body, array('event_calendar' => $node, 'node' => $node));
+      drupal_mail('event_calendar', 'admin', $to, $language, $params, $from, $send = TRUE);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ *
+ * Sending mail to users selected on module configuration page.
+ * @see drupal_mail()
+ * @see token_replace()
+ */
+function event_calendar_node_update($node) {
+  // NODE_TYPE && SELECTED && NOT_EXPIRED.
+  $node_type = variable_get('event_calendar_node_type', 'event_calendar');
+  if ($node->type == $node_type) {
+    $author = user_load($node->uid);
+    $to = $author->mail;
+    if (!empty($to)) {
+      $from = (string) variable_get('site_mail', '');
+      $language = language_default();
+      $subject = _event_calendar_email_text('users_subject');
+      $body = _event_calendar_email_text('users_body');
+      $params['subject'] = token_replace($subject, array('event_calendar' => $node->original, 'node' => $node->original));
+      $params['body'] = token_replace($body, array('event_calendar' => $node->original, 'node' => $node->original));
+      drupal_mail('event_calendar', 'users', $to, $language, $params, $from, $send = TRUE);
+    }
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function event_calendar_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'admin':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+      break;
+    case 'users':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+      break;
+  }
+}
+
+/**
+ * Returns a list of email reciepents.
+ */
+function _event_calendar_email_reciepents($key) {
+  $all_reciepents = variable_get('event_calendar_email_reciepents_list', array());
+  $admin_rid = db_query("SELECT rid FROM {role} where name like :id", array(':id' => 'administrator'))->fetchField(0);
+  $to = array();
+  switch ($key) {
+    case 'admin':
+      if (in_array($admin_rid, $all_reciepents)) {
+        $to = fetch_emails($admin_rid);
+      }
+      else {
+        $to = fetch_first_emails($admin_rid);
+      }
+      break;
+
+    case 'users':
+      if (in_array($admin_rid, $all_reciepents)) {
+        unset($all_reciepents[$admin_rid]);
+      }
+      foreach ($all_reciepents as $rid) {
+        $emails = fetch_emails($rid);
+        $to = array_merge($to, $emails);
+      }
+      break;
+    }
+  return $to;
+}
+
+/**
+ * Function to fetch emails from user table.
+ */
+function fetch_emails($rid) {
+  // Build query to fetch Emails.
+  $query = db_select('users', 'u');
+  $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+  $query->fields('u', array('mail'))
+        ->condition('ur.rid', $rid);
+  $users = $query->execute();
+  $emails = array();
+  foreach ($users as $user) {
+    $emails[] = $user->mail;
+  }
+  return $emails;
+}
+
+/**
+ * Function to fetch adminitrater email from user table.
+ */
+function fetch_first_emails($rid) {
+  // Build query to fetch Emails.
+  $query = db_select('users', 'u');
+  $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+  $query->fields('u', array('mail'))
+        ->condition('ur.rid', $rid)
+        ->orderBy('u.uid', 'ASC')
+        ->range(0, 1);
+  $users = $query->execute();
+  $emails = array();
+  foreach ($users as $user) {
+    $emails[] = $user->mail;
+  }
+  return $emails;
+}
+
+/**
+ * Returns a mail string for a variable name.
+ */
+function _event_calendar_email_text($key) {
+  if ($admin_setting = variable_get('event_calendar_email_' . $key, FALSE)) {
+    // An admin setting overrides the default string.
+    $text = $admin_setting;
+  }
+  else {
+    // No override, return default string.
+    switch ($key) {
+      case 'admin_body':
+        $text = t("Hello,
+
+A new event [node:title] is created at [site:name].
+
+Start Date: [event_calendar:start_date]
+End Date: [event_calendar:end_date]
+Please give your approval to sucessfully organize this event at [event_calendar:approval_url].
+
+
+--  [site:name] team");
+        break;
+
+      case 'users_body':
+        $text = t("Hello,
+
+A new event [node:title] is created at [site:name].
+
+Start Date: [event_calendar:start_date]
+End Date: [event_calendar:end_date]
+Please give your approval to sucessfully organize this event at [event_calendar:approval_url].
+
+
+--  [site:name] team");
+        break;
+
+      case 'admin_subject':
+        $text = t("New Event: [node:title]");
+        break;
+
+      case 'users_subject':
+        $text = t("New Event: [node:title]");
+        break;
+    }
+  }
+  return $text;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Set access FALSE for not to delete module defined terms.
+ * Make term name 'readonly'.
+ */
+function event_calendar_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
+  // Build query to fetch available terms.
+  $vid = db_query("SELECT vid FROM {taxonomy_vocabulary} WHERE machine_name = :machine_name",
+    array  (':machine_name' => TAXONOMY_NAME))->fetchField();
+  // Disable access to delete and set readonly.
+  // List of term added default.
+  $terms = array(
+    'approved' => 'approved',
+    'pending' => 'pending',
+    'denied' => 'denied',
+  );
+  if (isset($form['#vocabulary']->vid) && $form['#vocabulary']->vid == $vid) {
+    if (@$form_state['values']['op'] != 'Delete' ) {
+      if (in_array( $form['#term']['name'], $terms )) {
+        $form['name']['#attributes']['readonly'] = 'readonly';
+        $form['actions']['delete']['#access'] = FALSE;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Set access FALSE for not to delete module defined vocabulary.
+ * Make vocabulary name 'readonly'.
+ */
+function event_calendar_form_taxonomy_form_vocabulary_alter(&$form, &$form_state, $form_id) {
+  // Build query to fetch available terms.
+  $vid = db_query("SELECT vid FROM {taxonomy_vocabulary} WHERE machine_name = :machine_name",
+    array  (':machine_name' => TAXONOMY_NAME))->fetchField();
+  // Disable access to delete and set readonly.
+  if (isset($form['#vocabulary']->vid) && $form['#vocabulary']->vid == $vid) {
+    $form['machine_name']['#attributes']['readonly'] = 'readonly';
+    $form['actions']['delete']['#access'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Make taxonomy select field invisible.
+ */
+function event_calendar_form_alter(&$form, &$form_state, $form_id) {
+  $node_type = variable_get('event_calendar_node_type', 'event_calendar');
+  $id = $node_type . '_node_form';
+  if ($form_id == $id) {
+    $language = $form['event_calendar_status']['#language'];
+    $form['event_calendar_status'][$language]['#type'] = 'value';
+  }
+
+}
+
+/**
+ * Callback: Events dates.
+ */
+function is_event_expired($node, $key) { 
+  // Collect event end date and current date.
+  if ($key == 'load') {
+    $field_lang_code = field_language('node', $node, 'event_calendar_date', LANGUAGE_NONE);  
+    $date1 = isset($node->event_calendar_date[$field_lang_code]['0']['value'])?$node->event_calendar_date[$field_lang_code]['0']['value']:NULL;
+    $date2 = isset($node->event_calendar_date[$field_lang_code]['0']['value2'])?$node->event_calendar_date[$field_lang_code]['0']['value2']:NULL;
+  }
+  elseif ($key == 'update') {
+    $dataObj = $node->original;  
+    $field_lang_code = field_language('node', $dataObj, 'event_calendar_date', LANGUAGE_NONE);
+    $date1 = $node->original->event_calendar_date[$field_lang_code]['0']['value'];
+    $date2 = $node->original->event_calendar_date[$field_lang_code]['0']['value2'];
+  }
+  if (!empty($date2)) {
+    $event_end_time = $date2;
+  }
+  else {
+    $event_end_time = $date1;
+  }
+  $current_time = date("Y-m-d H:i:s");
+  // Compare event end date and currebt date.
+  if ($current_time > $event_end_time) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}

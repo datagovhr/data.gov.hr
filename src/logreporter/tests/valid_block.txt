@@ -1,0 +1,39 @@
+4 SessionOpen  c 95.145.215.76 50083 :80
+4 ReqStart     c 95.145.215.76 50083 527154603
+4 RxRequest    c GET
+4 RxURL        c /
+4 RxProtocol   c HTTP/1.1
+4 RxHeader     c Host: co-staging1.dh.bytemark.co.uk
+4 RxHeader     c Connection: keep-alive
+4 RxHeader     c Cache-Control: max-age=0
+4 RxHeader     c Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+4 RxHeader     c User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko)
+    Chrome/28.0.1500.71 Safari/537.36
+4 RxHeader     c Accept-Encoding: gzip,deflate,sdch
+4 RxHeader     c Accept-Language: en-US,en;q=0.8
+4 RxHeader     c Cookie: cookie-agreed-en=2; __utma=139669664.166087356.1367933127.1369216006.1370878750.4;
+    __utmz=139669664.1370878750.4.4.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided);
+    auth_tkt="REMOVED"
+4 RxHeader     c If-None-Match: "1374831543"
+4 VCL_call     c recv pass
+4 VCL_call     c hash hash
+4 VCL_call     c pass pass
+4 FetchError   c no backend connection
+4 VCL_call     c error deliver
+4 VCL_call     c deliver deliver
+4 TxProtocol   c HTTP/1.1
+4 TxStatus     c 503
+4 TxResponse   c Service Unavailable
+4 TxHeader     c Server: Varnish
+4 TxHeader     c Retry-After: 0
+4 TxHeader     c Content-Type: text/html; charset=utf-8
+4 TxHeader     c Content-Length: 418
+4 TxHeader     c Date: Fri, 26 Jul 2013 09:39:22 GMT
+4 TxHeader     c X-Varnish: 527154603
+4 TxHeader     c Age: 0
+4 TxHeader     c Via: 1.1 varnish
+4 TxHeader     c Connection: close
+4 TxHeader     c X-App: drupal
+4 TxHeader     c X-Varnish-Cache: MISS
+4 Length       c 418
+4 ReqEnd       c 527154603 1374831562.270035982 1374831562.270472765 0.000069380 0.000391245 0.000045538

@@ -1,0 +1,277 @@
+<?php
+/**
+ * @file
+ * Defines a custom widget for storing meta information of a node.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function event_calendar_colors_init() {
+  // Create css file and folder.
+  _event_css_add();
+  // Define css path.
+  $path = variable_get('file_public_path', conf_path() . '/files');
+// Define file location based on $base_url in sites settings.php
+  if (file_exists($path . '/' . 'event_calendar_colors/event_calendar_colors.css')) {
+    $dynamic_file = $GLOBALS['base_url'] . '/' . $path . '/' . 'event_calendar_colors/event_calendar_colors.css';
+    drupal_add_css($dynamic_file, 'external');
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function event_calendar_colors_permission() {
+  return array(
+    'administer event colors' => array(
+      'title' => t('Administer Event Color'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function event_calendar_colors_menu() {
+  $items = array();
+  $items['admin/config/date/eventcolors'] = array(
+    'title' => 'Event Colors',
+    'description' => 'Administer Colors setting',
+    'access arguments' => array('administer event colors'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('admin_event_calendar_colors_settings'),
+  );
+  return $items;
+}
+
+/**
+ * Form custructor for set color.
+ *
+ * @see admin_event_calendar_colors_settings_submit()
+ */
+function admin_event_calendar_colors_settings($form, &$form_state) {
+  // Define submit handler function.
+  $form['#submit'][] = 'admin_event_calendar_colors_settings_submit';
+  $query = db_select('field_config', 'fc');
+  $query->innerJoin('field_config_instance', 'fci', 'fc.id = fci.field_id');
+  $query->fields('fc', array('data'));
+  $query->fields('fci', array('data'));
+  $query->condition('fc.field_name', 'event_calendar_status');
+  $result = $query->execute();
+  $fci_data = '';
+  foreach ($result as $fetch) {
+    $fc_data = unserialize($fetch->data);
+  }
+  $vocName = $fc_data['settings']['allowed_values'][0]['vocabulary'];
+  // Load vocabulary.
+  $vac = taxonomy_vocabulary_machine_name_load($vocName);
+  // Get taxonomy list.
+  $form['eventcolors_eventcolors'] = array(
+    '#type'        => 'fieldset',
+    '#title'       => t('Set Color of events') ,
+    '#collapsible' => FALSE,
+    '#collapsed'   => FALSE,
+  );
+  $field_name = 'event_calendar_status';
+  $vocab = taxonomy_get_tree($vac->vid);
+  $term_colors = _event_calendar_colors_taxonomy_options($vac->vid);
+  foreach ($vocab as $key => $term) {
+    $form['eventcolors_eventcolors']['calendar_colors_taxonomy'][$term->tid] = array(
+      '#title' => check_plain(t($term->name)),
+      '#default_value' => isset($term_colors[$term->tid]) ? $term_colors[$term->tid] : CALENDAR_EMPTY_STRIPE,
+      // All 2 of the following #dependencies must be met.
+      '#dependency_count' => 2,
+      '#dependency' => array(
+        'edit-row-options-colors-legend' => array('taxonomy'),
+        'edit-row-options-colors-taxonomy-field' => array($field_name),
+      ),
+      '#type' => 'textfield',
+      '#size' => 7,
+      '#maxlength' => 7,
+      '#element_validate' => array('calendar_validate_hex_color'),
+      '#prefix' => '<div class="calendar-colorpicker-wrapper">',
+      '#suffix' => '<div class="calendar-colorpicker"></div></div>',
+      '#attributes' => array('class' => array('edit-calendar-colorpicker')),
+      '#attached' => array(
+        // Add Farbtastic color picker.
+        'library' => array(
+          array('system', 'farbtastic'),
+      ),
+        // Add javascript to trigger the colorpicker.
+        'js' => array(drupal_get_path('module', 'calendar') . '/js/calendar_colorpicker.js'),
+      ),
+    );
+  }
+  return system_settings_form($form);
+}
+
+/**
+ * Implementaion of admin submit.
+ */
+function admin_event_calendar_colors_settings_submit($form, &$form_state) {
+  $colors = array();
+  foreach ($form_state['values'] as $key => $values) {
+    if (is_numeric($key)) {
+      $colors['background'] = $values;
+      $selector = 'colors_taxonomy_term_' . $key;
+      //find previous color added.
+      $query_count = db_select('event_colors', 'ec')
+        ->fields('ec', array('color'))
+        ->condition('selector', $selector)
+        ->execute()
+        ->fetchField();
+     if ($query_count != '') {
+        $query = db_update('event_colors');
+        $query->fields(
+          array('color' => serialize($colors))
+        );
+        $query->condition('selector', $selector);
+        $query->execute();
+      }
+      else {
+        // Table name no longer needs {}.
+        $nid = db_insert('event_colors')
+          ->fields(array(
+          'selector' => $selector ,
+          'color' => serialize($colors),
+          'module' => 'taxonomy_term',
+          ))
+          ->execute();
+      }
+    }
+  }
+  // Overwrite css of calendar.
+  $css = '';
+  $query = db_select('event_colors', 'co')
+    ->fields("co", array('selector', 'color'));
+  $result = $query->execute();
+  foreach ($result as $fetch ) {
+    $class_name = str_replace('_', '-', $fetch->selector);
+    $backgroud_arr = unserialize($fetch->color);
+    $backgroud_color = $backgroud_arr['background'];
+    // Add dynamic css for change calendar item colors.
+    $css .= '.calendar-calendar .month-view .full td.multi-day div.' . $class_name . ',
+    .calendar-calendar .week-view .full td.multi-day div.' . $class_name . ',
+    .calendar-calendar .day-view .full td.multi-day div.' . $class_name . ' {
+      background: none repeat scroll 0 0 ' . $backgroud_color . ';
+      color: #FFFFFF;
+      height: 1.9em;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+    }
+    .calendar-calendar .month-view .full td.single-day div.' . $class_name . ',
+    .calendar-calendar .week-view .full td.single-day div.' . $class_name . ',
+    .calendar-calendar .day-view .full td.single-day div.' . $class_name . ' {
+      background: none repeat scroll 0 0 ' . $backgroud_color . ';
+      overflow: hidden;
+      padding: 0 3px;
+      width: auto;
+    }
+    .calendar-calendar .month-view .full td.multi-day .inner .' . $class_name . ' .continues,
+    .calendar-calendar .month-view .full td.multi-day .inner .' . $class_name . ' .cutoff,
+    .calendar-calendar .week-view .full td.multi-day .inner .' . $class_name . ' .continues,
+    .calendar-calendar .week-view .full td.multi-day .inner .' . $class_name . ' .cutoff {
+      background: none repeat scroll 0 0 ' . $backgroud_color . ';
+      border-radius: 0 5px 5px 0;
+      height: 1.9em;
+      padding-left: 6px;
+      position: absolute;
+      right: 0 !important;
+      text-align: left;
+      width: 10px;
+      z-index: 1;
+    }
+    .calendar-calendar .week-view .full div.single-day div.' . $class_name . ',
+    .calendar-calendar .day-view .full div.single-day div.' . $class_name . ' {
+      background: none repeat scroll 0 0 ' . $backgroud_color . ' !important;
+      overflow: hidden;
+      padding: 0 3px;
+      width: auto;
+    }';
+  }
+
+  $path  = $_SERVER['DOCUMENT_ROOT'] . base_path() . variable_get('file_public_path', conf_path() . '/files/');
+  $dynamic_file = $path . 'event_calendar_colors/event_calendar_colors.css';
+  if (is_dir($path . '/event_calendar_colors')) {
+    chmod($path . '/event_calendar_colors', 0755);
+  }
+  else {
+    mkdir($path . '/event_calendar_colors');
+    chmod($path . '/event_calendar_colors', 0755);
+  }
+  $handle = fopen($dynamic_file, 'w');
+  if (!is_writable($dynamic_file)) {
+    chmod($dynamic_file, 0755);
+  }
+  fwrite($handle, $css);
+}
+
+/**
+ * Get options of color associated with taxonomy.
+ *
+ * @param integer $vid
+ *   tid used to filter options.
+ *
+ * @return array
+ *   Texonomy color options.
+ */
+function _event_calendar_colors_taxonomy_options($vid) {
+  $term_color = array();
+  $query = db_select('taxonomy_term_data', 'ttd')
+    ->fields('ttd', array('tid'))
+    ->condition('vid', $vid, '=');
+  $result = $query->execute();
+  foreach ($result as $fetch) {
+    $selector = 'colors_taxonomy_term_' . $fetch->tid;
+    $color = db_select('event_colors', 'ec')
+    ->fields('ec', array('color'))
+    ->condition('selector', $selector)
+    ->execute()
+    ->fetchField();
+    $ser_color = unserialize($color);
+    $term_color[$fetch->tid] = $ser_color['background'];
+  }
+  return $term_color;
+}
+
+/**
+ * Implements hook_preprocess_calendar_item().
+ */
+function event_calendar_colors_preprocess_calendar_item(&$vars) {
+  // This alter used to add a class like into item display.
+  $tid = db_select("taxonomy_index", "ti")
+    ->fields("ti", array("tid"))
+    ->condition("nid", $vars['item']->id)
+    ->execute()
+    ->fetchField();
+  $item = $vars['item'];
+  $granularity = '';
+  $granularity = $vars['item']->granularity;
+  $vars['item']->granularity = 'colors-taxonomy-term-' . $tid . ' ' . $granularity;
+
+  $item = $vars['item'];
+
+  // Hidden excude item.
+  $multiday_hidden = !empty($vars['view']->style_options['multiday_hidden']) ? $vars['view']->style_options['multiday_hidden'] : array();
+  foreach ($vars['view']->field as $id => $field) {
+    if ($field->options['exclude'] || (!empty($item->is_multi_day) && in_array($id, $multiday_hidden))) {
+      unset($vars['rendered_fields'][$id]);
+    }
+  }
+}
+
+/**
+ * Function for add  custom css.
+ */
+function _event_css_add() {
+  // Create css folder and add write css.
+  $path = DRUPAL_ROOT . '/' . variable_get('file_public_path', conf_path() . '/files/');
+  if (is_dir($path . '/event_calendar_colors')) {
+    @chmod($path . '/event_calendar_colors', 0755);
+  } else {
+    @mkdir($path . '/event_calendar_colors');
+    @chmod($path . '/event_calendar_colors', 0755);
+  }
+}

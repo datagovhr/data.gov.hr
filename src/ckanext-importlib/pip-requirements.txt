@@ -1,0 +1,3 @@
+xlrd
+xlwt
+-e git+https://github.com/okfn/ckanclient.git#egg=ckanclient

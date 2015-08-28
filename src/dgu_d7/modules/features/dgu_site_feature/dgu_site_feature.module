@@ -1,0 +1,206 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Site Feature feature.
+ */
+
+include_once 'dgu_site_feature.features.inc';
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_site_feature_menu_breadcrumb_alter(&$active_trail, $item) {
+  if (isset($item['map'][1]->type) && $item['map'][1]->type == 'page') {
+    // Map breadcrumbs to node path for pages
+    $alias = drupal_get_path_alias('node/' . $item['map'][1]->nid);
+    $parts =  explode('/', $alias);
+
+    if (count($parts) > 1) {
+      $active_trail = array(current($active_trail));
+      array_pop($parts);
+      $current = '';
+      foreach ($parts as $part) {
+        $current_path = drupal_get_normal_path($current . $part);
+        if ($parent_menu = menu_get_item($current_path)) {
+          $parent_menu_title = $parent_menu['title'];
+          $active_trail[] = array('title' => htmlspecialchars_decode($parent_menu_title), 'href' => $current_path, 'localized_options' => array());
+        }
+        $current .= $part . '/';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function dgu_site_feature_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  if ($root_path == 'node/%' && node_access("update", $router_item['map'][1])) {
+    global $user;
+    if(in_array('administrator', $user->roles) || in_array('moderator', $user->roles) || in_array('data request administrator', $user->roles) || in_array('data publisher', $user->roles)) {
+      $data['tabs'][0]['output'][] = array(
+        '#markup' => '<li class="quick-edit"><a onclick="" href="" role="button" aria-pressed="false">'.t('Quick Edit').'</a></li>',
+      );
+    }
+  }
+}
+
+ /**
+ * Implements hook_theme().
+ */
+function dgu_site_feature_theme($existing, $type, $theme, $path) {
+  return array(
+    'image_style_outside_files' => array(
+   'variables' => array(
+     'style_name' => NULL,
+     'path' => NULL,
+     'alt' => '',
+     'title' => NULL,
+     'attributes' => array(),
+   ),
+ ),
+  );
+}
+
+/**
+ * This theme function is designed to deal with the limitation that
+ * theme_image_style does not work with images outside the files directory.
+ *
+ * Usage is the same as theme_image_style.
+ *
+ * @param $variables
+ */
+function theme_image_style_outside_files($variables) {
+  $styled_path = image_style_path($variables['style_name'], $variables['path']);
+  if (!file_exists($styled_path)) {
+    $style = image_style_load($variables['style_name']);
+    image_style_create_derivative($style, $variables['path'], $styled_path);
+  }
+  $variables['path'] = $styled_path;
+  return theme('image', $variables);
+}
+
+function dgu_site_feature_entity_info_alter(&$entity_info) {
+  $entity_info['fieldable_panels_pane']['bundles']['tile_big'] = array(
+    'label' => t('Tile: big'),
+    'pane category' => t('Tiles'),
+    'pane top level' => FALSE, // set to true to make this show as a top level icon
+    //'pane icon' => '/path/to/custom/icon/for/this/pane.png',
+    'admin' => array(
+      'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
+      'bundle argument' => 4,
+      // Note that this has all _ replaced with - from the bundle name.
+      'real path' => 'admin/structure/fieldable-panels-panes/manage/tile_big',
+      'access arguments' => array('administer fieldable panels panes'),
+    ),
+  );
+  $entity_info['fieldable_panels_pane']['bundles']['tile_small'] = array(
+    'label' => t('Tile: small'),
+    'pane category' => t('Tiles'),
+    'pane top level' => FALSE, // set to true to make this show as a top level icon
+    'admin' => array(
+      'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
+      'bundle argument' => 4,
+      // Note that this has all _ replaced with - from the bundle name.
+      'real path' => 'admin/structure/fieldable-panels-panes/manage/tile_small',
+      'access arguments' => array('administer fieldable panels panes'),
+    ),
+  );
+
+  $entity_info['fieldable_panels_pane']['bundles']['tile_text_big'] = array(
+    'label' => t('Tile with text: big'),
+    'pane category' => t('Tiles'),
+    'pane top level' => FALSE, // set to true to make this show as a top level icon
+    'admin' => array(
+      'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
+      'bundle argument' => 4,
+      'real path' => 'admin/structure/fieldable-panels-panes/manage/tile_text_big',
+      'access arguments' => array('administer fieldable panels panes'),
+    ),
+  );
+  $entity_info['fieldable_panels_pane']['bundles']['tile_text_small'] = array(
+    'label' => t('Tile with text: small'),
+    'pane category' => t('Tiles'),
+    'pane top level' => FALSE, // set to true to make this show as a top level icon
+    'admin' => array(
+      'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
+      'bundle argument' => 4,
+      // Note that this has all _ replaced with - from the bundle name.
+      'real path' => 'admin/structure/fieldable-panels-panes/manage/tile_text_small',
+      'access arguments' => array('administer fieldable panels panes'),
+    ),
+  );
+}
+//function ( e ) {
+//// Discard the second event of a jQuery.event.trigger()and
+//// when an event is called after a page has unloaded
+//  'return typeof jQuery !== "undefined" && (!e || jQuery.event.triggered !== e.type) ? jQuery.event.dispatch.apply( eventHandle.elem, arguments ) : undefined; }'
+//}
+
+/**
+ * Gets the last time the user viewed a node.
+ *
+ * @param $nid
+ *   The node ID.
+ *
+ * @return
+ *   The timestamp when the user last viewed this node, if the user has
+ *   previously viewed the node; otherwise NODE_NEW_LIMIT.
+ */
+function dgu_site_feature_user_last_visit($nid) {
+  global $user;
+  if($user->uid) {
+    $history = &drupal_static(__FUNCTION__, array());
+
+    if (empty($history)) {
+      $result = db_query('SELECT nid, timestamp FROM {history} WHERE uid = :uid', array(':uid' => $user->uid));
+      foreach ($result as $t) {
+        $history[$t->nid] = $t->timestamp > NODE_NEW_LIMIT ? $t->timestamp : NODE_NEW_LIMIT;
+      }
+    }
+    return isset($history[$nid]) ? $history[$nid] : NODE_NEW_LIMIT;
+  }
+}
+
+/**
+ * Get number of new replies for current user and specified node.
+ *
+ * @param $nid
+ *   Node-id to count comments for.
+ * @param $timestamp
+ *   Time to count from (defaults to time of last user access
+ *   to node).
+ * @return The result or FALSE on error.
+ */
+function dgu_site_feature_num_new_replies($nid, $timestamp = 0) {
+  global $user;
+  if($user->uid) {
+    // Retrieve the timestamp at which the current user last viewed this node.
+    if (!$timestamp) {
+      $timestamp = node_last_viewed($nid);
+    }
+    $timestamp = ($timestamp > NODE_NEW_LIMIT ? $timestamp : NODE_NEW_LIMIT);
+
+    // Use the timestamp to retrieve the number of new comments.
+    return db_query('SELECT COUNT(id) FROM {reply} WHERE entity_id = :nid AND created > :timestamp AND status = :status', array(
+      ':nid' => $nid,
+      ':timestamp' => $timestamp,
+      ':status' => 1,
+      ))->fetchField();
+  }
+}
+
+/**
+ * Get plural content type names.
+ */
+function dgu_site_feature_get_plural_content_types(){
+  return array(
+    'app' => t('Apps'),
+    'blog' => t('Blogs'),
+    'forum' => t('Forum topics'),
+    'resource' => t('Library resources'),
+    'dataset_request'  => t('Dataset requests'),
+    'page' => t('Pages'),
+    'book' => t('Books'),
+  );
+}

@@ -1,0 +1,21 @@
+{
+
+    "name": "silex/ckan_client",
+    "require": {
+        "guzzle/guzzle": "*"
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "autoload": {
+    	"psr-0": {
+            "Silex\\ckan":        "src/",
+            "Silex\\ckan\\tests": "test/"
+        }
+    },
+    "require-dev": {
+        "behat/behat": "2.4.*@stable",
+        "phpunit/phpunit":   "3.7@stable"
+    }
+}

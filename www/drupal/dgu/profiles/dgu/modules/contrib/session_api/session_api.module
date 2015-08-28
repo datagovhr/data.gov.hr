@@ -1,0 +1,122 @@
+<?php
+
+
+/**
+ * @file
+ * The Session API module provides a quick interface for storing
+ * information in the session.
+ */
+
+/**
+ * Determine if cookies are enabled.
+ */
+function session_api_available() {
+  return !empty($_COOKIE);
+}
+
+/**
+ * Create an empty string cookie. This is useful for fooling the
+ * session_api_available() function when using Pressflow, which does not set
+ * a cookie for anonymous users.
+ */
+function session_api_start_session() {
+  $_SESSION['session_api_session'] = '';
+  drupal_session_start();
+}
+
+/**
+ * Return a Session API ID corresponding to the current session.
+ * The session id is a created using the same method as Drupal core
+ * as defined in includes/session.inc.
+ * @param boolean create set this to FALSE if you don't want to create a session
+ * cookie if it doesn't already exist.
+ */
+function session_api_get_sid($create = TRUE) {
+  static $sid;
+
+  if ($create) {
+    // Must initialize sessions for anonymous users.
+    session_api_start_session();
+  }
+
+  if (!session_api_available()) {
+    return FALSE;
+  }
+
+  if (!isset($sid) || !$sid) {
+    $sid = FALSE;
+
+    // First, check if we already have an active session.
+    if (isset($_COOKIE['session_api_session']) && $_COOKIE['session_api_session']) {
+      $session_id = $_COOKIE['session_api_session'];
+      $sid = db_query("SELECT sid FROM {session_api} WHERE session_id = :session_id", array(':session_id' => $session_id))->fetchField();
+    }
+    // If the caller doesn't want to create a new session if it didn't exist, 
+    // then return here.
+    else if (!$create) {
+      // Return a negative value here, since it won't collide with any
+      // session_api IDs.
+    	return -1;
+    }
+    else {
+      $session_id = drupal_hash_base64(uniqid(mt_rand(), TRUE));
+    }
+
+    // For the cookie we use the same domain that Drupal's own session cookie uses.
+    $cookie_domain = ini_get('session.cookie_domain');
+    // Update the session timeout.
+    if ($sid) {
+      $rec = new stdClass;
+      $rec->sid = $sid;
+      $rec->timestamp = REQUEST_TIME;
+      $rec->session_id = $session_id;
+      drupal_write_record('session_api', $rec, 'sid');
+      setcookie('session_api_session', $session_id, REQUEST_TIME + variable_get('session_api_cookie_expire_time', 2592000), '/', $cookie_domain);
+    }
+    // No sid exists, create new one.
+    else {
+      $rec = new stdClass();
+      $rec->timestamp = REQUEST_TIME;
+      $rec->session_id = $session_id;
+      drupal_write_record('session_api', $rec);
+      $sid = $rec->sid;
+
+      // Set cookie.
+      setcookie('session_api_session', $session_id, REQUEST_TIME + variable_get('session_api_cookie_expire_time', 2592000), '/', $cookie_domain);
+    }
+  }
+  return $sid;
+}
+
+/**
+ * Implement hook_menu().
+ */
+function session_api_menu() {
+  $items['admin/config/development/session-api'] = array(
+    'title' => t('Session API Configuration'),
+    'description' => t('Configure Session API behavior.'),
+    'access arguments' => array('administer site configuration'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('session_api_settings_form'),
+    'file' => 'session_api.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implement hook_cron().
+ */
+function session_api_cron() {
+  // Fetch list of outdated sids.
+  $query = db_select('session_api', 'sap');
+  $query->leftJoin('sessions', 's', 'sap.sid = s.sid');
+  $query->fields('sap', array('sid'));
+  $query->condition('sap.timestamp', REQUEST_TIME - variable_get('session_api_cookie_expire_time', 2592000), '<');
+  $outdated_sids = $query->execute()->fetchCol();
+
+  if (!empty($outdated_sids)) {
+    module_invoke_all('session_api_cleanup', $outdated_sids);
+    db_query('DELETE FROM {session_api} WHERE sid IN (:sids)', array(':sids' => $outdated_sids));
+  }
+}

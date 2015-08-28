@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @file
+ * Field comments installation routines
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function field_replies_schema() {
+  $schema['reply_field'] = array(
+    'description' => 'Allows separated reply threads for fields.',
+    'fields' => array(
+      'reply_id' => array(
+        'description' => 'Reply ID',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'reply_bundle' => array(
+        'description' => 'Reply bundle',
+        'type' => 'varchar',
+        'length' => '64',
+        'not null' => TRUE,
+      ),
+      'entity_id' => array(
+        'description' => 'Entity id this reply is attached to',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'entity_type' => array(
+        'description' => 'Type of entity this reply is attached to',
+        'type' => 'varchar',
+        'length' => '64',
+        'not null' => TRUE,
+      ),
+      'field' => array(
+        'description' => 'Field',
+        'type' => 'varchar',
+        'length' => '100',
+        'not null' => FALSE,
+      ),
+      'delta' => array(
+        'description' => 'Field delta',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('reply_id'),
+    'indexes' => array(
+      'reply_id' => array('reply_id'),
+      'reply_bundle' => array('reply_bundle'),
+      'entity_id' => array('entity_id'),
+      'entity_type' => array('entity_type'),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function field_replies_uninstall() {
+  db_query("DELETE FROM {variable} WHERE name LIKE 'field_replies_%'");
+}

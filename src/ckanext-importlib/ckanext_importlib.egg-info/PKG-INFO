@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: ckanext-importlib
+Version: 0.1
+Summary: CKAN importer and loader library
+Home-page: http://ckan.org/
+Author: Open Knowledge Foundation
+Author-email: info@okfn.org
+License: AGPL
+Description: UNKNOWN
+Keywords: data packaging component tool server
+Platform: UNKNOWN

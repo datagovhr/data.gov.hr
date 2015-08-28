@@ -1,0 +1,14 @@
+name = CKAN Publisher tree
+description = Provides CKAN Publisher reference field with tree select widget
+package = CKAN
+core = 7.x
+dependencies[] = field
+dependencies[] = ckan_publisher
+
+
+; Information added by drush on 2014-10-02
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "ckan_publisher_tree"
+datestamp = "1412232486"
+

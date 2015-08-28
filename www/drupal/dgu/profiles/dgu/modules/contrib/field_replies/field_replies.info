@@ -1,0 +1,15 @@
+name = Field replies
+description =  Provides separated reply threads on fields
+core = 7.x
+
+dependencies[] = field
+dependencies[] = field_ui
+dependencies[] = field_formatter_settings
+dependencies[] = reply
+
+
+; Information added by drush on 2014-10-02
+version = "unknown"
+project = "field_replies"
+datestamp = "1412232382"
+

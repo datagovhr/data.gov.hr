@@ -1,0 +1,12 @@
+<?php
+/**
+ * @file install file
+ * 
+ * Implements when uninstall module
+ * 
+ * @author Duynv
+ */
+function md_wordcloud_uninstall() {
+  // Remove md_wordcloud_blocks_configure variable
+  variable_del('md_wordcloud_blocks_configure');
+}

@@ -1,0 +1,192 @@
+<?php
+/**
+ * @file
+ * Rules actions and conditions based on url arguments.
+ */
+
+/**
+ * Implements hook_rules_action_info().
+ *
+ * Provide a new action that akes the value of an URL argument
+ * avaliable as a new variable to rules.
+ */
+function rules_url_argument_rules_action_info() {
+  return array(
+    'rules_url_argument_rules_action_get_argument_from_url' => array(
+      'label' => t('Provide URL argument value'),
+      'group' => t('URL argument'),
+      'named parameter' => TRUE,
+      'parameter' => array(
+        'type' => array(
+          'type' => 'text',
+          'label' => t('Type'),
+          'options list' => 'rules_url_argument_get_argument_from_url_type_options',
+          'description' => t('Specifies the type of the variable that should be added.'),
+          'restriction' => 'input',
+          'default value' => 'text',
+        ),
+        'argument_name' => array(
+          'type' => 'text',
+          'label' => t('URL argument name'),
+        ),
+      ),
+      'provides' => array(
+        'argument_from_url' => array(
+          'type' => 'text',
+          'label' => t('Argument from URL'),
+        ),
+      ),
+    ),
+  );
+}
+
+/**
+ * Provides a list of supported argument types.
+ *
+ * @todo: This should be made more flexible. Look at the rules data creation action.
+ */
+function rules_url_argument_get_argument_from_url_type_options() {
+  $values = array(
+    'text' => 'Text',
+    'decimal' => 'Decimal',
+    'integer' => 'Integer',
+    'boolean' => 'Boolean',
+    'uri' => 'URI',
+    'list' => 'List',
+    'list<text>' => 'List of <text>',
+    'list<integer>' => 'List of <integer>',
+  );
+  return $values;
+}
+
+/**
+ * Action implementation.
+ *
+ * Makes the value of an URL argument avaliable as a new variable to rules.
+ */
+function rules_url_argument_rules_action_get_argument_from_url($action_parameters) {
+  $type = $action_parameters['type'];
+  $argument_name = $action_parameters['argument_name'];
+  $value = NULL;
+  if (!empty($_GET[$argument_name])) {
+    $raw = $_GET[$argument_name];
+    switch($type) {
+      case 'decimal':
+        if(is_numeric($raw)) {
+          $value = floatval($raw);
+        }
+        break;
+
+      case 'integer':
+        if(is_numeric($raw)) {
+          $value = intval($raw);
+        }
+        break;
+
+      case 'boolean':
+        $value = (boolean)$raw;
+        break;
+
+      case 'uri':
+        $value = urldecode($raw);
+        break;
+
+      case 'list':
+      case 'list<text>':
+        $value = explode(',', $raw);
+        break;
+
+      case 'list<integer>':
+        foreach (explode(',', $raw) as $val) {
+          if(is_numeric($val)) {
+            $value[] = intval($val);
+          }
+        }
+        break;
+
+      case 'text':
+      default:
+        return array('argument_from_url' => $raw);
+    }
+    return array('argument_from_url' => $value);
+  }
+}
+
+/**
+ * Info alteration callback for variable add action.
+ */
+function rules_url_argument_rules_action_get_argument_from_url_info_alter(&$element_info, RulesAbstractPlugin $element) {
+  if (isset($element->settings['type']) && $type = $element->settings['type']) {
+    $element_info['provides']['argument_from_url']['type'] = $type;
+
+    // For lists, we default to an empty list so subsequent actions can add items.
+    if (entity_property_list_extract_type($type)) {
+      $element_info['provides']['argument_from_url']['default value'] = array();
+    }
+  }
+}
+
+/**
+ * Implements hook_rules_condition_info().
+ */
+function rules_url_argument_rules_condition_info() {
+  return array(
+    'rules_url_argument_argument_exists' => array(
+      'label' => t('Check if URL argument exists'),
+      'parameter' => array(
+        'argument' => array(
+          'type' => 'text',
+          'label' => t('Argument'),
+        ),
+      ),
+      'group' => t('URL argument'),
+      'callbacks' => array(
+        'execute' => 'rules_url_argument_argument_exists',
+      ),
+    ),
+    'rules_url_argument_argument_value' => array(
+      'label' => t('Compare URL argument value'),
+      'parameter' => array(
+        'argument' => array(
+          'type' => 'pathrules_url_argument',
+          'label' => t('Argument'),
+        ),
+        'argument_value' => array(
+          'type' => 'text',
+          'label' => t('Argument value'),
+        ),
+        'operation' => array(
+          'type' => 'text',
+          'label' => t('Comparison operation'),
+          'options list' => 'rules_data_text_comparison_operation_list',
+          'restriction' => 'input',
+          'default value' => 'contains',
+          'optional' => TRUE,
+          'description' => t('In case the comparison operation @regex is selected, the matching pattern will be interpreted as a <a href="@regex-wikipedia">regular expression</a>.  Tip: <a href="@RegExr">RegExr: Online Regular Expression Testing Tool</a> is helpful for learning, writing, and testing Regular Expressions.', array('@regex-wikipedia' => 'http://en.wikipedia.org/wiki/Regular_expression', '@RegExr' => 'http://gskinner.com/RegExr/', '@regex' => t('regular expression'))),
+        ),
+      ),
+      'group' => t('URL argument'),
+      'callbacks' => array(
+        'execute' => 'rules_url_argument_argument_value',
+      ),
+    ),
+  );
+}
+
+/**
+ * Rules condition callback.
+ *
+ * Checks if the specified URL argument is set.
+ */
+function rules_url_argument_argument_exists($argument) {
+  return !empty($_GET[$argument]);
+}
+
+/**
+ * Rules condition callback.
+ *
+ * Compare the argument value using the rules_data_text_comparsion() function.
+ */
+function rules_url_argument_argument_value($argument, $argument_value, $op) {
+  return rules_data_text_comparison($_GET[$argument], $argument_value, $op);
+}

@@ -1,0 +1,520 @@
+<?php
+
+/**
+ * @file
+ * Sweaver install file.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function sweaver_requirements($phase) {
+  $requirements = array();
+  // Ensure translations don't break at install time.
+  $t = get_t();
+
+  if ($phase == 'runtime' || $phase == 'install') {
+    $sweaver_directory = 'public://sweaver';
+    if (!file_prepare_directory($sweaver_directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+      if (!is_dir($sweaver_directory)) {
+        $requirements['sweaver_directory'] = array(
+          'title' => $t('sweaver directory'),
+          'value' => $t('%p is not a directory or is not readable by the webserver.', array('%p' => $sweaver_directory)),
+          'severity' => REQUIREMENT_ERROR,
+        );
+      }
+      elseif (!is_writable($sweaver_directory)) {
+        $requirements['sweaver_directory'] = array(
+          'title' => $t('sweaver directory'),
+          'value' => $t('%p is not writeable by the webserver.', array('%p' => $sweaver_directory)),
+          'severity' => REQUIREMENT_ERROR,
+        );
+      }
+      else {
+        $requirements['sweaver_directory'] = array(
+          'title' => $t('sweaver directory'),
+          'value' => $t('An unknown error occured.'),
+          'description' => $t('An unknown error occured trying to verify %p is a directory and is writable.', array('%p' => $sweaver_directory)),
+          'severity' => REQUIREMENT_ERROR,
+        );
+      }
+    }
+    else {
+      $requirements['sweaver_directory'] = array(
+        'title' => t('sweaver directory'),
+        'severity' => REQUIREMENT_OK,
+        'value' => t('Exists'),
+      );
+    }
+  }
+
+  return $requirements;
+}
+
+function sweaver_update_7100()
+{
+  variable_del('sweaver_plugin_status_sweaver_plugin_customcss');
+  variable_set('sweaver_plugin_status_sweaver_plugin_advanced', true);
+}
+
+function sweaver_update_7101()
+{
+  $editor_form_configuration = array(
+    'one' => array(
+      'title' => t('Font'),
+      'properties' => array(
+        0 => 'font-family',
+        1 => 'font-properties-wrapper',
+        2 => 'vertical-align',
+        ),
+      ),
+    'two' => array(
+      'title' => t('Background'),
+      'properties' => array(
+        0 => 'background-color',
+        1 => 'background-image',
+        2 => 'background-repeat',
+        3 => 'background-attachment',
+        4 => 'background-position',
+        ),
+      ),
+    'three' => array(
+      'title' => t('Borders & Spacing'),
+      'properties' => array(
+        0 => 'position-settings',
+        1 => 'border-style',
+        2 => 'border-color',
+        3 => 'border-collapse',
+        4 => 'border-spacing',
+        ),
+      ),
+    'four' => array(
+      'title' => t('Other'),
+      'properties' => array(
+        0 => 'height',
+        1 => 'width',
+        ),
+      ),
+    );
+  variable_set('sweaver_editor_form_configuration', $editor_form_configuration);
+}
+
+/**
+ * Implements hook_install().
+ */
+function sweaver_install() {
+
+  // Alter the module weight to make sure we are the last one.
+  db_query("UPDATE {system} SET weight = 99 WHERE name = 'sweaver'");
+
+  // Set default editor configuration.
+  $editor_form_configuration = array(
+    'one' => array(
+      'title' => t('Font'),
+      'properties' => array(
+        0 => 'font-family',
+        1 => 'font-properties-wrapper',
+        2 => 'vertical-align',
+        ),
+      ),
+    'two' => array(
+      'title' => t('Background'),
+      'properties' => array(
+        0 => 'background-color',
+        1 => 'background-image',
+        2 => 'background-repeat',
+        3 => 'background-attachment',
+        4 => 'background-position',
+        ),
+      ),
+    'three' => array(
+      'title' => t('Borders & Spacing'),
+      'properties' => array(
+        0 => 'position-settings',
+        1 => 'border-style',
+        2 => 'border-color',
+        3 => 'border-collapse',
+        4 => 'border-spacing',
+        ),
+      ),
+    'four' => array(
+      'title' => t('Other'),
+      'properties' => array(
+        0 => 'height',
+        1 => 'width',
+        ),
+      ),
+    );
+  variable_set('sweaver_editor_form_configuration', $editor_form_configuration);
+
+  // Selector order.
+  $sweaver_selector_order = array(
+    'body' => -100,
+    'h1' => -99,
+    'h2' => -98,
+    'h3' => -97,
+    'li' => -96,
+    'link' => -95,
+    'ol' => -94,
+    'p' => -93,
+    'ul' => -92,
+    'form' => -91,
+    'label' => -90,
+    'input' => -89,
+    'textarea' => -88,
+    'submit' => -87,
+    'allids' => -86,
+    'allclasses' => -85,
+    'alltags' => -84,
+    'span' => -83,
+    'div' => -82,
+  );
+  variable_set('sweaver_selector_order', $sweaver_selector_order);
+
+  // Weights for plugins.
+  $plugins_weight = array(
+    'sweaver_plugin' => -51,
+    'sweaver_plugin_editor' => -49,
+    'sweaver_plugin_styles' => -48,
+    'sweaver_plugin_advanced' => -47,
+    'sweaver_plugin_palettes' => -46,
+    'sweaver_plugin_images' => -45,
+    'sweaver_plugin_themeswitch' => -44,
+    'sweaver_plugin_themesettings' => -43,
+    'sweaver_plugin_themeclasses' => -42,
+    'sweaver_plugin_fontface' => -41,
+    'sweaver_plugin_kb' => -39,
+  );
+  variable_set('sweaver_plugins_weight', $plugins_weight);
+
+  // Enable some plugins by default.
+  variable_set('sweaver_plugin_status_sweaver_plugin', TRUE);
+  variable_set('sweaver_plugin_status_sweaver_plugin_editor', TRUE);
+  variable_set('sweaver_plugin_status_sweaver_plugin_styles', TRUE);
+  variable_set('sweaver_plugin_status_sweaver_plugin_images', TRUE);
+
+  // Let images be handled by the images plugin.
+  variable_set('sweaver_plugin_handle_images', 'sweaver_plugin_images');
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function sweaver_uninstall() {
+  cache_clear_all('sweaver', 'cache');
+  cache_clear_all('plugins:sweaver:plugins', 'cache');
+  db_query("DELETE FROM {variable} WHERE name LIKE 'sweaver_%%'")->execute();
+}
+
+/**
+ * Implements hook_schema().
+ */
+function sweaver_schema() {
+
+  // Styles table.
+  $schema['sweaver_style'] = array(
+    'description' => t('Storage for the css array'),
+    'fields' => array(
+      'style_id' => array(
+        'description' => 'The primary identifier for a theme style. Linked to style_id from the draft table.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'theme' => array(
+        'description' => 'The theme name',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'style' => array(
+        'description' => 'The style name',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'css' => array(
+        'description' => 'The css object',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+      'customcss' => array(
+        'description' => 'Custom css',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+      'palette' => array(
+        'description' => 'Palette',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'themesettings' => array(
+        'description' => 'Theme settings',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+      'active' => array(
+        'description' => 'Should this style be active?',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0
+      ),
+    ),
+    'primary key' => array('style_id'),
+  );
+
+  // Styles draft table
+  $schema['sweaver_style_draft'] = array(
+    'description' => t('Storage for the css array'),
+    'fields' => array(
+      'style_id' => array(
+        'description' => 'The primary identifier for a theme style.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'theme' => array(
+        'description' => 'The theme name',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'style' => array(
+        'description' => 'The style name',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'css' => array(
+        'description' => 'The css object',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+      'customcss' => array(
+        'description' => 'Custom css',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+      'palette' => array(
+        'description' => 'Palette',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+      'themesettings' => array(
+        'description' => 'Theme settings',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+    ),
+    'primary key' => array('style_id'),
+  );
+
+  // Images table.
+  $schema['sweaver_image'] = array(
+    'description' => t('Table storing images.'),
+    'fields' => array(
+      'fid' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'The image fid.',
+        'default' => 0,
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => '40',
+        'description' => 'A human readable name of the image.',
+      ),
+    ),
+  );
+
+  // Selector table width CTools support.
+  $schema['sweaver_selector'] = array(
+    'description' => t('Table storing selector definitions.'),
+    'export' => array(
+      'key' => 'name',
+      'identifier' => 'selector',
+      'default hook' => 'default_sweaver_selector',
+      'list callback' => 'sweaver_ctools_selectors_list',
+      'can disable' => TRUE,
+      'api' => array(
+        'owner' => 'sweaver',
+        'api' => 'sweaver',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
+    ),
+    'fields' => array(
+      'oid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary ID field for the table. Not used for anything except internal lookups.',
+        'no export' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '40',
+        'description' => 'Unique ID for selectors. Used to identify them programmatically.',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => '60',
+        'description' => 'A human readable name of a selector.',
+      ),
+      'selector_selector' => array(
+        'type' => 'varchar',
+        'length' => '120',
+        'description' => 'The identifier of the selector',
+      ),
+      'selector_highlight' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'tiny',
+        'description' => 'Should this selector be highlighted by default',
+      ),
+    ),
+    'primary key' => array('oid'),
+    'unique keys' => array(
+      'name' => array('name'),
+    ),
+  );
+
+  // Property table width CTools support.
+  $schema['sweaver_property'] = array(
+    'description' => t('Table storing property definitions.'),
+    'export' => array(
+      'key' => 'name',
+      'identifier' => 'property',
+      'default hook' => 'default_sweaver_property',
+      'list callback' => 'sweaver_ctools_properties_list',
+      'can disable' => TRUE,
+      'api' => array(
+        'owner' => 'sweaver',
+        'api' => 'sweaver',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
+    ),
+    'fields' => array(
+      'oid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary ID field for the table. Not used for anything except internal lookups.',
+        'no export' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '40',
+        'description' => 'Unique ID for properties. Used to identify them programmatically.',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => '60',
+        'description' => 'A human readable name of a property.',
+      ),
+      'property' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'description' => 'The css property. Seperate multiple values by spaces.',
+      ),
+      'property_parent' => array(
+        'type' => 'varchar',
+        'length' => '40',
+        'description' => 'The parent of this property.',
+      ),
+      'property_type' => array(
+        'type' => 'varchar',
+        'length' => '20',
+        'description' => 'Type of the property',
+      ),
+      'property_prefix' => array(
+        'type' => 'varchar',
+        'length' => '20',
+        'description' => 'Prefix of the property',
+      ),
+      'property_suffix' => array(
+        'type' => 'varchar',
+        'length' => '20',
+        'description' => 'Suffix of the property',
+      ),
+      'property_slider_min' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => 'Minimum value for the slider',
+      ),
+      'property_slider_max' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 72,
+        'description' => 'Maximum value for the slider',
+      ),
+      'property_options' => array(
+        'description' => 'Options for this property',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+    ),
+    'primary key' => array('oid'),
+    'unique keys' => array(
+      'name' => array('name'),
+    ),
+  );
+
+  // Type table width CTools support.
+  $schema['sweaver_type'] = array(
+    'description' => t('Table storing type definitions.'),
+    'export' => array(
+      'key' => 'name',
+      'identifier' => 'type',
+      'default hook' => 'default_sweaver_type',
+      'list callback' => 'sweaver_ctools_types_list',
+      'can disable' => TRUE,
+      'api' => array(
+        'owner' => 'sweaver',
+        'api' => 'sweaver',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
+    ),
+    'fields' => array(
+      'oid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary ID field for the table. Not used for anything except internal lookups.',
+        'no export' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '40',
+        'description' => 'Unique ID for types. Used to identify them programmatically.',
+      ),
+      'description' => array(
+        'type' => 'varchar',
+        'length' => '60',
+        'description' => 'A human readable name of a type.',
+      ),
+      'type_options' => array(
+        'description' => 'Options for this type',
+        'type' => 'text',
+        'size' => 'big'
+      ),
+    ),
+    'primary key' => array('oid'),
+    'unique keys' => array(
+      'name' => array('name'),
+    ),
+  );
+
+  return $schema;
+}

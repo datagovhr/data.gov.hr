@@ -1,0 +1,560 @@
+<?php
+
+/**
+ * @file
+ * Provides comments on fields.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function field_replies_menu() {
+  $items['admin/config/field_replies'] = array(
+    'title' => 'Field comments settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('field_replies_settings'),
+    'access arguments' => array('administer site configuration'),
+    // Don't clutter config page, config link from modules page is enough.
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['reply/add/%/%/field/%'] = array(
+    'title' => 'Reply',
+    'page callback' => 'field_replies_reply',
+    'page arguments' => array(2, 3, 5), //reply_add_form($form, &$form_state, $entity_id, $instance_id, $parent = 0)
+    'access callback' => 'reply_access',
+    'access arguments' => array('create', 3, NULL, 2),
+    'type' => MENU_CALLBACK
+  );
+
+  return $items;
+}
+
+/**
+ * This function is responsible for storing field and delta as static variable.
+ *
+ * @param object $entity_id
+ *   Every reply belongs to an entity. This is that entity.
+ *
+ * @param object $instance_id
+ *   Instance of reply entity.
+ *
+ * @param string $field
+ *   Field this comment belongs to.
+ *
+ * @param int $delta
+ *   Delta for multiple value fields.
+ *
+ * @return array
+ *   The reply form.
+ */
+function field_replies_reply($entity_id, $instance_id, $field, $delta = 0) {
+  drupal_static('field_replies', array('field' => $field, 'delta' => $delta));
+  $form = drupal_get_form('reply_add_form', $entity_id, $instance_id, 0);
+  return drupal_render($form);
+}
+//TODO - implement revisioning?
+/**
+ * Form constructor for drupal_get_form().
+ */
+function field_replies_settings() {
+  $form = array();
+  $form['field_replies_field_delete'] = array(
+    '#type' => 'radios',
+    '#title' => t('On field deletion'),
+    '#options' => array(0 => t('Move replies to entity thread'), 1 => t('Delete replies on that field')),
+    '#default_value' => variable_get('field_replies_field_delete', 0),
+    '#description' => t('When a field is deleted, replies on that field can either be moved to entity thread or deleted.'),
+  );
+  return system_settings_form($form);
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ */
+function field_replies_field_formatter_info_alter(&$info) {
+  // Add to all formatters.
+  foreach ($info as $formatter_key => &$formatter) {
+    $formatter['settings'] += array(
+      'field_replies' => '',
+      'field_replies_settings' => array(
+        'field_replies_reply_field_name' => '',
+        'field_replies_revision' => '',
+      ),
+    );
+  }
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary_alter().
+ */
+function field_replies_field_formatter_settings_summary_alter(&$summary, $context) {
+  $settings = $context['instance']['display'][$context['view_mode']]['settings'];
+
+  if (!empty($settings['field_replies'])) {
+    $summary .= '<br />' . t('Replies enabled');
+  }
+  else {
+    $summary .= '<br />' . t('Replies disabled');
+  }
+}
+
+/**
+ * Implements hook_field_formatter_settings_form_alter().
+ */
+function field_replies_field_formatter_settings_form_alter(&$settings_form, $context) {
+  $settings = $context['instance']['display'][$context['view_mode']];
+  // Get names of Reply bundles attached to this entity
+  // they are needed in select list in field fromatter settings.
+  $fields = field_info_instances($context['instance']['entity_type'], $context['instance']['bundle']);
+  $options = array();
+  foreach ($fields as $field) {
+    if($field['widget']['module'] == 'reply') {
+      $options[$field['field_name']] = $field['label'];
+    }
+  }
+
+  $settings_form['field_replies'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable replies on this field'),
+    '#default_value' => $settings['settings']['field_replies'],
+    '#ajax' => array(
+      'callback' => 'field_replies_ajax_callback',
+      'wrapper' => 'field_replies_ajax_wrapper',
+    ),
+  );
+
+  if(empty($options)) {
+    $settings_form['field_replies']['#disabled'] = TRUE;
+    $settings_form['field_replies']['#description'] = t('Please add Reply field to this entity to enable replies on fields.');
+  }
+
+  $settings_form['field_replies_settings'] = array (
+    '#type' => 'fieldset',
+    '#title' => t('Field replies settings'),
+    '#tree' => TRUE,
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+    '#prefix' => '<div id="field_replies_ajax_wrapper">',
+    '#suffix' => '</div>',
+    '#disabled' => !$settings['settings']['field_replies'],
+  );
+
+  $settings_form['field_replies_settings']['field_replies_reply_field_name'] = array(
+    '#type' => 'select',
+    '#title' => t('Reply bundle to be used on this field'),
+    '#options' => $options,
+    '#default_value' => $settings['settings']['field_replies_settings']['field_replies_reply_field_name'],
+    '#description' => t('Please select Reply bundle from the list.'),
+  );
+
+  $settings_form['field_replies_settings']['field_replies_revision'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Link replies to field revision'),
+    '#prefix' => '<div id="field_replies_ajax_wrapper">',
+    '#suffix' => '</div>',
+    '#default_value' => $settings['settings']['field_replies_settings']['field_replies_revision'],
+    '#description' => t('Otherwise comments linked to all revisions of a field.'),
+  );
+
+  // Conditionally enabling or disabling form items via ajax.
+  // Looping through all fields to find currently edited formatter settings.
+  foreach ($context['form_state']['values']['fields'] as $field) {
+    if (isset($field['settings_edit_form']['settings']['field_replies'])) {
+      if ($field['settings_edit_form']['settings']['field_replies'] == TRUE) {
+        $settings_form['field_replies_settings']['#disabled'] = FALSE;
+      }
+      else {
+        $settings_form['field_replies_settings']['#disabled'] = TRUE;
+
+      }
+    }
+  }
+}
+
+/**
+ * Ajax handler for changing field revision linking on the 'Manage display' screen.
+ */
+function field_replies_ajax_callback($form, $form_state) {
+  // Looping through all fields to find currently edited formatter settings.
+  foreach ($form_state['values']['fields'] as $field_name => $field) {
+    if (isset($field['settings_edit_form']['settings']['field_replies'])) {
+      return $form['fields'][$field_name]['format']['settings_edit_form']['settings']['field_replies_settings'];
+    }
+  }
+}
+
+/**
+ * Implements hook_field_attach_view_alter().
+ *
+ * Add reply thread and add reply link after every field value...
+ */
+function field_replies_field_attach_view_alter(&$output, $context) {
+
+  $entity_type = $context['entity_type'];
+  if ($entity_type != 'reply') {
+
+    $entity = $context['entity'];
+    list($entity_id, $entity_vid, $bundle) = entity_extract_ids($entity_type, $entity); //return array($id, $vid, $bundle);
+
+    foreach (element_children($output) as $field_name) {
+
+      $element = &$output[$field_name];
+      if($element['#field_type'] == 'reply') {
+        //TODO affect only these reply fields which are used on fields
+        //TODO remove reply_fields instead of whole reply field
+      }
+
+      $info = field_replies_formatter_info($field_name, $context['entity_type'], $bundle, $context['view_mode']);
+
+      if (isset($info['field_replies']) && $info['field_replies'] == 1 && !empty($info['field_replies_settings']['field_replies_reply_field_name'])) {
+        foreach ($element['#items'] as $delta => $item) {
+
+          $field_content = $element[$delta];
+          unset($element[$delta]);
+          $element[$delta]['field'] = $field_content;
+
+
+          // Get reply instance info from field name stored in formatter settings.
+          $reply_instance = field_info_instance($entity_type, $info['field_replies_settings']['field_replies_reply_field_name'], $bundle);
+
+          // Create href attribute for 'Add reply' link.
+          $href = 'reply/add/' . $entity_id . '/' . $reply_instance['id'] . '/field/' . $field_name;
+          // Append delta only if it's greater than 0 (0 is default).
+          $href .= $delta > 0 ? '/' . $delta : '';
+
+          $element[$delta]['links'] = array(
+            '#attributes' => array('class' => array('links', 'inline')),
+            '#pre_render' => array('drupal_pre_render_links'),
+            '#printed' => FALSE,
+            '#theme' => 'links__node',
+            'reply' => array(
+              '#attributes' => array('class' => array('links', 'inline')),
+              '#links' => array(
+                'replies-links' => array(
+                  'title' => 'Add reply',
+                  'href' => $href,
+                  'attributes' => array('title' => t('Reply on this field.')),
+                  'fragment' => 'reply-add-form',
+                ),
+              ),
+            ),
+            '#prefix' => '<div class="link-wrapper">',
+            '#suffix' => '</div>',
+          );
+
+          if ($replies = field_replies_get_field_replies($entity, $info, $entity_id, $entity_type, $bundle, $field_name, $delta, $info['field_replies_settings']['field_replies_revision'], $entity_vid)) {
+            $element[$delta]['replies'] = $replies;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Builds comment render array for single field.
+ *
+ * @param object $entity
+ *   Every comment belongs to a entity. This is that entity.
+ * @param string $field_name
+ *   Name of the field this comment belongs to.
+ * @param string $delta
+ *   Field delta for multi value fields.
+ *
+ * @return array
+ *   Render array of comments for given field.
+ */
+function field_replies_get_field_replies($entity, $info, $entity_id, $entity_type, $bundle, $field_name, $delta, $revisioning = FALSE, $entity_vid = NULL) {
+
+  // Only attempt to render replies if the entity has visible replies.
+  // Unpublished comments are not included in $entity->comment_count, so show
+  // comments unconditionally if the user is an administrator.
+  if (field_replies_entity_has_field_replies($entity_id, $entity_type)) {
+
+
+    $query = db_select('reply_field', 'rf');
+    $query->join('reply', 'r', 'r.id = rf.reply_id');
+    $query->fields('rf', array('reply_id'))
+      ->condition('rf.entity_id', $entity_id)
+      ->condition('rf.entity_type', $entity_type)
+      ->condition('rf.field', $field_name)
+      ->condition('rf.delta', (int) $delta)
+      ->addTag('entity_access')
+      ->addMetaData('entity', $entity);
+
+    if (!user_access('administer replies')) {
+      $query->condition('r.status', 1);
+    }
+
+// TODO implement revisioning
+//    if ($revisioning) {
+//      $query->condition('cf.vid', $entity->vid);
+//    }
+
+
+    $ids = $query->orderBy('r.position')->execute()->fetchCol();
+
+    $reply_instance = field_info_instance($entity_type, $info['field_replies_settings']['field_replies_reply_field_name'], $bundle);
+
+    $element = array();
+
+    //$settings = reply_settings($field['settings']['bundle'], $field['settings'], $instance['settings'], $item);
+    // TODO get proper setting instead hardcoded values
+    $settings['access'] = 2;
+    $settings['display'] = 2;
+    $settings['form'] =  2;
+    $settings['allow_reply'] = 1;
+
+    //reply_filter_disabled($ids);
+    $settings['replies'] = reply_load_multiple($ids);
+    $settings['bundle'] = empty($settings['replies']) ? '' : reset($settings['replies'])->bundle; //reply bundle
+
+    $settings['instance_id'] = $reply_instance['id']; //reply instance id
+    $settings['entity_id'] = $entity_id; //node
+    $settings['entity'] = $entity; //node
+    $settings['header'] = '';
+
+    //@todo permissions
+    $element[0] = array('#markup' => theme('replies', array('elements' => $settings)));
+
+    $element['#attached']['css'] = array(
+      drupal_get_path('module', 'reply') .'/reply.css'
+    );
+
+    return $element;
+  }
+}
+
+/**
+ * Returns true if given entity has replies on fields.
+ *
+ * @param $entity_id mixed
+ *    The ID of content entity.
+ * @param $entity_type string
+ *    Type or bundle machine-readable name of target entity.
+ * @return bool
+ *    True if any replies on fields exist.
+ */
+function field_replies_entity_has_field_replies($entity_id, $entity_type) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  if (!isset($cache[$entity_type][$entity_id])) {
+    $cache[$entity_type][$entity_id] = db_select('reply_field', 'rf')
+      ->fields('rf', array('reply_id'))
+      ->condition('entity_id', $entity_id)
+      ->condition('entity_type', $entity_type)
+      ->countQuery()->execute()->fetchField();
+  }
+
+  return $cache[$entity_type][$entity_id] > 0;
+}
+
+/**
+ * Get the formatter settings for a field instance and display.
+ *
+ * @param string $field_name
+ *   Name of the field.
+ * @param string $entity_type
+ *   Type of the entity.
+ * @param string $bundle
+ *   Entity bundle.
+ * @param string $display
+ *   Field display.
+ *
+ * @return array
+ *   Formatter settings.
+ */
+function field_replies_formatter_info($field_name, $entity_type, $bundle, $display) {
+  $info = _field_info_collate_fields();
+  // There is no bundle for this entity type so the bundle
+  // name is the entity_type name.
+  if (empty($bundle)) {
+    $bundle = $entity_type;
+  }
+
+  $field_display = $info['instances'][$entity_type][$bundle][$field_name]['display'];
+  $default = $field_display['default']['settings'];
+  if (isset($field_display[$display]['settings'])) {
+    return $field_display[$display]['settings'] + $default;
+  }
+  return $default;
+}
+
+/**
+ * Implements hook_form_comment_form_alter().
+ */
+function field_replies_form_reply_add_form_alter(&$form, $form_state, $form_id) {
+
+  if ($field_replies = drupal_static('field_replies')) {
+    $field = $field_replies['field'];
+    $delta = $field_replies['delta'];
+  }
+  // Getting field and delta values submitted as hidden fields.
+  elseif (isset($_POST['field']) && isset($_POST['delta'])) {
+    $field = $_POST['field'];
+    $delta = $_POST['delta'];
+  }
+
+  // Attaching field and delta values as hidden fields.
+  if (isset($field) && isset($delta)) {
+    $form['field'] = array(
+      '#type' => 'hidden',
+      '#value' => $field,
+    );
+    $form['delta'] = array(
+      '#type' => 'hidden',
+      '#value' => $delta,
+    );
+  }
+}
+
+/**
+ * Implements hook_field_attach_submit().
+ */
+function field_replies_field_attach_submit($entity_type, $entity, $form, &$form_state) {
+  // TODO implement revisioning - $entity_vid
+  // Synchronising reply_field deltas when fields are rearranged.
+
+  list($entity_id, $entity_vid) = entity_extract_ids($entity_type, $entity);
+
+  if (field_replies_entity_has_field_replies($entity_id, $entity_type)) {
+
+    $result = db_select('reply_field', 'rf')
+      ->fields('rf', array('reply_id', 'field', 'delta'))
+      ->condition('entity_id', $entity_id)
+      ->condition('entity_type', $entity_type)
+      ->execute();
+
+    foreach ($result as $item) {
+      if (isset($form_state['values'][$item->field][LANGUAGE_NONE][$item->delta])) {
+        // Add cid to field item in array.
+        $fields_to_sort[$item->field][$item->delta][] = $item->reply_id;
+        $fields_to_sort[$item->field][$item->delta]['_weight'] = $form_state['values'][$item->field][LANGUAGE_NONE][$item->delta]['_weight'];
+      }
+    }
+
+    foreach ($fields_to_sort as $field_name => $items) {
+      if (count($items) > 1) {
+        usort($items, '_field_replies_sort_items_helper');
+        $fields_to_sort[$field_name] = $items;
+        foreach ($items as $delta => $values) {
+          unset($values['_weight']);
+          db_update('reply_field')
+            ->fields(array('delta' => $delta))
+            ->condition('field', $field_name)
+            ->condition('reply_id', $values)
+            ->execute();
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Sort function for items order.
+ * (copied form element_sort(), which acts on #weight keys)
+ */
+function _field_replies_sort_items_helper($a, $b) {
+  $a_weight = (is_array($a) ? $a['_weight'] : 0);
+  $b_weight = (is_array($b) ? $b['_weight'] : 0);
+  return $a_weight - $b_weight;
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function field_replies_entity_delete($entity, $entity_type) {
+  list($entity_id) = entity_extract_ids($entity_type, $entity);
+  if ($entity_type == 'reply') {
+    //Delete entries from reply_field table for reply being deleted.
+    db_delete('reply_field')
+      ->condition('reply_id', $entity_id)
+      ->execute();
+  }
+  else {
+    // Delete entries from reply_field table for entity being deleted.
+    db_delete('reply_field')
+      ->condition('entity_type', $entity_type)
+      ->condition('entity_id', $entity_id)
+      ->execute();
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function field_replies_entity_update($entity, $entity_type) {
+  // Delete replies when a field is deleted
+  $info = entity_get_info($entity_type);
+  list($entity_id, $entity_vid) = entity_extract_ids($entity_type, $entity);
+
+  // Select replies on fields for this entity
+    $result = db_select('reply_field', 'rf')
+      ->fields('rf', array('reply_id', 'field', 'delta'))
+      ->condition('entity_id', $entity_id)
+      ->condition('entity_type', $entity_type)
+      ->execute();
+
+    foreach ($result as $item) {
+      // If a field is deleted from an entity
+      if (!isset($entity->{$item->field}[LANGUAGE_NONE][$item->delta])) {
+        // Delete row from reply_field table.
+        db_delete('reply_field')
+          ->condition('reply_id', $item->reply_id)
+          ->execute();
+        // Delete a reply itself
+        reply_delete($item->reply_id);
+      }
+    }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function field_replies_entity_insert($entity, $type) {
+  if ($type == 'reply' && isset($entity->field) && isset($entity->delta)) {
+    // Insert new record.
+    db_insert('reply_field')
+      ->fields(array(
+      'reply_id' => $entity->id,
+      'reply_bundle' => $entity->bundle,
+      'entity_id' => $entity->entity_id,
+      'entity_type' => $entity->entity_type,
+      'field' => $entity->field,
+      'delta' => $entity->delta,
+      ))
+      ->execute();
+  }
+  elseif (isset($entity->parent)) {
+    $record = db_select('reply_field', 'rf')
+                ->fields('rf')
+                ->condition('reply_id', $entity->parent)
+                ->execute()
+                ->fetchObject();
+
+    if ($record) {
+      // Write new record to reply_fields table
+      // with all values other than reply_id inherited from parent.
+      db_insert('reply_field')
+        ->fields(array(
+          'reply_id' => $entity->id,
+          'reply_bundle' => $record->reply_bundle,
+          'entity_id' => $record->entity_id,
+          'entity_type' => $record->entity_type,
+          'field' => $record->field,
+          'delta' => $record->delta,
+        ))
+        ->execute();
+    }
+  }
+}
+
+function field_replies_entity_prepare_view($entities, $type, $langcode) {
+}
+
+function field_replies_entity_view_alter($entities, $type, $langcode) {
+}
+
+function field_replies_field_display_alter(&$display, $context) {
+}

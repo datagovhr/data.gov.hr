@@ -1,0 +1,26 @@
+-------------------------------------------------------------------------------------
+7.x-1.2 2011-xx-xx
+-------------------------------------------------------------------------------------
+- #1052538 by tbosviel: CTools warnings: plugins points to nonexistent file.
+- #1212592 by swentel: fix unsupported operand types.
+- #1157902 by swentel: Properties added in the back don't show up.
+- #1232006 by swentel: fix strict warnings.
+- #1020860 by sreynen: Work with @font-your-face 2.x.
+- #991544: conflict with Overlay module fixed.
+- Added automatic save when leaving a page.
+- Improvements into the interface such as the Spacing Pannel which had been rethinked
+- Fixed minor open/close bar issue.
+- Fixed minor css typos
+-------------------------------------------------------------------------------------
+7.x-1.1 2011-01-05
+-------------------------------------------------------------------------------------
+- #1004062 by FreekyMage and swentel: add UI to control the allowed css properties.
+- #984302 by swentel: fix reference in form.
+- #966644 by swentel: drupal_rebuild_theme_registry has been renamed.
+- General clean up in css and js.
+
+-------------------------------------------------------------------------------------
+7.x-1.0 2010-11-09
+-------------------------------------------------------------------------------------
+- Initial release.
+

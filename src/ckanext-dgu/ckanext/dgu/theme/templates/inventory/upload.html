@@ -1,0 +1,54 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <xi:include href="inventory_util.html" />
+
+  <py:def function="page_title">${c.group.display_name}</py:def>
+
+
+<py:match path="breadcrumbs">
+    <li><a href="/publisher">Publishers</a></li>
+    <li><a href="/publisher/${c.group['name']}">${c.group['title']}</a></li>
+    <li><a href="/unpublished/${c.group['name']}/edit">Manage inventory</a></li>
+    <li><a href="${request.url}">Upload results</a></li>
+</py:match>
+
+  <py:match path="content">
+    <h3 py:if="c.group['state'] != 'active'">State: ${c.group['state']}</h3>
+
+    <div class="row">
+
+      <div py:if="c.errors">
+        <div class="alert alert-danger">
+          <p  py:for="e in c.errors">${h.literal(e)}</p>
+        </div>
+      </div>
+      <div  class="col-md-8" py:if="not c.errors">
+      <h1>Upload results</h1>
+
+        <div class="alert alert-success">
+          Your Inventory document has been successfully uploaded to data.gov.uk
+        </div>
+
+        <p>These items will appear in a list of your uploaded inventory items within 2-4 hours.  To track of the status of Your Inventory uploads go to <a href="${h.url_for(controller='ckanext.dgu.controllers.inventory:InventoryController', action='upload_status',id=c.group.name, upload_id=c.job_id )}">${h.render_datestamp(c.job_timestamp)} - ${h.render_datestamp(c.job_timestamp,format="%H:%M")}</a> or click the '${h.render_datestamp(c.job_timestamp)} - ${h.render_datestamp(c.job_timestamp,format="%H:%M")}' link from the 'Recent Inventory Uploads' section of the side-bar.</p>
+      </div>
+
+      <div class="col-md-4">
+        ${inventory_jobs()}
+      </div>
+
+    </div>
+  </py:match>
+
+  <py:def function="optional_feed">
+  <link rel="alternate" type="application/atom+xml" title="${g.site_title} - Datasets in group '${c.group['title']}'"
+    href="${h.url(controller='feed', action='group', id=c.group['name'])}" />
+  </py:def>
+
+
+  <xi:include href="../layout.html" />
+</html>
+
+

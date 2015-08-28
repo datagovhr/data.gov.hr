@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: ckanext-dgu-local
+Version: 0.1
+Summary: DGU Local Authority Datasets
+Home-page: https://github.com/datagovuk/ckanext-dgu-local
+Author: Ross Jones / David Read
+Author-email: david.read@hackneyworkshop.com
+License: GPL3
+Description:     
+Platform: UNKNOWN

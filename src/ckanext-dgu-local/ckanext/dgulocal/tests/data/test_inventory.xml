@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Draft format, last updated at 06/12/2013. Schema will be produced when the format is finalised -->
+<inv:Inventory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:conformsTo="http://standards.esd.org.uk/schemas/inventory.xsd" xsi:schemaLocation="http://schemas.esd.org.uk/inventory http://schemas.esd.org.uk/inventory.xsd" Modified="2013-12-01" Language="en" xmlns:inv="http://schemas.esd.org.uk/inventory">
+  <inv:Identifier>http://datashare.esd.org.uk/</inv:Identifier>
+  <inv:Metadata>
+    <inv:Publisher>http://opendatacommunities.org/doc/unitary-authority/peterborough</inv:Publisher>
+    <inv:Title>Peterborough  datasets</inv:Title>
+    <inv:Description>Sample inventory covering a selection of Peterborough City Council datasets</inv:Description>
+    <inv:Coverage>
+      <inv:Spatial>http://statistics.data.gov.uk/id/statistical-geography/E06000031</inv:Spatial>
+    </inv:Coverage>
+  </inv:Metadata>
+  <inv:Datasets>
+    <inv:Dataset Modified="2013-12-01" Active="Yes">
+      <inv:Identifier>payments_over_£500</inv:Identifier>
+      <inv:Title>Payments of £500</inv:Title>
+      <inv:Description>individual payments with a value over £500 made to suppliers each month. This allows residents to see what the council spends its money on. The information excludes payments to individuals such as council tax refunds and benefit payments. The payment amounts include VAT where applicable.</inv:Description>
+      <inv:Rights>http://www.nationalarchives.gov.uk/doc/open-government-licence/</inv:Rights>
+      <inv:Resources>
+        <inv:Resource Type="Document" Modified="2013-12-01" Active="Yes" Language="en">
+          <inv:Identifier>payments_over_£500.aspx</inv:Identifier>
+          <inv:Title>Payments over £500 webpage</inv:Title>
+          <inv:Description>Web page describing and listing peterborough payments over £500 data</inv:Description>
+          <inv:Renditions>
+            <inv:Rendition Active="Yes">
+              <inv:Identifier>http://www.peterborough.gov.uk/council_and_democracy/payments_over_£500.aspx</inv:Identifier>
+              <inv:MimeType>text/html</inv:MimeType>
+              <inv:Title>Council payments over £500</inv:Title>
+              <inv:Description>Web page describing and listing peterborough payments over £500 data</inv:Description>
+              <inv:Availability>Download</inv:Availability>
+            </inv:Rendition>
+          </inv:Renditions>
+        </inv:Resource>
+        <inv:Resource Type="Data" Modified="2013-12-01" Active="Yes" Language="en">
+          <inv:Identifier>CouncilAndDemocracy-PaymentsToSuppliers-January2011</inv:Identifier>
+          <inv:Title>Payments over £500 January 2011</inv:Title>
+          <inv:Description>Payments over £500 in January 2011</inv:Description>
+          <inv:Coverage TemporalFrom="2013-01-01" TemporalTo="2013-01-31">
+            <inv:Spatial>http://statistics.data.gov.uk/id/statistical-geography/E06000031</inv:Spatial>
+          </inv:Coverage>
+          <inv:Renditions>
+            <inv:Rendition Modified="2013-12-01" Active="Yes">
+              <inv:Identifier>http://www.peterborough.gov.uk/pdf/CouncilAndDemocracy-PaymentsToSuppliers-January2011v2.pdf</inv:Identifier>
+              <inv:MimeType>application/pdf</inv:MimeType>
+              <inv:Title>PDF file - Spend over £500 January</inv:Title>
+              <inv:Description>Web page describing and listing peterborough payments over £500 data</inv:Description>
+            </inv:Rendition>
+          </inv:Renditions>
+        </inv:Resource>
+        <inv:Resource Type="Data" Modified="2013-12-01" Active="Yes" Language="en">
+          <inv:Identifier>CouncilAndDemocracy-PaymentsToSuppliers-January2011</inv:Identifier>
+          <inv:Title>Payments over £500 January 2011</inv:Title>
+          <inv:Description>Payments over £500 in January 2011</inv:Description>
+          <inv:Coverage TemporalFrom="2013-01-01" TemporalTo="2013-01-31">
+            <inv:Spatial>http://statistics.data.gov.uk/id/statistical-geography/E06000031</inv:Spatial>
+          </inv:Coverage>
+          <inv:Renditions>
+            <inv:Rendition Modified="2013-12-01" Active="Yes">
+              <inv:Identifier>http://www.peterborough.gov.uk/files/CouncilAndDemocracy-PaymentsToSuppliers-January2011v2.csv</inv:Identifier>
+              <inv:MimeType>text/csv</inv:MimeType>
+              <inv:Title>CSV file - Spend over £500 January</inv:Title>
+              <inv:Description>Web page describing and listing peterborough payments over £500 data</inv:Description>
+            </inv:Rendition>
+          </inv:Renditions>
+        </inv:Resource>
+      </inv:Resources>
+    </inv:Dataset>
+  </inv:Datasets>
+</inv:Inventory>

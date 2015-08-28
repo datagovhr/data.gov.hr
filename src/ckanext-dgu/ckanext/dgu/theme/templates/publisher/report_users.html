@@ -1,0 +1,54 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">User report</py:def>
+  <py:def function="page_heading">Users (${ c.count })</py:def>
+
+  <py:match path="breadcrumbs">
+    <li><a href="/data/system_dashboard">System Dashboard</a></li>
+    <li><a href="/publisher/report_users">Users report</a></li>
+  </py:match>
+
+
+  <div py:match="content">
+
+      ${paginator(c.page)}
+
+      <table py:if="c.count" width="100%" class="table table-bordered">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Datasets created (in CKAN)</th>
+          <th>Edits made (in CKAN)</th>
+          <th>Rights</th>
+          <th>Created</th>
+        </tr>
+        <py:for each="u in c.page.items">
+          <tr>
+            <td><a href="/data/user/${u.name}">${u.display_name}</a></td>
+            <td>${u.email}</td>
+            <td>${u.number_administered_packages()}</td>
+            <td>${u.number_of_edits()}</td>
+            <td>
+              <py:if test="h.is_sysadmin(u)">Sysadmin</py:if>
+              <py:for each="capacity in ('admin', 'editor')">
+                <py:for each="group in u.get_groups(capacity=capacity)">
+                  ${capacity.capitalize()}: <a href="/publisher/${group.name}">${group.display_name}</a>
+                </py:for>
+              </py:for>
+            </td>
+            <td>${h.render_datetime(u.created, date_format="%d-%m-%Y")}</td>
+          </tr>
+        </py:for>
+      </table>
+
+      ${paginator(c.page)}
+
+  </div>
+
+
+  <xi:include href="../layout.html" />
+
+</html>

@@ -1,0 +1,102 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Reply feature.
+ */
+
+include_once 'dgu_reply.features.inc';
+
+
+/**
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ *
+ * Implement hook_FORM_ID_form_alter. Add submit handler to fill in the subject if it's empty.
+ */
+function dgu_reply_form_reply_add_form_alter(&$form, &$form_state, $form_id){
+    $form["#submit"] = array_merge((array) 'dgu_reply_form_submit',$form["#submit"]);
+}
+
+
+/**
+ * @param $form
+ * @param $form_state
+ *
+ * Submit handler for add reply form, which checks whether a subject has been supplied, and if not, uses the body of
+ * the comment to add a subject.  This code is similar to the comment module.
+ */
+function dgu_reply_form_submit($form, &$form_state) {
+    $reply_subject = trim($form_state['values']['field_reply_subject'][LANGUAGE_NONE][0]['value']);
+    if (empty($reply_subject)) {
+        $field_reply_comment = $form_state['values']['field_reply_comment'][LANGUAGE_NONE][0];
+        if (isset($field_reply_comment['format'])) {
+            $reply_comment = check_markup($field_reply_comment['value'], $field_reply_comment['format']);
+        }
+        else {
+            $reply_comment = check_plain($field_reply_comment['value']);
+        }
+        $form_state['values']['field_reply_subject'][LANGUAGE_NONE][0]['value'] = truncate_utf8(trim(decode_entities(strip_tags($reply_comment))), 29, TRUE);
+    }
+}
+
+/**
+ * Implements hook_menu_alter.
+ */
+function dgu_reply_menu_alter(&$items) {
+  foreach ($items as $key => &$value) {
+    if (substr($key, 0, 9) == 'reply/add') {
+      $value['title'] = 'Comment';
+    }
+  }
+}
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_reply_menu_breadcrumb_alter(&$active_trail, $item) {
+  if ($item['path'] == 'reply/add/%/%/%') {
+
+    // Keep only first home page breadcrumb
+    $active_trail = array(current($active_trail));
+
+    $instance_id = $item['page_arguments'][1];
+    $instance = reply_load_instance($instance_id);
+    $entity_type = $instance->entity_type;
+    $entity = entity_load($entity_type, array($item['page_arguments'][0]));
+    $entity = current($entity);
+    list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+
+    if ($entity_type == 'ckan_dataset') {
+      $entity_uri = entity_uri($entity_type, $entity);
+      $active_trail[] = array('title' => 'Datasets', 'href' => 'data/search', 'localized_options' => array());
+      $active_trail[] = array('title' => htmlspecialchars_decode($entity->title), 'href' => $entity_uri['path'], 'localized_options' => array());
+    }
+
+    elseif ($entity_type == 'taxonomy_term' && $bundle == 'glossary'){
+      $parent_menu = menu_get_item('glossary');
+      $parent_menu_title = $parent_menu['title'];
+      $active_trail[] = array('title' => $parent_menu_title, 'href' => 'glossary', 'localized_options' => array());
+      $active_trail[] = array('title' => htmlspecialchars_decode($entity->name), 'href' => 'glossary/' . $id, 'localized_options' => array());
+    }
+
+    else {
+      $alias = $entity->path['alias'] ? $entity->path['alias'] : drupal_get_path_alias($entity_type . '/' . $id);
+      $parts =  explode('/', $alias);
+
+      if (count($parts) > 1) {
+        $parent_path =  $parts[0];
+        if ($parent_path == 'taxonomy_term') {
+          $parent_path = 'glossary';
+        }
+        if ($parent_menu = menu_get_item($parent_path)) {
+          $parent_menu_title = $parent_menu['title'];
+          $active_trail[] = array('title' => htmlspecialchars_decode($parent_menu_title), 'href' => $parent_path, 'localized_options' => array());
+        }
+      }
+      $active_trail[] = array('title' => htmlspecialchars_decode($entity->title), 'href' => $alias, 'localized_options' => array());
+    }
+
+    drupal_set_title('Comment');
+  }
+}

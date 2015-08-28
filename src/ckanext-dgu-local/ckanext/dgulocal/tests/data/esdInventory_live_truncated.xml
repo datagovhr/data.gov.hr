@@ -1,0 +1,1346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inv:Inventory xmlns:inv="http://schemas.esd.org.uk/inventory" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Language="en" Modified="2014-03-10">
+<inv:Identifier>http://www.redbridge.gov.uk</inv:Identifier>
+<inv:Creator>http://www.redbridge.gov.uk</inv:Creator>
+<inv:Metadata>
+    <inv:Publisher>http://opendatacommunities.org/doc/london-borough-council/redbridge</inv:Publisher>
+    <inv:Title>Inventory covering a selection of London Borough of Redbridge datasets</inv:Title>
+    <inv:Description>Redbridge Datasets</inv:Description>
+    <inv:Coverage>
+        <inv:Spatial>http://opendatacommunities.org/doc/london-borough-council/redbridge</inv:Spatial>
+    </inv:Coverage>
+</inv:Metadata>
+<inv:Datasets>
+    <inv:Dataset Active="True" Modified="2013-12-19">
+        <inv:Identifier>finance/payments-over-500</inv:Identifier>
+        <inv:Title>Payments over £500</inv:Title>
+        <inv:Description>&lt;p&gt;Payments made to suppliers where the &lt;strong&gt;invoice total&lt;/strong&gt; amounts to over &amp;pound;500.&amp;nbsp; Note that a single invoice may be represented by multiple lines in the payment data and as such some lines may contain amounts under &amp;pound;500.&lt;br /&gt;&lt;br /&gt;Some data may appear as Redacted Personal Data. This personal data is protected by the Data Protection Act 1998 to prevent any individual being identified.&lt;br /&gt;&lt;br /&gt;This data will be published in the middle of each following month. So data for October is published mid November and so on. This is simply to allow us to run the appropriate data gathering exercise.&lt;/p&gt;</inv:Description>
+        <inv:Rights>http://www.nationalarchives.gov.uk/doc/open-government-licence/</inv:Rights>
+        <inv:RightsHolder>http://www.nationalarchives.gov.uk/doc/open-government-licence/</inv:RightsHolder>
+        <inv:Subjects/>
+        <inv:Resources>
+            <inv:Resource Type="Document" Modified="2013-12-19">
+                <inv:Identifier>payments-over-500</inv:Identifier>
+                <inv:Title>Payments over £500</inv:Title>
+                <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                <inv:Coverage>
+                    <inv:Spatial>http://opendatacommunities.org/doc/london-borough-council/redbridge</inv:Spatial>
+                </inv:Coverage>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-12-19">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500</inv:Identifier>
+                        <inv:MimeType>text/html</inv:MimeType>
+                        <inv:Title>Payments over £500</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/april-2010</inv:Identifier>
+                <inv:Title>April 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/april-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>April 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/may-2010</inv:Identifier>
+                <inv:Title>May 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/may-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>May 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/june-2010</inv:Identifier>
+                <inv:Title>June 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/june-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>June 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/july-2010</inv:Identifier>
+                <inv:Title>July 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/july-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>July 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/august-2010</inv:Identifier>
+                <inv:Title>August 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/august-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>August 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/september-2010</inv:Identifier>
+                <inv:Title>September 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/september-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>September 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/october-2010</inv:Identifier>
+                <inv:Title>October 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/october-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>October 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/november-2010</inv:Identifier>
+                <inv:Title>November 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/november-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>November 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/december-2010</inv:Identifier>
+                <inv:Title>December 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/december-2010/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>December 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/january-2011</inv:Identifier>
+                <inv:Title>January 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/january-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>January 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/february-2011</inv:Identifier>
+                <inv:Title>February 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/february-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>February 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/march-2011</inv:Identifier>
+                <inv:Title>March 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-04-14" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/march-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>March 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/april-2011</inv:Identifier>
+                <inv:Title>April 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-05-20" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/april-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>April 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/may-2011</inv:Identifier>
+                <inv:Title>May 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-06-23" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/may-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>May 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/june-2011</inv:Identifier>
+                <inv:Title>June 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-08-04" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/june-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>June 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/july-2011</inv:Identifier>
+                <inv:Title>July 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-08-26" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/july-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>July 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/august-2011</inv:Identifier>
+                <inv:Title>August 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-09-28" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/august-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>August 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/september-2011</inv:Identifier>
+                <inv:Title>September 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-10-26" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/september-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>September 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/payments-over-500-october-2011</inv:Identifier>
+                <inv:Title>Payments over 500 October 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-11-29" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/payments-over-500-october-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>Payments over 500 October 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/november-2011</inv:Identifier>
+                <inv:Title>November 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-12-12" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/november-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>November 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/december-2011</inv:Identifier>
+                <inv:Title>December 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-01-24" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/december-2011/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>December 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/january-2012</inv:Identifier>
+                <inv:Title>January 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-02-29" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/january-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>January 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/february-2012</inv:Identifier>
+                <inv:Title>February 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-04-18" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/february-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>February 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/march-2012</inv:Identifier>
+                <inv:Title>March 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-04-18" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/march-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>March 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/april-2012</inv:Identifier>
+                <inv:Title>April 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-05-16" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/april-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>April 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/may-2012</inv:Identifier>
+                <inv:Title>May 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-06-20" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/may-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>May 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/june-2012</inv:Identifier>
+                <inv:Title>June 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-07-24" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/june-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>June 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/july-2012</inv:Identifier>
+                <inv:Title>July 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-08-22" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/july-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>July 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/august-2012</inv:Identifier>
+                <inv:Title>August 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-09-26" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/august-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>August 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/september-2012</inv:Identifier>
+                <inv:Title>September 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-10-25" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/september-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>September 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/october-2012</inv:Identifier>
+                <inv:Title>October 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-11-27" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/october-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>October 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/november-2012</inv:Identifier>
+                <inv:Title>November 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-12-13" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/november-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>November 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/december-2012</inv:Identifier>
+                <inv:Title>December 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-01-09" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/december-2012/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>December 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/january-2013</inv:Identifier>
+                <inv:Title>January 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-03-20" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/january-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>January 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/february-2013</inv:Identifier>
+                <inv:Title>February 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-03-27" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/february-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>February 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/march-2013</inv:Identifier>
+                <inv:Title>March 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-04-24" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/march-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>March 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/april-2013</inv:Identifier>
+                <inv:Title>April 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-06-07" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/april-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>April 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/may-2013</inv:Identifier>
+                <inv:Title>May 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-06-07" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/may-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>May 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/june-2013</inv:Identifier>
+                <inv:Title>June 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-07-31" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/june-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>June 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/july-2013</inv:Identifier>
+                <inv:Title>July 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/july-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>July 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/august-2013</inv:Identifier>
+                <inv:Title>August 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/august-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>August 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/sept-2013</inv:Identifier>
+                <inv:Title>Sept 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/sept-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>Sept 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/october-2013</inv:Identifier>
+                <inv:Title>October 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-12-19" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/october-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>October 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/november-2013</inv:Identifier>
+                <inv:Title>November 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-12-19" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/november-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>November 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/april-2010</inv:Identifier>
+                <inv:Title>April 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/april-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>April 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/may-2010</inv:Identifier>
+                <inv:Title>May 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/may-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>May 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/june-2010</inv:Identifier>
+                <inv:Title>June 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/june-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>June 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/july-2010</inv:Identifier>
+                <inv:Title>July 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/july-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>July 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/august-2010</inv:Identifier>
+                <inv:Title>August 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/august-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>August 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/september-2010</inv:Identifier>
+                <inv:Title>September 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/september-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>September 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/october-2010</inv:Identifier>
+                <inv:Title>October 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/october-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>October 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/november-2010</inv:Identifier>
+                <inv:Title>November 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/november-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>November 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/december-2010</inv:Identifier>
+                <inv:Title>December 2010</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/december-2010/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>December 2010</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/january-2011</inv:Identifier>
+                <inv:Title>January 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/january-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>January 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/february-2011</inv:Identifier>
+                <inv:Title>February 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-03-10" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/february-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>February 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/march-2011</inv:Identifier>
+                <inv:Title>March 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-04-14" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/march-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>March 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/april-2011</inv:Identifier>
+                <inv:Title>April 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-05-20" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/april-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>April 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/may-2011</inv:Identifier>
+                <inv:Title>May 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-06-23" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/may-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>May 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/june-2011</inv:Identifier>
+                <inv:Title>June 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-08-04" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/june-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>June 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/july-2011</inv:Identifier>
+                <inv:Title>July 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-08-26" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/july-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>July 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/august-2011</inv:Identifier>
+                <inv:Title>August 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-09-28" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/august-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>August 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/september-2011</inv:Identifier>
+                <inv:Title>September 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-10-26" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/september-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>September 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/payments-over-500-october-2011</inv:Identifier>
+                <inv:Title>Payments over 500 October 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-11-29" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/payments-over-500-october-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>Payments over 500 October 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/november-2011</inv:Identifier>
+                <inv:Title>November 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2011-12-12" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/november-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>November 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/december-2011</inv:Identifier>
+                <inv:Title>December 2011</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-01-24" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/december-2011/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>December 2011</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/january-2012</inv:Identifier>
+                <inv:Title>January 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-02-29" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/january-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>January 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/february-2012</inv:Identifier>
+                <inv:Title>February 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-04-18" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/february-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>February 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/march-2012</inv:Identifier>
+                <inv:Title>March 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-04-18" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/march-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>March 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/april-2012</inv:Identifier>
+                <inv:Title>April 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-05-16" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/april-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>April 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/may-2012</inv:Identifier>
+                <inv:Title>May 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-06-20" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/may-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>May 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/june-2012</inv:Identifier>
+                <inv:Title>June 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-07-24" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/june-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>June 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/july-2012</inv:Identifier>
+                <inv:Title>July 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-08-22" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/july-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>July 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/august-2012</inv:Identifier>
+                <inv:Title>August 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-09-26" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/august-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>August 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/september-2012</inv:Identifier>
+                <inv:Title>September 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-10-25" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/september-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>September 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/october-2012</inv:Identifier>
+                <inv:Title>October 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-11-27" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/october-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>October 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/november-2012</inv:Identifier>
+                <inv:Title>November 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2012-12-13" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/november-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>November 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/december-2012</inv:Identifier>
+                <inv:Title>December 2012</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-01-09" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/december-2012/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>December 2012</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/january-2013</inv:Identifier>
+                <inv:Title>January 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-03-20" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/january-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>January 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/february-2013</inv:Identifier>
+                <inv:Title>February 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-03-27" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/february-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>February 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/march-2013</inv:Identifier>
+                <inv:Title>March 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-04-24" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/march-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>March 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/april-2013</inv:Identifier>
+                <inv:Title>April 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-06-07" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/april-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>April 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/may-2013</inv:Identifier>
+                <inv:Title>May 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-06-07" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/may-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>May 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/june-2013</inv:Identifier>
+                <inv:Title>June 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-07-31" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/june-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>June 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/july-2013</inv:Identifier>
+                <inv:Title>July 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/july-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>July 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/august-2013</inv:Identifier>
+                <inv:Title>August 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/august-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>August 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/sept-2013</inv:Identifier>
+                <inv:Title>Sept 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/sept-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>Sept 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/october-2013</inv:Identifier>
+                <inv:Title>October 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-12-19" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/october-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>October 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-12-19">
+                <inv:Identifier>finance/payments-over-500/november-2013</inv:Identifier>
+                <inv:Title>November 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-12-19" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/payments-over-500/november-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>November 2013</inv:Title>
+                        <inv:Description>Payments made to suppliers where the invoice total amounts to over £500.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+        </inv:Resources>
+    </inv:Dataset>
+    <inv:Dataset Active="True" Modified="2013-10-01">
+        <inv:Identifier>finance/contracts</inv:Identifier>
+        <inv:Title>Contracts</inv:Title>
+        <inv:Description>&lt;p&gt;Details of current council contracts.&lt;/p&gt;&#13;
+        &lt;p&gt;Contract values that are shown are as set at the start of the contract; they may not include any annual price increases.&lt;/p&gt;</inv:Description>
+        <inv:Rights>http://www.nationalarchives.gov.uk/doc/open-government-licence/</inv:Rights>
+        <inv:RightsHolder>http://www.nationalarchives.gov.uk/doc/open-government-licence/</inv:RightsHolder>
+        <inv:Subjects/>
+        <inv:Resources>
+            <inv:Resource Type="Document" Modified="2013-10-01">
+                <inv:Identifier>contracts</inv:Identifier>
+                <inv:Title>Contracts</inv:Title>
+                <inv:Description>Details of current council contracts.</inv:Description>
+                <inv:Coverage>
+                    <inv:Spatial>http://opendatacommunities.org/doc/london-borough-council/redbridge</inv:Spatial>
+                </inv:Coverage>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01">
+                        <inv:Identifier>http://datashare/Download/finance/contracts</inv:Identifier>
+                        <inv:MimeType>text/html</inv:MimeType>
+                        <inv:Title>Contracts</inv:Title>
+                        <inv:Description>Details of current council contracts.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-10-01">
+                <inv:Identifier>finance/contracts/october-2013</inv:Identifier>
+                <inv:Title>October 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/contracts/october-2013/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>October 2013</inv:Title>
+                        <inv:Description>Details of current council contracts.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-10-01">
+                <inv:Identifier>finance/contracts/october-2013</inv:Identifier>
+                <inv:Title>October 2013</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/contracts/october-2013/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>October 2013</inv:Title>
+                        <inv:Description>Details of current council contracts.</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+        </inv:Resources>
+    </inv:Dataset>
+    <inv:Dataset Active="True" Modified="2013-10-01">
+        <inv:Identifier>finance/budget</inv:Identifier>
+        <inv:Title>Budget</inv:Title>
+        <inv:Description>&lt;p&gt;The budget which the Council is working to for the financial year and has been agreed by the full Council meeting. This excludes unallocated contigencies.&lt;/p&gt;&#13;
+        &lt;p&gt;The Council&amp;rsquo;s Revenue Budget for 2011/12 is &amp;pound;200.6 million which, when compared to the equivalent figure for 2010/11, is a decrease in spending of &amp;pound;9.5 million (4.5%).&amp;nbsp; Spending reductions have primarily been driven by the significant funding cuts imposed across the public sector by Central Government.&amp;nbsp; In meeting this challenge and in order to deliver a freeze in Council Tax the authority has given its highest priority to identifying and delivering savings through back office support and/or efficiency measures wherever this has been possible.&lt;/p&gt;</inv:Description>
+        <inv:Rights>http://www.nationalarchives.gov.uk/doc/open-government-licence/</inv:Rights>
+        <inv:RightsHolder>http://www.nationalarchives.gov.uk/doc/open-government-licence/</inv:RightsHolder>
+        <inv:Subjects/>
+        <inv:Resources>
+            <inv:Resource Type="Document" Modified="2013-10-01">
+                <inv:Identifier>budget</inv:Identifier>
+                <inv:Title>Budget</inv:Title>
+                <inv:Description>The Council's revenue and capital budget</inv:Description>
+                <inv:Coverage>
+                    <inv:Spatial>http://opendatacommunities.org/doc/london-borough-council/redbridge</inv:Spatial>
+                </inv:Coverage>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01">
+                        <inv:Identifier>http://datashare/Download/finance/budget</inv:Identifier>
+                        <inv:MimeType>text/html</inv:MimeType>
+                        <inv:Title>Budget</inv:Title>
+                        <inv:Description>The Council's revenue and capital budget</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-10-01">
+                <inv:Identifier>finance/budget/budget-2012-13</inv:Identifier>
+                <inv:Title>Budget 2012/13</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/budget/budget-2012-13/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>Budget 2012/13</inv:Title>
+                        <inv:Description>The Council's revenue and capital budget</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-10-01">
+                <inv:Identifier>finance/budget/budget-2013-14</inv:Identifier>
+                <inv:Title>Budget 2013/14</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/budget/budget-2013-14/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>Budget 2013/14</inv:Title>
+                        <inv:Description>The Council's revenue and capital budget</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-10-01">
+                <inv:Identifier>finance/budget/budget-2011-12</inv:Identifier>
+                <inv:Title>Budget 2011/12</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/budget/budget-2011-12/CSV?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/csv</inv:MimeType>
+                        <inv:Title>Budget 2011/12</inv:Title>
+                        <inv:Description>The Council's revenue and capital budget</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-10-01">
+                <inv:Identifier>finance/budget/budget-2012-13</inv:Identifier>
+                <inv:Title>Budget 2012/13</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/budget/budget-2012-13/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>Budget 2012/13</inv:Title>
+                        <inv:Description>The Council's revenue and capital budget</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-10-01">
+                <inv:Identifier>finance/budget/budget-2013-14</inv:Identifier>
+                <inv:Title>Budget 2013/14</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/budget/budget-2013-14/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>Budget 2013/14</inv:Title>
+                        <inv:Description>The Council's revenue and capital budget</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+            <inv:Resource Active="True" Language="en" Type="Data" Modified="2013-10-01">
+                <inv:Identifier>finance/budget/budget-2011-12</inv:Identifier>
+                <inv:Title>Budget 2011/12</inv:Title>
+                <inv:Renditions>
+                    <inv:Rendition Modified="2013-10-01" Active="True">
+                        <inv:Identifier>http://datashare/Download/finance/budget/budget-2011-12/XML?version=10/03/2014</inv:Identifier>
+                        <inv:MimeType>text/xml</inv:MimeType>
+                        <inv:Title>Budget 2011/12</inv:Title>
+                        <inv:Description>The Council's revenue and capital budget</inv:Description>
+                        <inv:Availability>Download</inv:Availability>
+                    </inv:Rendition>
+                </inv:Renditions>
+            </inv:Resource>
+        </inv:Resources>
+    </inv:Dataset>
+</inv:Datasets>
+</inv:Inventory>

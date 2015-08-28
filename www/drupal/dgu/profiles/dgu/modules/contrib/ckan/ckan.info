@@ -1,0 +1,14 @@
+name = CKAN Client
+description = Provides CKAN client for connecting to OKFN CKAN
+core = 7.x
+php = 5.3.3
+package = "CKAN"
+
+dependencies[] = composer_manager
+
+
+; Information added by drush on 2014-10-02
+version = "ckan_dgu_7.x-1.x-dev"
+project = "ckan"
+datestamp = "1412232482"
+

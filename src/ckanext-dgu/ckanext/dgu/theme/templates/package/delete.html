@@ -1,0 +1,39 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+  
+  <py:def function="page_title" py:with="is_uklp=c.pkg.extras.get('UKLP')=='True'">
+    ${c.pkg.title or c.pkg.name} - ${if_(is_uklp,'Withdraw','Delete')}
+  </py:def>
+
+  <py:match path="breadcrumbs" py:with="is_uklp=c.pkg.extras.get('UKLP')=='True'">
+    <li><a href="/data/search">Skupovi podataka</a></li>
+    <li><a href="${h.url_for(controller='package',action='read',id=c.pkg.name)}">${c.pkg.title or c.pkg.name}</a></li>
+    <li><a href="${h.url_for(controller='package',action='delete',id=c.pkg.name)}">${if_(is_uklp,'Withdraw Record','Delete')}</a></li>
+  </py:match>
+
+  <div py:match="content" class="dataset-edit-form" py:with="is_uklp=c.pkg.extras.get('UKLP')=='True'">
+    <div class="panel panel-danger">
+      <div class="panel-heading">Potvrda</div>
+      <div class="panel-body">
+      <form id="package-delete" method="post"
+            xmlns:i18n="http://genshi.edgewall.org/i18n"
+            xmlns:py="http://genshi.edgewall.org/"
+            xmlns:xi="http://www.w3.org/2001/XInclude">
+        <p py:if="not is_uklp">Sigurno &#382;elite obrisati ovaj skup podataka?</p>
+        <py:if test="is_uklp">
+          <p>Sigurno &#382;elite povu&#263;i ovaj ${c.pkg.extras.get('resource-type')} zapis?</p>
+          <p py:if="c.pkg.extras.get('resource-type') == 'service'"><strong>Reminder:</strong> Ensure any dataset or series records that are related to this record (e.g. by Coupled Resource) are also considered for withdrawal.</p>
+          <p py:if="c.pkg.extras.get('resource-type') in ('dataset', 'series')"><strong>Reminder:</strong> Ensure any service records that point to this record (e.g. by Coupled Resource) are also withdrawn.</p>
+        </py:if>
+        <button id="delete-button" class="btn btn-danger" name="delete" type="submit" value="Delete">Obri&#353;i</button>
+        <button id="cancel-button" class="btn" name="cancel" type="submit" value="Cancel">Odustani</button>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <xi:include href="../layout_base.html" />
+</html>
+

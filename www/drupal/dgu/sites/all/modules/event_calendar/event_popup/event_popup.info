@@ -1,0 +1,15 @@
+name = Event Pop-up
+description = A module to create and edit events in pop-up.
+package = Event Calendar
+core = 7.x
+
+dependencies[] = event_calendar
+
+
+
+; Information added by Drupal.org packaging script on 2014-04-14
+version = "7.x-1.9"
+core = "7.x"
+project = "event_calendar"
+datestamp = "1397468354"
+

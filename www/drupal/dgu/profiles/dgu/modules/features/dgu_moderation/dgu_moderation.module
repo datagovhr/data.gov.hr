@@ -1,0 +1,236 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Moderation feature.
+ */
+
+include_once 'dgu_moderation.features.inc';
+
+define('PUBLISHED_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
+define('MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+
+/**
+ * Implements hook_menu_alter().
+ */
+function dgu_moderation_menu_alter(&$items) {
+  // Override the node edit menu item title.
+  $items['node/%node/edit']['title callback'] = 'dgu_moderation_edit_tab_title';
+  $items['node/%node/edit']['title arguments'] = array(1);
+
+  // Override the node view menu item title.
+  $items['node/%node/view']['title callback'] = 'dgu_moderation_view_tab_title';
+  $items['node/%node/view']['title arguments'] = array(1);
+
+  // Rename 'My Workbench' to 'Manage my content'.
+  $items['admin/workbench']['title'] = t('Manage my content');
+}
+
+/**
+ * Change the name of the node edit tab, conditionally.
+ *
+ * @param $node
+ *   The node being acted upon.
+ *
+ * @return
+ *   The title for the tab.
+ */
+function dgu_moderation_edit_tab_title($node) {
+
+  foreach (module_implements('dgu_moderation_moderator_permission') as $module) {
+    $function = $module . '_dgu_moderation_moderator_permission';
+    if ($function($node)) {
+      // Don't change the title if user is a moderator.
+      return t('Edit');
+    }
+  }
+  // If user isn't a moderator apply workbench moderation logic.
+  return workbench_moderation_edit_tab_title($node);
+
+}
+
+/**
+ * Change the name of the node edit tab, conditionally.
+ *
+ * @param $node
+ *   The node being acted upon.
+ *
+ * @return
+ *   The title for the tab.
+ */
+function dgu_moderation_view_tab_title($node) {
+  // Don't change the title if user is a moderator.
+  foreach (module_implements('dgu_moderation_moderator_permission') as $module) {
+    $function = $module . '_dgu_moderation_moderator_permission';
+    if ($function($node)) {
+      // Don't change the title if user is a moderator.
+      return t('View');
+    }
+  }
+  // If user isn't a moderator apply workbench moderation logic.
+  return workbench_moderation_view_tab_title($node);
+}
+
+/**
+ * Implements hook_page_alter().
+ *
+ * Remove unwanted bit added to the node edit form by workbench moderation module.
+ */
+function dgu_moderation_page_alter(&$page) {
+
+  //if (isset($page['content']['workbench_block']) && isset($page['content']['system_main']['#form_id']) && strlen($page['content']['system_main']['#form_id']) > 10 && substr($page['content']['system_main']['#form_id'], -10,10) == '_node_form') {
+  if (isset($page['content']['workbench_block']) && $page['content']['system_main']['#node_edit_form']) {
+    unset($page['content']['workbench_block']);
+    unset($page['help']['system_help']);
+
+  }
+}
+
+/**
+ * Helper function called in content type specific form_hook_alter().
+ */
+function dgu_moderation_node_forms_alter (&$form) {
+  $form['revision_information']['#type'] = 'hidden';
+  $form['actions']['publish']['#access'] = TRUE;
+  $form['actions']['publish']['#value'] = t('Submit for moderation');
+  $form['actions']['publish']['#type'] = 'submit';
+  $form['actions']['publish']['#weight'] = 6;
+  $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
+  $form['actions']['submit']['#value'] = t('Save draft');
+  $form['#submit'][] = 'dgu_moderation_node_submit';
+}
+
+function dgu_moderation_node_forms_after_build ($form) {
+  if (isset($form['options']['workbench_moderation_state_new']['#value'])) {
+    $form['options']['workbench_moderation_state_new']['#value'] = $form['workbench_moderation_state_current']['#value'];
+  }
+  elseif($form['revision_information']['workbench_moderation_state_new']['#value']) {
+    $form['revision_information']['workbench_moderation_state_new']['#value'] = $form['workbench_moderation_state_current']['#value'];
+  }
+  return $form;
+}
+
+/**
+ * Custom submit function for data_set_request content type.
+ */
+function dgu_moderation_node_submit($form, &$form_state) {
+  if(isset($form_state['clicked_button'])) {
+
+    $content_types = node_type_get_types();
+    $content_type = $content_types[$form['#node']->type]->name;
+    $action = empty($form['#node']->nid) ? 'created' : 'updated';
+
+    if ($form_state['clicked_button']['#value'] == t('Submit for moderation')) {
+      $form_state['values']['workbench_moderation_state_new'] = 'needs_review';
+      $message = &drupal_static('dgu_moderation_message');
+	  //$content_type = t($content_type);
+	  //$message = t('Your @content has been @action and submitted for moderation. You can update it in @startLinkCon Manage my content @endLink section. <br />Please ensure your @startLinkUser profile @endLink is up to date as we may use these details to contant you about your @content.', array('@content' => $content_type, '@action' => $action, '@startLinkCon' => '<a href="/admin/workbench">', '@startLinkUser' => '<a href="/user">', '@endLink' => '</a>'));
+      //$message = t('Your').' '. t($content_type) .' '. t('has been').' '. t($action).' '. t('and submitted for moderation.').' '.t('You can update it in').' '.'<a href="/admin/workbench">'.t('Manage my content').'</a>'.' '.t('section').'.<br />'.t('Please ensure your').' '.'<a href="/user">'.t('profile').'</a>'.' '.t('is up to date as we may use these details to contact you about your').' ' . t($content_type) . '.';
+	  //$message = 'Your ' . $content_type . ' has been ' . $action . ' and submitted for moderation. You can update it in <a href="/admin/workbench">Manage my content</a> section.<br />Please ensure your <a href="/user">profile</a> is up to date as we may use these details to contact you about your ' . $content_type . '.';
+	  if($content_type == 'App'){
+		$message = t('Vaš prijedlog za dodavanje nove aplikacije je poslan na provjeru. Možete ga izmijeniti odabirom stavke <a href="/admin/workbench">Uredi moje sadržaje</a> na svom korisničkom profilu.<br />Molimo provjerite da li su podaci <a href="/user">korisničkog profila</a> ažurni jer će se te informacije koristiti ukoliko Vas budemo trebali povratno kontaktirati.'); 
+	  }
+	  else {
+		  $message = t('Vaš zahtjev za podacima je poslan na provjeru. Možete ga izmijeniti odabirom stavke <a href="/admin/workbench">Uredi moje sadržaje</a> na svom korisničkom profilu. Molimo provjerite da li su podaci <a href="/user">korisničkog profila</a> ažurni jer će se te informacije koristiti ukoliko Vas budemo trebali kontaktirati.');
+	  }
+    }
+    elseif ($form_state['clicked_button']['#value'] == t('Save draft')) {
+      $form_state['values']['workbench_moderation_state_new'] = 'draft';
+      $message = &drupal_static('dgu_moderation_message');
+      $message = t('Your draft').' '. t($content_type) . ' '.t('has been') .' '. t($action).'. '. t('You can update it in'). ' <a href="/admin/workbench/content/drafts">'.t('My Drafts').' </a>'.t('section').'.<br />'.t('Please ensure your').' '.'<a href="/user">'.t('profile').'</a>'.' '.t('is up to date as we may use these details to contact you about your').' ' . t($content_type) . '.';
+    }
+  }
+}
+
+/**
+ * Implements hook_exit().
+ */
+function dgu_moderation_exit() {
+  if ($message = drupal_static('dgu_moderation_message')) {
+    // Remove all status messages - most likely nothing more than '... has been created/updated'.
+    drupal_get_messages('status');
+    // Add a message created in dgu_data_set_request_node_submit().
+    drupal_set_message($message);
+  }
+}
+
+
+/**
+ * Implements hook_node_presave().
+ */
+function dgu_moderation_node_presave($node) {
+  if($_SERVER['REQUEST_URI'] == '/quickedit/entity/node/' . $node->nid && user_access('edit any ' . $node->type . ' content')) {
+    // Avoid reverting to draft published nodes during quick editing.
+    $node->workbench_moderation_state_new = $node->workbench_moderation['published']->state;
+  }
+}
+
+
+/**
+ * Implements hook_node_load().
+ */
+function dgu_moderation_node_load($nodes, $types) {
+  // Hack to avoid administrators moderating themselves when using quickedit module.
+  // We have other hacks in form alter hooks, this one fixes node_save called without submitting a node edit form.
+  $backtrace = debug_backtrace();
+  $count = count($backtrace);
+  if ($backtrace[--$count]['function'] == '_drupal_shutdown_function' && $backtrace[--$count]['function'] == 'call_user_func_array' && $backtrace[--$count]['function'] == 'workbench_moderation_store') {
+    $node = reset($nodes);
+    // If user can edit any nodes of this type then we don't want this user moderate self actions.
+    // We terminate execution here to avoid workbench moderation reverting current revision to previous revision and preserve the state.
+    if($_SERVER['REQUEST_URI'] == '/quickedit/entity/node/' . $node->nid && user_access('edit any ' . $node->type . ' content')) {
+      die;
+    }
+  }
+}
+
+
+function dgu_moderation_access($account, $node, $permission) {
+  if(!($node->uid == $account->uid || user_access($permission) || $node->status)) {
+    return NODE_ACCESS_DENY;
+  }
+}
+
+function dgu_moderation_get_node_grants(&$node){
+  $grants = array();
+  $grants[] = array(
+    'realm' => 'moderation',
+    'gid' => MODERATOR_GRANT,
+    'grant_view' => 1,
+    'grant_update' => 1,
+    'grant_delete' => 1,
+    'priority' => 1,
+
+  );
+  if ($node->uid) {
+    // Grant author permission only if author is not anonymous.
+    $grants[] = array(
+      'realm' => 'moderation',
+      'gid' => $node->uid,
+      'grant_view' => 1,
+      'grant_update' => 1,
+      'grant_delete' => 1,
+      'priority' => 1,
+    );
+  }
+  if ($node->status == 1) {
+    $grants[] = array(
+      'realm' => 'moderation',
+      'gid' => PUBLISHED_GRANT,
+      'grant_view' => 1,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+      'priority' => 1,
+    );
+  }
+  return $grants;
+}
+
+function dgu_moderation_get_account_grants(&$account, $permission){
+  $grants = array();
+  $grants['moderation'] = array($account->uid);
+  $grants['moderation'] = array($account->uid, PUBLISHED_GRANT);
+  if (user_access($permission, $account)) {
+    $grants['moderation'] = array(MODERATOR_GRANT);
+  }
+  return $grants;
+}

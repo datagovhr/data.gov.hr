@@ -1,0 +1,13 @@
+name = Rules URL Argument
+description = Rules actions and conditions based on url arguments.
+core = 7.x
+package = "Rules"
+dependencies[] = rules
+package = "Rules"
+
+; Information added by drupal.org packaging script on 2012-09-03
+version = "7.x-1.2"
+core = "7.x"
+project = "rules_url_argument"
+datestamp = "1346684559"
+

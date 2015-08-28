@@ -1,0 +1,74 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Blog Feature feature.
+ */
+
+define('BLOG_MODERATION_PERMISSION', 'edit any blog content');
+
+include_once 'dgu_blog.features.inc';
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_blog_menu_breadcrumb_alter(&$active_trail, $item) {
+  if ($item['path'] == 'blog') {
+    $active_trail = array(
+      current($active_trail),
+      array('title' => 'Blog', 'href' => 'blog', 'localized_options' => array()),
+      array('title' => 'Blog', 'href' => 'blog', 'localized_options' => array())
+    );
+
+    drupal_set_title('Latest Blogs');
+  }
+  // Reset breadcrumb to '/blog' only on 'Most popular blog posts'
+  elseif ($item['path'] == 'blog/popular') {
+    $active_trail = array(
+      current($active_trail),
+      array('title' => 'Blog', 'href' => 'blog', 'localized_options' => array())
+    );
+    drupal_set_title('Most popular Blogs');
+  }
+  if (isset($item['map'][1]->type) && $item['map'][1]->type == 'blog') {
+    $active_trail[2] = $active_trail[1];
+    $active_trail[1] = array('title' => 'Blog', 'href' => 'blog', 'localized_options' => array());
+  }
+
+}
+
+function dgu_blog_dgu_moderation_moderator_permission(&$node) {
+  if ($node->type == 'blog') {
+    return user_access(BLOG_MODERATION_PERMISSION);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dgu_blog_form_blog_node_form_alter(&$form, &$form_state, $form_id) {
+  unset($form['actions']['preview']);
+  $form['#attributes']['class'][] = "boxed";
+
+  if (!user_access(BLOG_MODERATION_PERMISSION)) {
+    dgu_moderation_node_forms_alter($form);
+  }
+  else {
+    $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
+  }
+}
+
+function dgu_blog_node_access($node, $op, $account) {
+  if ($op != 'create' && is_object($node) && $node->type == 'forum') {
+    return dgu_moderation_access($account, $node, BLOG_MODERATION_PERMISSION);
+  }
+}
+
+function dgu_blog_node_access_records($node) {
+  if (($node->type == 'blog')) {
+    return dgu_moderation_get_node_grants($node);
+  }
+}
+
+function dgu_blog_node_grants($account, $op) {
+  return dgu_moderation_get_account_grants($account, BLOG_MODERATION_PERMISSION);
+}

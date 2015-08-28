@@ -1,0 +1,344 @@
+<?php
+
+/**
+ * @file
+ * install file for Event Calendar module.
+ */
+
+// Machine name for our custom taxonomy.
+define('TAXONOMY_TYPE', 'event_calendar_status');
+
+/**
+ * Implements hook_install().
+ *
+ * We are using hook_install() to define our node content type and its fields
+ *
+ * @see is_node_type_already_exist()
+ * @see _create_taxonomy()
+ * @see _create_content_type()
+ */
+function event_calendar_install() {
+  $node_type = 'event_calendar';
+  $ext = 1;
+  $node_type = is_node_type_already_exist($node_type, $ext);
+  variable_set('event_calendar_node_type', $node_type);
+  // Call a custom function to create taxonomy.
+  _create_taxonomy();
+  // Call a custom function to create content type.
+  _create_content_type();
+}
+
+/**
+ * Function to create UNIQUE content type name.
+ *
+ * @see node_type_get_types()
+ */
+function is_node_type_already_exist($node_type, $ext) {
+  $types = node_type_get_types();
+  foreach ($types as $type) {
+    if ($node_type == $type->type) {
+      $node_type = $node_type . '_' . $ext;
+      $node_type = is_node_type_already_exist($node_type, $ext + 1);
+    }
+  }
+  return $node_type;
+}
+/**
+ * Implements hook_uninstall().
+ *
+ * We are using hook_uninstall() to delete our node content type and its fields
+ *
+ * @see field_delete_instance()
+ * @see field_delete_field()
+ * @see taxonomy_term_delete()
+ * @see variable_del()
+ */
+function event_calendar_uninstall() {
+  $node_type = variable_get('event_calendar_node_type', 'event_calendar');
+  // Delete content type and all fields.
+  $instances = field_info_instances('node', $node_type);
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_instance($instance);
+  }
+  $instances = field_info_instances('node', $node_type);
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_field($instance);
+  }
+  
+  $result= db_query("SELECT nid FROM {node} AS n WHERE n.type = '$node_type'");
+  foreach ($result as $record) {
+    node_delete($record->nid);
+  }
+  
+  node_type_delete($node_type);
+
+  // Delete peristant variables that control settings.
+  variable_del('node_preview_' . $node_type);
+  variable_del('node_options_' . $node_type);
+  variable_del('node_submitted_' . $node_type);
+  variable_del('comment_' . $node_type);
+  variable_del('event_calendar_node_type');
+  // Delete all terms associated with status vocabulary.
+  $vid = db_query('SELECT vid FROM {taxonomy_vocabulary} WHERE machine_name = ' . ':machine_name',
+  array(':machine_name' => TAXONOMY_TYPE))->fetchField();
+  $terms = taxonomy_get_tree($vid);
+  if ($terms) {
+    foreach ($terms as $key => $tid) {
+      taxonomy_term_delete($tid->tid);
+    }
+  }
+  // Delete vocabulary.
+  taxonomy_vocabulary_delete($vid);
+  // Rebuild database cache of node types.
+  node_types_rebuild();
+  // Rebuild database cache of menus.
+  menu_rebuild();
+}
+
+/**
+ * Function to create a taxonomy and attach fields to it.
+ *
+ * @see taxonomy_vocabulary_save()
+ * @see taxonomy_vocabulary_save()
+ */
+function _create_taxonomy() {
+  $t = get_t();
+  $term = new stdClass();
+  $term->name = $t('Event Status');
+  $term->machine_name = TAXONOMY_TYPE;
+  $term->description = $t('Description');
+  $term->heirarchy = 1;
+  $term->module = 'event_calendar';
+  $term->weight = 1;
+  taxonomy_vocabulary_save($term);
+
+  // Get the vocabulary ID.
+  $vid = db_query('SELECT vid FROM {taxonomy_vocabulary} WHERE machine_name = ' . ':machine_name',
+  array(':machine_name' => TAXONOMY_TYPE))->fetchField();
+  $terms = array(
+    array(
+      'name' => 'approved',
+      'vid' => $vid,
+      'weight' => 1,
+    ),
+    array(
+      'name' => 'pending',
+      'vid' => $vid,
+      'weight' => 2,
+    ),
+    array(
+      'name' => 'denied',
+      'vid' => $vid,
+      'weight' => 2,
+    ),
+  );
+  foreach ($terms as $term) {
+    taxonomy_term_save((object) $term);
+  }
+}
+
+/**
+ * Function to create content type and its fields.
+ *
+ * @see node_add_body_field()
+ * @see node_type_save()
+ * @see field_create_field()
+ * @see field_create_instance()
+ */
+function _create_content_type() {
+  $t = get_t();
+  $node_type = variable_get('event_calendar_node_type', 'event_calendar');
+  $node = array(
+    'type' => $node_type,
+    'name' => $t('Event Calendar'),
+    'base' => 'node_content',
+    'locked' => TRUE,
+    'description' => $t('A content type to create events for calendar.'),
+    'title_label' => $t('Event Title'),
+    'custom' => TRUE,
+  );
+  $content_type = node_type_set_defaults($node);
+  // Add body field using drupal function.
+  $body_instance = node_add_body_field($content_type, $t('Event Description'));
+  $body_instance['widget']['settings']['rows'] = 7;
+  $body_instance['settings']['display_summary'] = 0;
+  $body_instance['settings']['text_processing'] = 0;
+  // Save our changes to the body field instance.
+  field_update_instance($body_instance);
+  // Save our changes node type.
+  node_type_save($content_type);
+
+  // Add peristant variables that control settings.
+  variable_set('node_preview_' . $node_type, 0);
+  variable_set('node_options_' . $node_type, array('status'));
+  variable_set('node_submitted_' . $node_type, 0);
+  variable_set('comment_' . $node_type, 1);
+
+  // Create all the fields we are adding to our content type.
+  foreach (_event_calendar_installed_fields($t) as $field) {
+    field_create_field($field);
+  }
+
+  // Create all the instances for our fields.
+  foreach (_event_calendar_installed_instances($t) as $instance) {
+    $instance['entity_type'] = 'node';
+    $instance['bundle'] = $node_type;
+    field_create_instance($instance);
+  }
+
+}
+
+/**
+ * Callback to define fields.
+ */
+function _event_calendar_installed_fields($t) {
+  return array(
+    'event_calendar_status' => array(
+      'field_name' => 'event_calendar_status',
+      'type' => 'taxonomy_term_reference',
+      'label' => $t('Status'),
+      'settings' => array(
+        'allowed_values' => array(
+          array(
+            'vocabulary' => TAXONOMY_TYPE,
+            'parent' => 0,
+          ),
+        ),
+      ),
+    ),
+    'event_calendar_date' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'required' => TRUE, 
+      'entity_types' => array(),
+      'field_name' => 'event_calendar_date',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'module' => 'date',
+      'settings' => array(
+        'enddate' => 1,
+        'enddate_required' => 0,
+        'granularity' => array(
+          'day' => 'day',
+          'hour' => 'hour',
+          'minute' => 'minute',
+          'month' => 'month',
+          'second' => 0,
+          'year' => 'year',
+        ),
+        'repeat' => 0,
+        'timezone_db' => 'UTC',
+        'todate' => 'optional',
+        'tz_handling' => 'none',
+      ),
+      'translatable' => '0',
+      'type' => 'datetime',
+    ),
+  );
+
+}
+
+/**
+ * Callback to define instances of fields.
+ */
+function _event_calendar_installed_instances($t) {
+  return array(
+    'event_calendar_status' => array(
+      'field_name'  => 'event_calendar_status',
+      'label' => $t('Status'),
+      'description' => $t('Describe Event status'),
+      'default_value' => array('0' => array('tid' => _get_term_from_name('pending', TAXONOMY_TYPE))),
+      'required' => TRUE,
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'settings' => array(),
+            'type' => 'hidden',
+          ),
+          'teaser' => array(
+            'label' => 'hidden',
+            'settings' => array(),
+            'type' => 'hidden',
+          ),
+      ),
+      'widget' => array(
+        'type' => 'options_select',
+        'weight' => 10,
+      ),
+    ),
+    'event_calendar_date' => array(
+      'field_name'  => 'event_calendar_date',
+      'deleted' => '0',
+      'description' => 'Select the start and end dates for this event.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'date',
+          'settings' => array(
+            'format_type' => 'long',
+            'fromto' => 'both',
+            'multiple_from' => '',
+            'multiple_number' => '',
+            'multiple_to' => '',
+            'show_repeat_rule' => 'show',
+          ),
+          'type' => 'date_default',
+          'weight' => 1,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'label' => 'Date',
+      'settings' => array(
+        'default_value' => 'now',
+        'default_value2' => 'blank',
+        'default_value_code' => '',
+        'default_value_code2' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'date',
+        'settings' => array(
+          'increment' => '15',
+          'input_format' => 'm/d/Y - H:i:s',
+          'input_format_custom' => '',
+          'label_position' => 'above',
+          'repeat_collapsed' => 0,
+          'text_parts' => array(),
+          'year_range' => '-3:+3',
+        ),
+        'type' => 'date_popup',
+        'weight' => '-3',
+      ),
+    ),
+  );
+}
+
+/**
+ * Helper function to dynamically get the tid from the term_name
+ *
+ * @param string $term_name
+ *   Term name data.
+ * @param string $vocabulary_name
+ *   Name of the vocabulary to search the term in it.
+ *
+ * @return string Term id
+ *   Term ID of the found term or else FALSE.
+ */
+function _get_term_from_name($term_name, $vocabulary_name) {
+  if ($vocabulary = taxonomy_vocabulary_machine_name_load($vocabulary_name)) {
+    $tree = taxonomy_get_tree($vocabulary->vid);
+    foreach ($tree as $term) {
+      if ($term->name == $term_name) {
+        return $term->tid;
+      }
+    }
+  }
+  return NULL;
+}

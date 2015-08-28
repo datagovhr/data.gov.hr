@@ -1,0 +1,1950 @@
+<?php
+
+define('REPLY_INHERIT', -1);
+define('REPLY_FORM_PAGE_SAME', 1);
+define('REPLY_FORM_PAGE_CUSTOM', 2);
+define('REPLY_ACCESS_NONE', 0);
+define('REPLY_ACCESS_READ', 1);
+define('REPLY_ACCESS_FULL', 2);
+define('REPLY_LIST_FLAT', 1);
+define('REPLY_LIST_TREE', 2);
+define('REPLY_STATUS_DISABLED', 0);
+define('REPLY_STATUS_ENABLED', 1);
+define('REPLY_ALLOW_REPLY', 1);
+define('REPLY_DENY_REPLY', 0);
+define('REPLY_LOCKED', 1);
+define('REPLY_UNLOCKED', 0);
+define('REPLY_DELETED', 1);
+define('REPLY_DELETE_REPLACE', 1);
+define('REPLY_DELETE_ALL', 2);
+
+require_once 'reply.field.inc';
+
+/**
+ * Implements hook_init().
+ */
+function reply_init() {
+  // Deny editing fields for locked bundles
+  if (arg(0) == 'admin' && arg(1) == 'structure' && arg(2) == 'reply' && in_array(arg(4), array('fields', 'display'))) {
+    $bundle = menu_get_object('reply_bundle', 3);
+    if ($bundle && $bundle->locked == REPLY_LOCKED) {
+      drupal_set_message(t("This bundle is locked and cannot be edited."), 'error');
+      drupal_goto('admin/structure/reply');
+    }
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function reply_menu() {
+  $items = array();
+
+  $items['reply/%reply'] = array(
+    'title' => 'View',
+    'page callback' => 'reply_view',
+    'page arguments' => array(1),
+    'access callback' => 'reply_access',
+    'access arguments' => array('view', 1),
+  );
+
+  $items['reply/%reply/view'] = array(
+    'title' => 'View',
+    'access callback' => 'reply_access',
+    'access arguments' => array('view', 1),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10
+  );
+
+  $items['reply/%reply/edit'] = array(
+    'title' => 'Edit',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reply_edit_form', 1),
+    'access callback' => 'reply_access',
+    'access arguments' => array('update', 1),
+    'type' => MENU_LOCAL_TASK
+  );
+
+  $items['reply/%reply/delete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('reply_delete_form', 1),
+    'access callback' => 'reply_access',
+    'access arguments' => array('delete', 1),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10
+  );
+
+  if (module_exists('devel')) {
+    $items['reply/%reply/devel'] = array(
+      'title' => 'Devel',
+      'page callback' => 'devel_load_object',
+      'page arguments' => array('reply', 1),
+      'access arguments' => array('access devel information'),
+      'type' => MENU_LOCAL_TASK,
+      'file path' => drupal_get_path('module', 'devel'),
+      'file' => 'devel.pages.inc',
+      'weight' => 100,
+    );
+    $items['reply/%reply/devel/load'] = array(
+      'title' => 'Load',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+    );
+    $items['reply/%reply/devel/render'] = array(
+      'title' => 'Render',
+      'page callback' => 'devel_render_object',
+      'page arguments' => array('reply', 1),
+      'access arguments' => array('access devel information'),
+      'type' => MENU_LOCAL_TASK,
+      'file path' => drupal_get_path('module', 'devel'),
+      'file' => 'devel.pages.inc',
+      'weight' => 100,
+    );
+  }
+  $items['reply/add/%/%/%'] = array(
+    'title' => 'Reply',
+    'page callback' => 'reply_post',
+    'page arguments' => array(2, 3, 4),
+    'access callback' => 'reply_access',
+    'access arguments' => array('create', 3, NULL, 2),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['admin/content/reply'] = array(
+    'title' => 'Replies',
+    'page callback' => 'reply_page_list',
+    'access arguments' => array('administer replies'),
+    'description' => 'Manage reply types.',
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_admin_menu_map().
+ */
+function reply_admin_menu_map() {
+  if (!user_access('administer reply bundles')) {
+    return;
+  }
+  $map['admin/structure/reply/%reply_bundle'] = array(
+    'parent' => 'admin/structure/reply',
+    'arguments' => array(
+      array('%reply_bundle' => array_keys(reply_load_bundles())),
+    ),
+  );
+  return $map;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function reply_permission() {
+  $out = array(
+    'administer replies' => array(
+      'title' => t('Administer replies'),
+      'restrict access' => TRUE,
+    ),
+    'administer reply bundles' => array(
+      'title' => t('Administer bundles'),
+      'restrict access' => TRUE,
+    )
+  );
+
+  $bundles = reply_load_bundles();
+  foreach ($bundles AS $bundle) {
+    $out += array(
+      "view $bundle->bundle reply" => array(
+        'title' => t('%bundle: View replies', array('%bundle' => $bundle->name)),
+      ),
+      "edit $bundle->bundle reply" => array(
+        'title' => t('%bundle: Edit replies', array('%bundle' => $bundle->name)),
+      ),
+      "edit own $bundle->bundle reply" => array(
+        'title' => t('%bundle: Edit own reply', array('%bundle' => $bundle->name)),
+      ),
+      "delete $bundle->bundle reply" => array(
+        'title' => t('%bundle: Delete replies', array('%bundle' => $bundle->name)),
+      ),
+      "delete own $bundle->bundle reply" => array(
+        'title' => t('%bundle: Delete own reply', array('%bundle' => $bundle->name)),
+      ),
+      "post $bundle->bundle reply" => array(
+        'title' => t('%bundle: Post reply', array('%bundle' => $bundle->name)),
+      )
+    );
+  }
+
+  return $out;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function reply_theme() {
+  return array(
+    'replies' => array(
+      'render element' => 'elements',
+      'template' => 'replies'
+    ),
+    'reply' => array(
+      'render element' => 'elements',
+      'template' => 'reply'
+    ),
+    'reply_post_forbidden' => array(
+      'variables' => array('entity' => NULL, 'entity_type' => NULL, 'instance_id' => NULL, 'form' => NULL, 'bundle' => NULL),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_entity_info().
+ */
+function reply_entity_info() {
+  $return = array(
+    'reply' => array(
+      'label' => t('Reply'),
+      'module' => 'reply',
+      'entity class' => 'Entity',
+      'controller class' => 'EntityAPIController',
+      'base table' => 'reply',
+      'static cache' => TRUE,
+      'field cache' => TRUE,
+      'load hook' => 'reply_load',
+      'uri callback' => 'reply_uri',
+      'label callback' => 'reply_label',
+      'fieldable' => TRUE,
+      'entity keys' => array(
+        'id' => 'id',
+        'bundle' => 'bundle',
+      ),
+      'bundle keys' => array(
+        'bundle' => 'bundle'
+      ),
+      'bundles' => array(),
+      'view modes' => array(
+        'full' => array(
+          'label' => t('Full'),
+          'custom settings' => FALSE
+        )
+      )
+    )
+  );
+
+  $return['reply_bundle'] = array(
+    'label' => t('Reply bundle'),
+    'entity class' => 'ReplyBundle',
+    'controller class' =>  'EntityAPIControllerExportable',
+    'base table' => 'reply_bundle',
+    'fieldable' => FALSE,
+    'bundle of' => 'reply',
+    'exportable' => TRUE,
+    'entity keys' => array(
+      'id' => 'id',
+      'name' => 'bundle',
+      'label' => 'name',
+    ),
+    'access callback' => 'reply_bundle_access',
+    'module' => 'reply',
+    'admin ui' => array(
+      'path' => 'admin/structure/reply',
+      'file' => 'reply_bundle.admin.inc',
+      'controller class' => 'ReplyBundleUIController',
+    ),
+  );
+
+  return $return;
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ *
+ * Build the reply bundles here as reply_load_bundles() needs entity info to be
+ * fully build already.
+ */
+function reply_entity_info_alter(&$info) {
+  foreach (reply_load_bundles() as $bundle) {
+    $info['reply']['bundles'][$bundle->bundle] = array(
+      'label' => t($bundle->name),
+      'admin' => array(
+        'path' => 'admin/structure/reply/manage/%reply_bundle',
+        'bundle argument' => 4,
+        'real path' => 'admin/structure/reply/manage/'. $bundle->bundle,
+        'access arguments' => array('administer reply bundles'),
+      ),
+    );
+  }
+}
+
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function reply_entity_property_info_alter(&$info) {
+  $info['reply']['properties']['uid']['type'] = 'user';
+  $info['reply']['properties']['parent']['type'] = 'reply';
+  $info['reply']['properties']['created']['type'] = 'date';
+  $info['reply']['properties']['changed']['type'] = 'date';
+}
+
+/**
+ * Loads field instance settings.
+ * We could use field_read_instances bud it makes unnecessary joins
+ * to gather data that are not needed here.
+ */
+function reply_load_instance($id) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  if (!isset($cache[$id])) {
+    $instance = db_select('field_config_instance', 'i')->fields('i')->condition('id', $id)->execute()->fetchObject();
+    $instance->data = unserialize($instance->data);
+    $cache[$id] = $instance;
+  }
+
+  return $cache[$id];
+}
+
+
+/**
+ * Returns all defined reply bundles.
+ *
+ * @return array
+ */
+function reply_load_bundles() {
+  return entity_load_multiple_by_name('reply_bundle');
+}
+
+/**
+ * Returns loaded bundle object.
+ *
+ * @param $bundle string
+ *    The name of bundle to load.
+ * @return object
+ */
+function reply_bundle_load($bundle) {
+  $bundle = strtr($bundle, array('-' => '_'));
+
+  $bundles = entity_load_multiple_by_name('reply_bundle', isset($bundle) ? array($bundle) : FALSE);
+  return isset($bundle) ? reset($bundles) : FALSE;
+}
+
+
+/**
+ * Returns list of IDs that belong to field instance.
+ *
+ * @param $instance_id mixed
+ *    The numeric ID of field instance.
+ * @return array
+ */
+function reply_get_instance($instance_id) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  if (!isset($cache[$instance_id])) {
+    $cache[$instance_id] = db_select('reply', 'r')->fields('r', array('id'))->condition('instance_id', $instance_id)->orderBy('created')->execute()->fetchCol();
+  }
+
+  return $cache[$instance_id];
+}
+
+
+/**
+ * Returns bundle name by it's machine readable name.
+ *
+ * @param $bundle object
+ *   Reply object.
+ * @return string
+ */
+function reply_bundle_label($bundle) {
+  return $bundle->name;
+}
+
+/**
+ * Access callback for reply bundles.
+ */
+function reply_bundle_access($op, $type = NULL, $account = NULL) {
+  return user_access('administer reply bundles', $account);
+}
+
+/**
+ * Returns entity label.
+ *
+ * @param $entity object
+ *    The entity object.
+ * @return string
+ */
+function reply_label(&$entity) {
+  return t('Reply #!id', array('!id' => $entity->id));
+}
+
+
+/**
+ * Returns entity uri.
+ *
+ * @param $entity object
+ *    The entity object.
+ * @return array
+ */
+function reply_uri(&$entity) {
+  return array(
+    'path' => 'reply/'. $entity->id
+  );
+}
+
+/**
+ * Loads entity by ID.
+ *
+ * @param $id mixed
+ *    The entity ID to be loaded.
+ * @return object
+ *    The entity object or FALSE if not found.
+ */
+function reply_load($id) {
+  $list = reply_load_multiple(array($id));
+  return $list ? reset($list) : FALSE;
+}
+
+/**
+ * Loads all entities from ID list.
+ *
+ * @param $ids array
+ *    The list of entity IDs to be loaded.
+ * @param $conditions array
+ *    Conditions by which entities can be filtered.
+ * @param $reset bool
+ *    True to load uncached entities.
+ */
+function reply_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('reply', $ids, $conditions, $reset);
+}
+
+/**
+ * Deletes all entities from ID list.
+ *
+ * @param $ids array
+ *    The list of entity IDs.
+ * @param $op
+ *    Type of deletion.
+ *    REPLY_DELETE_REPLACE will change entity for placeholder,
+ *    REPLY_DELETE_ALL will delete entity and it's children.
+ */
+function reply_delete_multiple($ids, $op = REPLY_DELETE_REPLACE) {
+  // We need to update positions before deletion
+  $replies = reply_load_multiple($ids);
+  foreach ($replies AS $reply) {
+    switch ($op) {
+      case REPLY_DELETE_REPLACE:
+          // We need to delete FIELDS content so it won't affect
+          // search, views or any other logic.
+          foreach ($reply AS $key => $val) {
+            if (stripos($key, 'field_') === 0) {
+              $reply->{$key} = NULL;
+            }
+          }
+          $reply->deleted = REPLY_DELETED;
+          reply_save($reply);
+        break;
+
+      case REPLY_DELETE_ALL:
+        $children = reply_get_children($reply->id);
+        if ($children) {
+          reply_delete_multiple($children, $op);
+        }
+        entity_get_controller('reply')->delete(array($reply->id));
+        reply_positions_delete($reply);
+        break;
+    }
+  }
+}
+
+
+/**
+ * Decreases a position of all replies that were preceded be the reply that is
+ * about to be deleted.
+ *
+ * @param $reply object
+ *    The entity object that is about to be deleted.
+ */
+function reply_positions_delete($reply) {
+  db_update('reply')
+    ->expression('position', 'position - 1')
+    ->condition('entity_id', $reply->entity_id)
+    ->condition('entity_type', $reply->entity_type)
+    ->condition('instance_id', $reply->instance_id)
+    ->condition('position', $reply->position, '>')
+    ->execute();
+}
+
+
+/**
+ * Deletes a single entity by ID.
+ *
+ * @param $id mixed
+ *    The ID of entity to be deleted.
+ */
+function reply_delete($id, $op = REPLY_DELETE_REPLACE) {
+  reply_delete_multiple(array($id), $op);
+}
+
+
+/**
+ * Saves new entity or updates existing one into database.
+ *
+ * @param $entity object
+ *    The entity object to be saved.
+ * @return object
+ *    The saved entity object. With populated ID property.
+ */
+function reply_save($entity) {
+  // We validate Field API fields before saving into database.
+  try {
+    field_attach_validate('reply', $entity);
+  } catch (FieldValidationException $e) {
+    return FALSE;
+  }
+
+  // Language is mandatiory.
+  if (empty($entity->language)) {
+    $entity->language = LANGUAGE_NONE;
+  }
+
+  // In case created timestamp is missing we create it.
+  if (!isset($entity->created) || empty($entity->created)) {
+    $entity->created = REQUEST_TIME;
+  }
+
+  // If we are creating a new entity we need to prepare other entities
+  // by changing their position so the new entity could be attached
+  // at the end of list or put within the list.
+  reply_positions_add($entity);
+
+  // We always save timestamp of last action.
+  $entity->changed = REQUEST_TIME;
+
+  return entity_get_controller('reply')->save($entity);
+}
+
+
+/**
+ * Rearranges positions of associated entities when new entity is created.
+ *
+ * @param $entity object
+ *    The entity object that is about to be saved.
+ */
+function reply_positions_add(&$entity) {
+  if (isset($entity->id)) {
+    return;
+  }
+
+  // Appending entity at the end of the list.
+  if ($entity->parent == 0) {
+    $position = (int) db_select('reply', 'r')
+      ->fields('r', array('position'))
+      ->condition('entity_id', $entity->entity_id)
+      ->condition('entity_type', $entity->entity_type)
+      ->condition('instance_id', $entity->instance_id)
+      ->orderBy('position', 'DESC')
+      ->range(0, 1)
+      ->execute()
+      ->fetchField();
+    // We have position of the last entity so we need to increment the position by one
+    $position++;
+    // Set the position for new entity.
+    $entity->position = $position;
+  }
+  // Putting entity within the list.
+  else {
+    $parent = reply_load($entity->parent);
+    $position = db_select('reply', 'r')
+      ->fields('r', array('position'))
+      ->condition('entity_id', $entity->entity_id)
+      ->condition('entity_type', $entity->entity_type)
+      ->condition('instance_id', $entity->instance_id)
+      ->condition('depth', $parent->depth, '<=')
+      ->condition('position', $parent->position, '>')
+      ->orderBy('position', 'ASC')
+      ->range(0, 1)
+      ->execute()
+      ->fetchField();
+    // Set the position for new entity. If our parent was the last reply (the
+    // above query returns FALSE), position after the parent.
+    $entity->position = empty($position) ? $parent->position + 1 : $position;
+
+    // We need to reorder the list by increasing a position number by one for all
+    // entities that have position equal or greater then position that we'll set
+    // for the new entity.
+    db_update('reply')
+      ->expression('position', 'position + 1')
+      ->condition('entity_id', $entity->entity_id)
+      ->condition('entity_type', $entity->entity_type)
+      ->condition('instance_id', $entity->instance_id)
+      ->condition('position', $entity->position, '>=')
+      ->execute();
+  }
+}
+
+
+/**
+ * Returns list of entity IDs belonging to user.
+ *
+ * @param $uid mixed
+ *    The user ID.
+ * @return array
+ *    Array of entity IDs.
+ */
+function reply_get_user($uid) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  if (!isset($cache[$uid])) {
+    $cache[$uid] = db_select('reply', 'r')->fields('r', array('id'))->condition('uid', $uid)->orderBy('created')->execute()->fetchCol();
+  }
+
+  return $cache[$uid];
+}
+
+
+/**
+ * Returns loaded entity objects belonging to user.
+ *
+ * @param $uid mixed
+ *    The user ID.
+ * @return array
+ *    Array of loaded entity objects.
+ */
+function reply_load_user($uid) {
+  $ids = reply_get_user($uid);
+  return reply_load_multiple($ids);
+}
+
+
+/**
+ * Returns array of entity children IDs.
+ *
+ * @param $id int
+ *    The ID of parent entity.
+ * @param $recursive bool
+ *    TRUE to get children from whole tree, FALS to get only direct children.
+ * @return array
+ *    The array with IDs of entity children.
+ * @todo find out performance side of this function and use static cache if necessary
+ */
+function reply_get_children($id, $recursive = FALSE) {
+  if (!$recursive) {
+    return db_select('reply', 'r')->fields('r', array('id'))->condition('parent', $id)->orderBy('created')->execute()->fetchCol();
+  } else {
+    $parent = db_select('reply', 'r')
+      ->fields('r', array('id', 'depth', 'entity_id', 'entity_type', 'instance_id', 'bundle'))
+      ->condition('id', $id)
+      ->execute()
+      ->fetchObject();
+
+    $maxDepth = db_select('reply', 'r')
+      ->fields('r', array('depth'))
+      ->condition('instance_id', $parent->instance_id)
+      ->condition('entity_id', $parent->entity_id)
+      ->condition('entity_type', $parent->entity_type)
+      ->condition('bundle', $parent->bundle)
+      ->orderBy('depth', 'DESC')
+      ->range(0, 1)
+      ->execute()
+      ->fetchField();
+
+    if ($maxDepth == $parent->depth) {
+      return FALSE;
+    }
+
+    $children = db_select('reply', 'r')
+      ->fields('r', array('id'))
+      ->condition('parent', $id)
+      ->execute()
+      ->fetchCol();
+
+    if (empty($children)) {
+      return FALSE;
+    }
+
+    $buffer = array();
+    $startDepth = $parent->depth;
+    $startDepth++;
+    $buffer[$startDepth] = $children;
+
+    for ($i = $startDepth; $i <= $maxDepth; $i++) {
+      if (isset($buffer[$i])) {
+        foreach ($buffer[$i] AS $chid) {
+          $n = $i;
+          $n++;
+          $data = db_select('reply', 'r')
+            ->fields('r', array('id'))
+            ->condition('parent', $chid)
+            ->execute()
+            ->fetchCol();
+          if ($data) {
+            $buffer[$n] = $data;
+          } else {
+            break;
+          }
+        }
+      }
+    }
+
+    $return = array();
+    foreach ($buffer AS $list) {
+      $return = array_merge($return, $list);
+    }
+
+    return $return;
+  }
+}
+
+
+/**
+ * Loads children entities for parent entity.
+ *
+ * @param $uid mixed
+ *    The ID of paren entity.
+ * @return array
+ *    Array of loaded children entity objects.
+ */
+function reply_load_children($id) {
+  $ids = reply_get_children($id);
+  return reply_load_multiple($ids);
+}
+
+
+/**
+ * Returns list of entity IDs that belong under specific entity, field and field instance.
+ *
+ * @param $entity_id mixed
+ *    The ID of content entity.
+ * @param $entity_type string
+ *    Type or bundle machine-readable name of target entity.
+ * @param $instance_id mixed
+ *    The instance id of target entity.
+ * @return array
+ *    Array of entity IDs.
+ */
+function reply_get_entity($entity_id, $entity_type, $instance_id) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  if (!isset($cache[$entity_type][$entity_id][$instance_id])) {
+    $cache[$entity_type][$entity_id][$instance_id] = db_select('reply', 'r')
+      ->fields('r', array('id'))
+      ->condition('entity_id', $entity_id)
+      ->condition('entity_type', $entity_type)
+      ->condition('instance_id', $instance_id)
+      ->orderBy('position')->execute()->fetchCol();
+  }
+
+  return $cache[$entity_type][$entity_id][$instance_id];
+}
+
+
+/**
+ * Returns list of loaded entities that belong under specific entity, field and field instance.
+ *
+ * @param $entity_id mixed
+ *    The ID of content entity.
+ * @param $entity_type string
+ *    Type or bundle machine-readable name of target entity.
+ * @param $instance_id mixed
+ *    The instance id of target entity.
+ * @return array
+ *    Array of loaded entity objects.
+ */
+function reply_load_entity($entity_id, $entity_type, $instance_id) {
+  $ids = reply_get_entity($entity_id, $entity_type, $instance_id);
+  return reply_load_multiple($ids);
+}
+
+
+/**
+ * Implements hook_preprocess_replies().
+ */
+function template_preprocess_replies(&$vars) {
+  $vars = array_merge($vars, $vars['elements']);
+  $vars['replies'] = array();
+
+  if ($vars['access'] <> REPLY_ACCESS_NONE && !empty($vars['elements']['replies']) && (user_access('administer replies') || user_access('view '. $vars['bundle'] .' reply'))) {
+    foreach ($vars['elements']['replies'] AS $reply) {
+      $vars['replies'][$reply->id]['#markup'] = theme('reply', array('elements' => array('reply' => $reply, 'display' => $vars['display'], 'access' => $vars['access'], 'allow_reply' => $vars['allow_reply'], 'bundle' => $vars['bundle'])));
+    }
+  }
+
+  $vars['reply_form'] = '';
+  $vars['links'] = '';
+  if (($vars['access'] == REPLY_ACCESS_FULL && user_access('administer replies')) ||  user_access('administer replies') || user_access('post '. $vars['bundle'] .' reply')) {
+      if ($vars['form'] == REPLY_FORM_PAGE_SAME) {
+          $vars['reply_form'] = drupal_get_form('reply_add_form_'. $vars['entity_id'] .'_'. $vars['instance_id'], $vars['entity_id'], $vars['instance_id'], 0);
+      }
+
+      if ($vars['form'] == REPLY_FORM_PAGE_CUSTOM) {
+          $vars['links']['add_reply']['#markup'] = l(t('Add reply'), 'reply/add/'. $vars['entity_id'] .'/'. $vars['instance_id'] .'/0');
+      }
+  } else {
+     $vars['links']['reply_post_forbidden'] = array(
+         '#markup' => theme('reply_post_forbidden', array('entity_type' => $vars['entity_type'], 'entity'=>$vars['entity'],'instance_id' => $vars['instance_id'], 'form'=>$vars['form'], 'bundle' => $vars['bundle'])),
+     );
+  }
+}
+
+/**
+ * Implement hook_forms to set the callback to reply_add_form for forms to add replies on the same page as the entity
+ * which relates to the reply
+ */
+function reply_forms($form_id, $args) {
+    $forms = array();
+
+    if (stripos($form_id, 'reply_add_form') === 0) {
+        $forms[$form_id] = array(
+            'callback' => 'reply_add_form',
+        );
+    }
+
+    return $forms;
+}
+
+/**
+ * Implements hook_preprocess_reply().
+ */
+function template_preprocess_reply(&$vars) {
+  $vars = array_merge($vars, $vars['elements']);
+  if (!isset($vars['reply'])) {
+    $vars['reply'] = $vars['#reply'];
+  }
+  $reply = $vars['reply'];
+
+  if ($reply->uid == 0) {
+    $vars['author'] = variable_get('anonymous', t('Anonymous'));
+  } else {
+    $replyUser = user_load($reply->uid);
+    $vars['author'] = theme('username', array('account' => $replyUser));
+  }
+
+  $vars['created'] = format_date($reply->created, 'medium');
+  $vars['changed'] = format_date($reply->changed, 'medium');
+
+  if (isset($vars['elements']['display']) && $vars['elements']['display'] == REPLY_LIST_TREE) {
+    $vars['classes_array'][] = 'push-'. $reply->depth;
+  }
+
+  $vars['entity_id'] = $reply->entity_id;
+  $vars['entity_type'] = $reply->entity_type;
+
+  $vars['links'] = array();
+  // Load settings for this entity
+  $settings = _reply_get_settings($reply);
+
+  //$settings = reply_load_instance($reply->instance_id);
+  if (isset($vars['access']) && $vars['access'] == REPLY_ACCESS_FULL) {
+    if (reply_access('reply', $reply)) {
+      if ($settings['form'] == REPLY_FORM_PAGE_SAME) {
+        $vars['links']['reply']['#markup'] = l(t('Reply'), 'reply/add/' . $reply->entity_id . '/' . $reply->instance_id . '/' . $reply->id, array('query' => array('destination' => $_GET['q'])));
+      }
+      else {
+        $vars['links']['reply']['#markup'] = l(t('Reply'), 'reply/add/' . $reply->entity_id . '/' . $reply->instance_id . '/' . $reply->id);
+      }
+    }
+
+    if (reply_access('update', $reply)) {
+      if ($settings['form'] == REPLY_FORM_PAGE_SAME) {
+        $vars['links']['edit']['#markup'] = l(t('Edit'), 'reply/' . $reply->id . '/edit', array('attributes' => array('query' => array('destination' => $_GET['q']))));
+      }
+      else {
+        $vars['links']['edit']['#markup'] = l(t('Edit'), 'reply/' . $reply->id . '/edit', array('query' => array('destination' => $_GET['q'])));
+      }
+    }
+    if (reply_access('delete', $reply)) {
+      if ($settings['form'] == REPLY_FORM_PAGE_SAME) {
+        $vars['links']['delete']['#markup'] = l(t('Delete'), 'reply/' . $reply->id . '/delete', array('attributes' => array('query' => array('destination' => $_GET['q']))));
+      }
+      else {
+        $vars['links']['delete']['#markup'] = l(t('Delete'), 'reply/' . $reply->id . '/delete', array('query' => array('destination' => $_GET['q'])));
+      }
+    }
+  }
+
+  $uri = reply_uri($reply);
+  $vars['permalink'] = l(t('Permalink'), $uri['path'], array('class' => 'permalink', 'rel' => 'bookmark'));
+  $vars['submitted'] = t('Submitted by !username on !datetime', array('!username' => $vars['author'], '!datetime' => $vars['created']));
+
+  field_attach_prepare_view('reply', array($reply->id => $reply), 'full');
+  $vars['content'] = field_attach_view('reply', $reply, 'full');
+
+  if ($reply->deleted == REPLY_DELETED) {
+    $bundle = reply_bundle_load($reply->bundle);
+    $vars['content']['deleted']['#markup'] = t("Content of this @bundle was deleted.", array('@bundle' => strtolower($bundle->name)));
+    if (isset($vars['links']['edit'])) {
+      unset($vars['links']['edit']);
+    }
+  }
+}
+
+/**
+ * Get the settings for a reply entity instance.
+ * @param $reply
+ * @return array of reply settings for a reply entity instance.
+ */
+function _reply_get_settings($reply) {
+  $instance_id = $reply->instance_id;
+  $instance = reply_load_instance($instance_id);
+  $entity_type = $instance->entity_type;
+  $entity = entity_load($entity_type, array($reply->entity_id));
+  $entity = reset($entity);
+  $field_info = field_info_field($instance->field_name);
+  $bundle = $field_info['settings']['bundle'];
+  $entity_settings = field_get_items($entity_type, $entity, $instance->field_name);
+  $entity_settings = empty($entity_settings) ? $instance->data['settings'] : reset($entity_settings);
+  return reply_settings($bundle, $field_info['settings'], $instance->data['settings'], $entity_settings);
+}
+
+
+/**
+ * Reply form wrapper that will display parent reply entity.
+ */
+function reply_post($entity_id, $instance_id, $parent) {
+  $instance = reply_load_instance($instance_id);
+  $entity_type = $instance->entity_type;
+  $entity = entity_load($entity_type, array($entity_id));
+  $entity = reset($entity);
+  $entity_url = '/' . $entity->type . '/' . $entity_id;
+  $build = array();
+
+  if ($parent) {
+    $parent_reply = reply_load($parent);
+    if (!$parent_reply) {
+      drupal_set_message(t('The %reply you are replying to does not exist.', array('reply' => $parent_reply->bundle)), 'error');
+      drupal_goto($entity_url);
+    }
+    if (!reply_access('reply', $parent_reply)) {
+      drupal_set_message(t('You are not authorized to view this reply.'), 'error');
+      drupal_goto($entity_url);
+    }
+    $build['reply_parent'] = reply_view($parent_reply);
+  }
+  // This is a reply post to an entity, not in response to a reply post, so render the node and the form
+  else {
+    $entities = entity_load($entity_type, array($entity_id));
+    $build['reply_entity'] = entity_view($entity_type, $entities, 'teaser');
+  }
+  $build['reply_form'] = drupal_get_form('reply_add_form', $entity_id, $instance_id, $parent);
+
+  return $build;
+}
+
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function reply_menu_breadcrumb_alter(&$active_trail, $item){
+  foreach ($active_trail as $key => $crumb) {
+    if (!empty($crumb['path']) && $crumb['path'] == 'reply/add/%/%/%') {
+      $instance_id = $item['page_arguments'][1];
+      $instance = reply_load_instance($instance_id);
+      $entity_type = $instance->entity_type;
+      $entity_id = $item['page_arguments'][0];
+      $entity = entity_load($entity_type, array($entity_id));
+      $entity = reset($entity);
+      $parent_path = drupal_get_path_alias($entity_type . '/' . $entity_id);
+      $crumb['href'] = $parent_path;
+      $crumb['title'] = htmlspecialchars_decode($entity->title);
+      $active_trail[$key] = $crumb;
+    }
+  }
+}
+
+
+/**
+ * Form for adding new entity.
+ */
+function reply_add_form($form, &$form_state, $entity_id, $instance_id, $parent = 0) {
+  // Try to load the field instance data
+  $instance = reply_load_instance($instance_id);
+  $entity_type = $instance->entity_type;
+  if (!$instance) {
+    //@todo watchdog
+    return FALSE;
+  }
+
+  // Find out if we're working with reply field
+  $field_info = field_info_field($instance->field_name);
+  if ($field_info['type'] != 'reply') {
+    //@todo watchdog
+    return FALSE;
+  }
+
+  // Load the entity we're working with
+  $entity = entity_load($entity_type, array($entity_id));
+  $entity = reset($entity);
+
+  // Find reply bundle set for this field
+  $field = field_info_field($instance->field_name);
+  $bundle = $field['settings']['bundle'];
+
+  // Load parent to get depth level.
+  if (!empty($parent)) {
+    $parent = reply_load($parent);
+    $depth = $parent->depth;
+    $parent = $parent->id;
+    // Increase depth level for new entity
+    $depth++;
+  } else {
+    $depth = 0;
+  }
+
+  // Create a redirect path if destination is missing
+  $redirect = entity_uri($entity_type, $entity);
+
+  // Load settings for this entity
+  $entity_settings = field_get_items($entity_type, $entity, $instance->field_name);
+  $entity_settings = empty($entity_settings) ? $instance->data['settings'] : reset($entity_settings);
+  $settings = reply_settings($bundle, $field_info['settings'], $instance->data['settings'], $entity_settings);
+
+  // Check settings
+  if ($settings['access'] != REPLY_ACCESS_FULL) {
+    if ($settings['form'] == REPLY_FORM_PAGE_CUSTOM) {
+      //@todo watchdog
+      drupal_goto($redirect['path']);
+    } else {
+      return;
+    }
+  }
+
+  $form['id'] = array(
+    '#type' => 'value',
+    '#value' => NULL
+  );
+  $form['uid'] = array(
+    '#type' => 'value',
+    '#value' => $GLOBALS['user']->uid
+  );
+  $form['bundle'] = array(
+    '#type' => 'value',
+    '#value' => $bundle
+  );
+  $form['position'] = array(
+    '#type' => 'value',
+    '#value' => NULL
+  );
+  $form['parent'] = array(
+    '#type' => 'value',
+    '#value' => $parent
+  );
+  $form['entity_id'] = array(
+    '#type' => 'value',
+    '#value' => $entity_id
+  );
+  $form['entity_type'] = array(
+    '#type' => 'value',
+    '#value' => $entity_type
+  );
+  $form['instance_id'] = array(
+    '#type' => 'value',
+    '#value' => $instance_id
+  );
+  $form['created'] = array(
+    '#type' => 'value',
+    '#value' => REQUEST_TIME
+  );
+  $form['language'] = array(
+    '#type' => 'value',
+    '#value' => isset($entity->language) ? $entity->language : LANGUAGE_NONE,
+  );
+  $form['depth'] = array(
+    '#type' => 'value',
+    '#value' => $depth
+  );
+  $form['hostname'] = array(
+    '#type' => 'value',
+    '#value' => ip_address()
+  );
+  $form['redirect'] = array(
+    '#type' => 'value',
+    '#value' => $redirect['path']
+  );
+
+  //@todo permissions + approval settings
+  $form['status'] = array(
+    '#type' => 'value',
+    '#value' => 1,
+  );
+  $form['deleted'] = array(
+    '#type' => 'value',
+    '#value' => 0,
+  );
+
+  $reply = (object) array('bundle' => $bundle);
+  field_attach_form('reply', $reply, $form, $form_state);
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+    '#weight' => 100
+  );
+
+  return $form;
+}
+
+
+/**
+ * Validation handler for adding new entity form.
+ */
+function reply_add_form_validate($form, &$form_state) {
+  entity_form_field_validate('reply', $form, $form_state);
+}
+
+
+/**
+ * Submit handler for adding new entity form.
+ */
+function reply_add_form_submit($form, &$form_state) {
+  $reply = (object) $form_state['values'];
+  entity_form_submit_build_entity('reply', $reply, $form, $form_state);
+  reply_save($reply);
+  $bundle = reply_bundle_load($reply->bundle);
+
+  // Verbalsite action
+  isset($form_state['values']['id'])
+  ? drupal_set_message(t('%bundle was successfully updated.', array('%bundle' => $bundle->name)))
+  : drupal_set_message(t('%bundle was successfully created.', array('%bundle' => $bundle->name)));
+
+  // Set redirect
+  if (isset($form_state['values']['redirect'])) {
+    $redirect = $form_state['values']['redirect'];
+  } else {
+    $entity = entity_load($reply->entity_type, array($reply->entity_id));
+    $entity = reset($entity);
+    $redirect = entity_uri($reply->entity_type, $entity);
+  }
+
+  $form_state['redirect'] = $redirect;
+}
+
+
+/**
+ * Form for editing an existing entity.
+ */
+function reply_edit_form($form, &$form_state, $reply) {
+  if ($reply->deleted == REPLY_DELETED) {
+    $form['deleted']['#markup'] = t("This entity has been deleted and cannot be edited.");
+    return $form;
+  }
+
+  $form['id'] = array(
+    '#type' => 'value',
+    '#value' => $reply->id
+  );
+  $form['uid'] = array(
+    '#type' => 'value',
+    '#value' => $reply->uid
+  );
+  $form['bundle'] = array(
+    '#type' => 'value',
+    '#value' => $reply->bundle
+  );
+  $form['parent'] = array(
+    '#type' => 'value',
+    '#value' => $reply->parent
+  );
+  $form['position'] = array(
+    '#type' => 'value',
+    '#value' => $reply->position
+  );
+  $form['entity_id'] = array(
+    '#type' => 'value',
+    '#value' => $reply->entity_id
+  );
+  $form['entity_type'] = array(
+    '#type' => 'value',
+    '#value' => $reply->entity_type
+  );
+  $form['instance_id'] = array(
+    '#type' => 'value',
+    '#value' => $reply->instance_id
+  );
+  $form['created'] = array(
+    '#type' => 'value',
+    '#value' => $reply->created
+  );
+  $form['language'] = array(
+    '#type' => 'value',
+    '#value' => $reply->language
+  );
+  $form['depth'] = array(
+    '#type' => 'value',
+    '#value' => $reply->depth
+  );
+  $form['hostname'] = array(
+    '#type' => 'value',
+    '#value' => $reply->hostname
+  );
+
+  if (user_access('administer replies')) {
+    $form['status'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enabled'),
+      '#default_value' => $reply->status,
+      '#weight' => 100
+    );
+  } else {
+    $form['status'] = array(
+      '#type' => 'value',
+      '#value' => $reply->status
+    );
+  }
+  $form['deleted'] = array(
+    '#type' => 'value',
+    '#default_value' => $reply->deleted
+  );
+
+  field_attach_form('reply', $reply, $form, $form_state);
+
+  $form['buttons']['#weight'] = 101;
+  $form['buttons']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit')
+  );
+  $form['buttons']['delete']['#markup'] = l(t('Delete'), 'reply/'. $reply->id .'/delete');
+
+  // Recycle functions
+  $form['#validate'] = array('reply_add_form_validate');
+  $form['#submit'] = array('reply_add_form_submit');
+
+  return $form;
+}
+
+
+/**
+ * Form for deleting an existing entity.
+ */
+function reply_delete_form($form, &$form_state, $reply) {
+  $bundle = reply_bundle_load($reply->bundle);
+
+  $question = t('Are you sure you want to delete this !bundle?', array('!bundle' => strtolower($bundle->name)));
+  $form['id'] = array(
+    '#type' => 'value',
+    '#value' => $reply->id
+  );
+  $form['type'] = array(
+    '#type' => 'radios',
+    '#title' => t('Type'),
+    '#options' => array(
+      REPLY_DELETE_ALL => t("Delete entity and it's children"),
+      REPLY_DELETE_REPLACE => t("Delete entity but preserve it's children using placeholder")
+    ),
+    '#default_value' => REPLY_DELETE_ALL,
+    '#required' => TRUE,
+  );
+  $form['bundle'] = array(
+    '#type' => 'value',
+    '#value' => $bundle->bundle
+  );
+  $path = 'admin/structure/reply';
+
+  if ($reply->deleted == REPLY_DELETED) {
+    unset($form['type']['#options'][REPLY_DELETE_REPLACE]);
+  }
+
+  if (!user_access('administer replies') && !user_access("delete $bundle->bundle reply")) {
+    unset($form['type']['#options'][REPLY_DELETE_ALL]);
+  }
+
+  return confirm_form($form, $question, $path);
+}
+
+
+/**
+ * Submit handler for deleting an existing entity
+ */
+function reply_delete_form_submit($form, &$form_state) {
+  reply_delete($form_state['values']['id'], $form_state['values']['type']);
+  $message = t('@bundle was successfully deleted.', array('@bundle' => ucfirst($form_state['values']['bundle'])));
+  drupal_set_message($message);
+  $form_state['redirect'] = 'admin/structure/reply';
+}
+
+/**
+ * Determine whether the current user may perform the given operation on the
+ * specified reply.
+ *
+ * @param $op
+ *   The operation to be performed on the reply. Possible values are:
+ *   - "view"
+ *   - "update"
+ *   - "delete"
+ *   - "create"
+ *   - "reply"
+ * @param $reply
+ *   The reply object on which the operation is to be performed, or reply field
+ *   instance ID for "create" operation.
+ * @param $account
+ *   Optional, a user object representing the user for whom the operation is to
+ *   be performed. Determines access for a user other than the current user.
+ * @param $entity_id
+ *   Optional unless for the "create" operation, the entity ID that the reply is
+ *   to be posted against.
+ * @return
+ *   TRUE if the operation may be performed, FALSE otherwise.
+ */
+function reply_access($op, $reply, $account = NULL, $entity_id = NULL) {
+  $rights = &drupal_static(__FUNCTION__, array());
+
+  if (empty($reply) || !in_array($op, array('view', 'update', 'delete', 'create', 'reply'), TRUE)) {
+    // If there was no reply to check against, or the $op was not one of the
+    // supported ones, we return access denied.
+    return FALSE;
+  }
+  // If no user object is supplied, the access check is for the current user.
+  if (empty($account)) {
+    $account = $GLOBALS['user'];
+  }
+
+  // $reply may be either an object or a reply field instance ID.
+  if (is_object($reply)) {
+    $cid = $reply->id;
+  }
+  elseif (is_numeric($reply)) {
+    if (empty($entity_id)) {
+      return FALSE;
+    }
+    else {
+      $cid = $reply . ':' . $entity_id;
+    }
+  }
+  else {
+    return FALSE;
+  }
+  $cid = is_object($reply) ? $reply->id : $reply;
+
+  // If we've already checked access for this reply, user and op, return from
+  // cache.
+  if (isset($rights[$account->uid][$cid][$op])) {
+    return $rights[$account->uid][$cid][$op];
+  }
+
+  // Check reply field instance ID.
+  if (($op == 'create' || $op == 'reply')) {
+    if ($op == 'create' && !is_numeric($reply)) {
+      $rights[$account->uid][$cid][$op] = FALSE;
+      return FALSE;
+    }
+
+    $instance_id = is_object($reply) ? $reply->instance_id : $reply;
+    $instance = reply_load_instance($instance_id);
+    if (empty($instance)) {
+      $rights[$account->uid][$cid][$op] = FALSE;
+      return FALSE;
+    }
+
+    // Find out if we're working with reply field
+    $field_info = field_info_field($instance->field_name);
+    if ($field_info['type'] != 'reply') {
+      $rights[$account->uid][$cid][$op] = FALSE;
+      return FALSE;
+    }
+
+    // Find reply bundle set for this field
+    $field = field_info_field($instance->field_name);
+    if (empty($field['settings']['bundle'])) {
+      $rights[$account->uid][$cid][$op] = FALSE;
+      return FALSE;
+    }
+
+    if ($op == 'create') {
+      $reply = $field['settings']['bundle'];
+    }
+
+    // Load the entity we're working with
+    if ($op == 'reply' && empty($entity_id)) {
+      $entity_id = $reply->entity_id;
+    }
+    $entity = entity_load($instance->entity_type, array($entity_id));
+    if (empty($entity)) {
+      $rights[$account->uid][$cid][$op] = FALSE;
+      return FALSE;
+    }
+    $entity = reset($entity);
+
+    // Load settings for this entity
+    $entity_settings = field_get_items($instance->entity_type, $entity, $instance->field_name);
+    $entity_settings = empty($entity_settings) ? $instance->data['settings'] : reset($entity_settings);
+    $settings = reply_settings($field['settings']['bundle'], $field_info['settings'], $instance->data['settings'], $entity_settings);
+
+    if ($settings['access'] != REPLY_ACCESS_FULL || ($op == 'reply' && $settings['allow_reply'] != REPLY_ALLOW_REPLY)) {
+      $rights[$account->uid][$cid][$op] = FALSE;
+      return FALSE;
+    }
+  }
+
+  if (user_access('administer replies', $account)) {
+    $rights[$account->uid][$cid][$op] = TRUE;
+    return TRUE;
+  }
+
+  switch ($op) {
+    case 'create' :
+      $rights[$account->uid][$cid][$op] = user_access("post $reply reply");
+      break;
+
+    case 'reply' :
+      $rights[$account->uid][$cid][$op] = reply_access('create', $reply->instance_id, NULL, $reply->entity_id);
+      break;
+
+    case 'view' :
+      $rights[$account->uid][$cid][$op] = user_access("view $reply->bundle reply");
+      break;
+
+    case 'update' :
+      $rights[$account->uid][$cid][$op] = ($reply->uid == $account->uid && user_access("edit own $reply->bundle reply")) || user_access("edit $reply->bundle reply");
+      break;
+
+    case 'delete' :
+      $rights[$account->uid][$cid][$op] = ($reply->uid == $account->uid && user_access("delete own $reply->bundle reply")) || user_access("delete $reply->bundle reply");
+      break;
+  }
+
+  return $rights[$account->uid][$cid][$op];
+}
+
+/**
+ * Builds array for displaying an entity.
+ *
+ * @param $reply object
+ *    The reply entity object.
+ * @param $entity object
+ *    The entity reply is attached to.
+ * @param $view_mode string
+ *    The mode of view to use to generate a view.
+ * @param $langcode string
+ *    The language code of this view.
+ * @return array
+ *    Formatted arrat for rendering.
+ *
+ * @todo reconsider logic due to reply view in full page mode / view as attached
+ *    entity through field
+ */
+function reply_view($reply, $entity = NULL, $view_mode = 'full', $langcode = NULL) {
+  if (!isset($langcode)) {
+    $langcode = $GLOBALS['language_content']->language;
+  }
+
+  // @todo maybe remove $entity from arguments and load here
+  $entity_id = array($reply->entity_id);
+  $entity = $entity ? $entity : entity_load($reply->entity_type, $entity_id);
+
+  // Populate $reply->content with a render() array.
+  reply_build_content($reply, $view_mode, $langcode);
+
+  $build = $reply->content;
+  // We don't need duplicate rendering info in reply->content.
+  unset($reply->content);
+
+  $build += array(
+    '#theme' => 'reply__' . $reply->bundle,
+    '#reply' => $reply,
+    '#entity' => $entity,
+    '#view_mode' => $view_mode,
+    '#language' => $langcode,
+  );
+
+  // Allow modules to modify the structured content.
+  $type = 'reply';
+  drupal_alter(array('reply_view', 'entity_view'), $build, $type);
+
+  return $build;
+}
+
+
+/**
+ * Builds content property for displaying an entity.
+ *
+ * @param $reply object
+ *    The reply entity object.
+ * @param $view_mode string
+ *    The mode of view to use to generate a view.
+ * @param $langcode string
+ *    The language code of this view.
+ */
+function reply_build_content($reply, $view_mode = 'full', $langcode = NULL) {
+  if (!isset($langcode)) {
+    $langcode = $GLOBALS['language_content']->language;
+  }
+
+  // Remove previously built content, if exists.
+  $reply->content = array();
+
+  // Build fields content.
+  field_attach_prepare_view('reply', array($reply->id => $reply), $view_mode, $langcode);
+  entity_prepare_view('reply', array($reply->id => $reply), $langcode);
+  $reply->content += field_attach_view('reply', $reply, $view_mode, $langcode);
+
+  $reply->content['links'] = array(
+    '#theme' => 'links__reply',
+    '#pre_render' => array('drupal_pre_render_links'),
+    '#attributes' => array('class' => array('links', 'inline')),
+  );
+
+  // Allow modules to make their own additions to the entity.
+  module_invoke_all('reply_view', $reply, $view_mode, $langcode);
+  module_invoke_all('entity_view', $reply, 'reply', $view_mode, $langcode);
+}
+
+/**
+ * Finds out if bundle exists.
+ *
+ * @param $bundle string
+ *    The machine-readable name of bundle to look for.
+ * @return bool
+ */
+function reply_bundle_exists($bundle) {
+  return reply_bundle_load($bundle) ? TRUE : FALSE;
+}
+
+
+/**
+ * Form for adding or editing an existing entity.
+ */
+function reply_bundle_form($form, &$form_state, $bundle = NULL, $op = 'edit') {
+  if (isset($bundle) && $bundle->locked == REPLY_LOCKED) {
+    drupal_set_message(t("This bundle is locked and cannot be edited."), 'error');
+    drupal_goto('admin/structure/reply');
+  }
+
+  if ($op == 'clone') {
+    $bundle->name .= ' (cloned)';
+    $bundle->bundle = '';
+  }
+
+  $form['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#max_length' => 128,
+    '#required' => TRUE,
+    '#default_value' => isset($bundle->name) ? $bundle->name : NULL
+  );
+  if (isset($bundle->bundle)) {
+    $form['bundle'] = array(
+      '#type' => 'value',
+      '#value' => $bundle->bundle
+    );
+  } else {
+    $form['bundle'] = array(
+      '#type' => 'machine_name',
+      '#maxlength' => 64,
+      '#machine_name' => array(
+        'exists' => 'reply_bundle_exists',
+        'source' => array('name'),
+      )
+    );
+  }
+  $form['description'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Description'),
+    '#rows' => 4,
+    '#default_value' => isset($bundle->description) ? $bundle->description : NULL
+  );
+  $form['access'] = array(
+    '#type' => 'radios',
+    '#title' => t('Default access on new content'),
+    '#options' => array(
+      REPLY_ACCESS_NONE => t('Disabled (Hidden)'),
+      REPLY_ACCESS_READ => t('Read only (Closed)'),
+      REPLY_ACCESS_FULL => t('Read and write (Open)')
+    ),
+    '#default_value' => isset($bundle->access) ? $bundle->access : REPLY_ACCESS_FULL
+  );
+  $form['display'] = array(
+    '#type' => 'radios',
+    '#title' => t('Display'),
+    '#options' => array(
+      REPLY_LIST_FLAT => t('Flat list'),
+      REPLY_LIST_TREE => t('Threaded list')
+    ),
+    '#default_value' => isset($bundle->display) ? $bundle->display : REPLY_LIST_TREE
+  );
+  $form['form'] = array(
+    '#type' => 'radios',
+    '#title' => t('Form position'),
+    '#options' => array(
+      REPLY_FORM_PAGE_SAME => t('On the same page'),
+      REPLY_FORM_PAGE_CUSTOM => t('On custom page')
+    ),
+    '#default_value' => isset($bundle->form) ? $bundle->form : REPLY_FORM_PAGE_SAME
+  );
+  $form['allow_reply'] = array(
+    '#type' => 'radios',
+    '#title' => t('Allow replying on replies'),
+    '#options' => array(
+      REPLY_ALLOW_REPLY => t('Allow'),
+      REPLY_DENY_REPLY => t('Deny')
+    ),
+    '#default_value' => isset($bundle->allow_reply) ? $bundle->allow_reply : REPLY_ALLOW_REPLY
+  );
+  $form['locked'] = array(
+    '#type' => 'value',
+    '#value' => REPLY_UNLOCKED
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit')
+  );
+
+  return $form;
+}
+
+
+/**
+ * Submit handler for adding a new or editing an existing entity.
+ */
+function reply_bundle_form_submit($form, &$form_state) {
+  // Build the reply bundle
+  $reply_bundle = entity_ui_form_submit_build_entity($form, $form_state);
+
+  // Save and go back.
+  $reply_bundle->save();
+  $form_state['redirect'] = 'admin/structure/reply';
+}
+
+
+/**
+ * Saves new or existing bundle object into database.
+ */
+function reply_save_bundle($bundle, $verbalise = TRUE) {
+  $bundle->save();
+}
+
+
+/**
+ * Form for deleting an existing bundle.
+ */
+function reply_bundle_delete_form($form, &$form_state, $bundle) {
+  if ($bundle->locked == REPLY_LOCKED) {
+    drupal_set_message(t("This bundle is locked and cannot be deleted."), 'error');
+    drupal_goto('admin/structure/reply');
+  }
+
+  $question = t('Are you sure you want do delete bundle %bundle?', array('%bundle' => $bundle->name));
+  $form['bundle'] = array(
+    '#type' => 'value',
+    '#value' => $bundle,
+  );
+  $path = 'admin/structure/reply';
+
+  return confirm_form($form, $question, $path);
+}
+
+
+/**
+ * Submit handler for deleting an existing bundle form.
+ */
+function reply_bundle_delete_form_submit($form, &$form_state) {
+  $bundle = $form_state['values']['bundle'];
+  $message = t('Bundle %name was successfully deleted.', array('%name' => $bundle->name));
+  $bundle->delete();
+  drupal_set_message($message);
+  $form_state['redirect'] = 'admin/structure/reply';
+}
+
+
+/**
+ * Deletes bundle from database.
+ */
+function reply_bundle_delete($bundle) {
+  $bundle->delete();
+}
+
+
+/**
+ * Page callback with list of all entities.
+ */
+function reply_page_list() {
+  $return = array();
+  $return['filter'] = drupal_get_form('reply_list_filter_form');
+
+  $header = array(
+    array('data' => t('ID'), 'field' => 'id', 'sort' => 'DESC'),
+    array('data' => t('Author'), 'field' => 'uid'),
+    array('data' => t('Status'), 'field' => 'status'),
+    array('data' => t('Created'), 'field' => 'created'),
+    array('data' => t('Bundle'), 'field' => 'bundle'),
+    array('data' => t('Language'), 'field' => 'language'),
+    array('data' => t('Parent'), 'field' => 'language'),
+    array('data' => t('Operations'), 'colspan' => 3)
+  );
+
+  $ids = db_select('reply', 'r')
+    ->fields('r', array('id'))
+    ->extend('PagerDefault')->limit(20)
+    ->extend('TableSort')->orderByHeader($header)
+    ->execute()
+    ->fetchCol();
+
+  $languages = language_list();
+  $loadBundles = reply_load_bundles();
+  $bundles = array();
+  foreach ($loadBundles AS $bundle) {
+    $bundles[$bundle->bundle] = $bundle->name;
+  }
+  unset($loadBundles);
+
+  $rows = array();
+  $replies = reply_load_multiple($ids);
+  foreach ($replies AS $reply) {
+    if ($reply->language == LANGUAGE_NONE || isset($languages[$reply->language])) {
+      $language = $reply->language == LANGUAGE_NONE ? t('Language neutral') : t($languages[$reply->language]->name);
+    }
+    else {
+      $language = t('Undefined language (@langcode)', array('@langcode' => $reply->language));
+    }
+
+    if ($parent_entity = entity_load_single($reply->entity_type, $reply->entity_id)) {
+      $parent_link = l(entity_label($reply->entity_type, $parent_entity), $reply->entity_type . '/' . $reply->entity_id);
+    }
+    else {
+      $parent_link = 'Missing: ' . $reply->entity_type . '/' . $reply->entity_id;
+    }
+
+    $row = array();
+    $user = user_load($reply->uid);
+    $row[] = $reply->id;
+    $row[] = theme('username', array('account' => $user));
+    $row[] = ($reply->status == 1) ? t('published') : t('not published');
+    $row[] = format_date($reply->created, 'short');
+    $row[] = $bundles[$reply->bundle];
+    $row[] = $language;
+    $row[] = $parent_link;
+    $row[] = l(t('View'), 'reply/'. $reply->id .'/view');
+    $row[] = l(t('Edit'), 'reply/'. $reply->id .'/edit', array('query' => drupal_get_destination()));
+    $row[] = l(t('Delete'), 'reply/'. $reply->id .'/delete', array('query' => drupal_get_destination()));
+    $rows[] = $row;
+  }
+
+  $return['list'] = array(
+    '#theme' => 'table',
+    '#header' => $header,
+    '#rows' => $rows,
+    'empty' => t('There are no replies created.')
+  );
+
+  $return['pager'] = array(
+    '#theme' => 'pager'
+  );
+
+  return $return;
+}
+
+
+/**
+ * Form to filter replies on administration page.
+ */
+function reply_list_filter_form($form, &$form_state) {
+  $form['filter'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => FALSE,
+    '#title' => t('Filter')
+  );
+  $form['filter']['status'] = array(
+    '#type' => 'select',
+    '#title' => t('Status'),
+    '#options' => array(
+      'all' => t('Any'),
+      1 => t('published'),
+      0 => t('not published')
+    ),
+    '#default_value' => isset($_GET['status']) ? $_GET['status'] : NULL
+  );
+  $bundles = reply_load_bundles();
+  $form['filter']['bundle'] = array(
+    '#type' => 'select',
+    '#title' => t('Bundle'),
+    '#options' => array(
+      'all' => t('Any')
+    ),
+    '#default_value' => isset($_GET['bundle']) ? $_GET['bundle'] : NULL
+  );
+  foreach ($bundles AS $bundle) {
+    $form['filter']['bundle']['#options'][$bundle->bundle] = $bundle->name;
+  }
+
+  $form['filter']['buttons']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit')
+  );
+  $form['filter']['buttons']['reset']['#markup'] = l(t('Reset'), $_GET['q']);
+
+  return $form;
+}
+
+
+/**
+ * Submit handler fo filtering form.
+ */
+function reply_list_filter_form_submit($form, &$form_state) {
+  $args = array();
+  if ($form_state['values']['status'] != 'all') {
+    $args['status'] = $form_state['values']['status'];
+  }
+  if ($form_state['values']['bundle'] != 'all') {
+    $args['bundle'] = $form_state['values']['bundle'];
+  }
+  $form_state['redirect'] = array(
+    'path' => $_GET['q'],
+    'options' => array(
+      'query' => $args
+    )
+  );
+}
+
+
+/**
+ * Returns settings for displaying replies.
+ *
+ * @param $bundle_settings array
+ *    Array of settings defined for bundle.
+ * @param $field_settings array
+ *    Array of settings defined for field.
+ * @param $instance_settings array
+ *    Array of settings defined for field instance.
+ * @param $entity_settings array
+ *    Array of settings define for entity.
+ * @return array
+ *    Array of settings computed from hierarchy settings.
+ */
+function reply_settings($bundle_settings, $field_settings, $instance_settings, $entity_settings) {
+  $bundle_settings = is_array($bundle_settings) ? $bundle_settings : (array) reply_bundle_load($bundle_settings);
+
+  foreach ($entity_settings AS $field => $value) {
+    if ($value == REPLY_INHERIT) {
+      if ($instance_settings[$field] == REPLY_INHERIT) {
+        if ($field_settings[$field] == REPLY_INHERIT) {
+          $entity_settings[$field] = $bundle_settings[$field];
+        } else {
+          $entity_settings[$field] = $field_settings[$field];
+        }
+      } else {
+        $entity_settings[$field] = $instance_settings[$field];
+      }
+    }
+  }
+
+  $defaults = array(
+    'access' => REPLY_ACCESS_FULL,
+    'display' => REPLY_LIST_TREE,
+    'form' => REPLY_FORM_PAGE_SAME,
+    'allow_reply' => REPLY_ALLOW_REPLY,
+  );
+  return array_merge($defaults, $entity_settings);
+}
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function reply_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
+  // We allow only one value per reply field
+  // so we don't get duplicated list of replies on field view.
+  // Also there is no point in having field required.
+  if ($form['#field']['type'] == 'reply') {
+    $form['field']['cardinality']['#default_value'] = 1;
+    $form['field']['cardinality']['#access'] = FALSE;
+    $form['instance']['required']['#default_value'] = 0;
+    $form['instance']['required']['#access'] = FALSE;
+  }
+}
+
+
+/**
+ * Filter-out disabled entities and their children.
+ *
+ * @param $ids array
+ *    Array of entity IDs.
+ *
+ * @return array
+ *    Filtered array of entity IDs.
+ */
+function reply_filter_disabled(array &$ids) {
+  if (empty($ids)) {
+    return;
+  }
+  $query = db_select('reply', 'r')
+    ->fields('r', array('id'))
+    ->condition('id', $ids, 'IN')
+    ->condition('status', 0)
+    ->execute()
+    ->fetchCol();
+
+  $disable = $query;
+  foreach ($query AS $id) {
+    if ($children = reply_get_children($id, TRUE)) {
+      $disable = array_merge($disable, $children);
+    }
+  }
+
+  $ids = array_diff($ids, $disable);
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function reply_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'reply') . '/views',
+  );
+}
+
+function theme_reply_post_forbidden($variables) {
+    $entity = $variables['entity'];
+    $entity_type = $variables['entity_type'];
+    $entity_info = entity_extract_ids($entity_type, $entity);
+    $entity_id = $entity_info[0];
+    $form = $variables['form'];
+    $instance_id = $variables['instance_id'];
+    $bundle = $variables['bundle'];
+    global $user;
+
+    $authenticated_post_reply = &drupal_static(__FUNCTION__, NULL);
+
+    if (!$user->uid) {
+        if (!isset($authenticated_post_reply)) {
+            // We only output a link if we are certain that users will get permission
+            // to post replies by logging in.
+
+            $reply_roles = user_roles(TRUE, 'post '. $bundle .' reply');
+            $authenticated_post_reply = isset($reply_roles[DRUPAL_AUTHENTICATED_RID]);
+        }
+
+        if ($authenticated_post_reply) {
+            // We cannot use drupal_get_destination() because these links
+            // sometimes appear on /node and taxonomy listing pages.
+            if ($form == REPLY_FORM_PAGE_CUSTOM) {
+                $destination = array('destination' =>  'reply/add/' . $entity_id . '/' . $instance_id . '/0');
+            }
+            else {
+                $entity_uri = entity_uri($entity_type, $entity);
+                $entity_uri = $entity_uri['path'];
+                $destination = array('destination' => "$entity_uri#reply-add-form");
+            }
+
+            if (variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL)) {
+                // Users can register themselves.
+                return t('<a href="@login">Log in</a> or <a href="@register">register</a> to post a reply', array('@login' => _reply_get_login_url($destination), '@register' => _reply_get_register_url($destination)));
+            }
+            else {
+                // Only admins can add new users, no public registration.
+                return t('<a href="@login">Log in</a> to post a reply', array('@login' => _reply_get_login_url($destination)));
+            }
+
+        }
+    }
+}
+
+function _reply_get_login_url($destination){
+    return url('user/login', array('query' => $destination));
+}
+
+function _reply_get_register_url($destination){
+    return url('user/register', array('query' => $destination));
+}

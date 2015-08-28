@@ -1,0 +1,15 @@
+# ckanext-importlib
+-e git+https://github.com/okfn/ckanext-importlib.git@4b66ea20f44e4dc7fa9b697b73e2fb7c523e59bf#egg=ckanext-importlib
+
+# datautildate
+-e git+https://github.com/okfn/datautildate.git@e2777147bd11cded237867416270f8f9d16503fc#egg=datautildate
+
+# datautil
+-e git+https://github.com/okfn/datautil@2df83f8919d622bf056d8760c6f8a261d6bcad60#egg=datautil
+
+# from ckanext-spatial: [-r /var/lib/ckan/dguos/pyenv/src/ckanext-spatial/pip-requirements.txt]
+# these were pulled from the ckanext-spatial plugin, but are now defined
+# as concrete dependencies.
+GeoAlchemy>=0.6
+Shapely>=1.2.13
+

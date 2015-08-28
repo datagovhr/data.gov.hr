@@ -1,0 +1,8 @@
+GeoAlchemy>=0.6
+Shapely>=1.2.13
+# DGU CSW harvesters need this new OWSlib
+owslib>=0.8.6
+# OWSLib needs newish lxml for the register_namespace func
+lxml==3.2.4
+argparse
+requests==1.1.0

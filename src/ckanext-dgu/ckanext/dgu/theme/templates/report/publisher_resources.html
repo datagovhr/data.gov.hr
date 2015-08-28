@@ -1,0 +1,39 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+        <ul>
+          <li>Skupovi podataka: ${c.data['num_datasets']}</li>
+          <li>Resursi: ${c.data['num_resources']}</li>
+        </ul>
+
+        <table class="table table-bordered table-condensed" id="report-table" style="width: 100%; table-layout: fixed;">
+         <thead>
+            <tr class="js-tooltip">
+              <th style="width: 60px" py:if="c.options['include_sub_organizations']" >Izdava&#269;</th>
+              <th style="width: 100px">Skup podataka</th>
+              <th style="width: 40px">Bilje&#353;ke</th>
+              <th style="width: 30px" title="Index/position of the resource in the dataset">Pozicija</th>
+              <th style="width: 100px">URL</th>
+              <th style="width: 100px">Opis</th>
+              <th style="width: 30px">Format</th>
+              <th style="width: 50px">Kreiran</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr py:for="row_dict in c.data['table']">
+              <td py:if="c.options['include_sub_organizations']"><a href="/publisher/${row_dict['publisher_name']}">${row_dict['publisher_title']}</a></td>
+              <td><a href="${h.url_for(controller='package', action='read', id=row_dict['package_name'])}">${row_dict['package_title']}</a></td>
+              <td>${row_dict.get('package_notes')}</td>
+              <td><a href="/dataset/${row_dict['package_name']}/resource/${row_dict['resource_id']}">${row_dict['resource_position']}</a></td>
+              <td><a href="${row_dict['resource_url']}" style="word-wrap:break-word;">${row_dict['resource_url']}</a></td>
+              <td>${row_dict.get('resource_description', '-')}</td>
+              <td>${row_dict.get('resource_format', '-')}</td>
+              <td>${row_dict.get('resource_created').strftime('%d.%m.%Y  %H:%M') if row_dict.get('resource_created') else '-'}</td>
+            </tr>
+          </tbody>
+        </table>
+
+</html>
+

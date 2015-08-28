@@ -1,0 +1,4514 @@
+# Croatian translations for ckanext-dgu.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the ckanext-dgu
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ckanext-dgu 0.4\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-12-10 16:07+0100\n"
+"PO-Revision-Date: 2014-12-10 16:10+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: hr <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: ckanext/dgu/authorize.py:21
+#, python-format
+msgid "User %s not authorized to edit packages in these groups"
+msgstr ""
+
+#: ckanext/dgu/authorize.py:67
+#, python-format
+msgid "User %s not authorized to edit a dataset's extra fields"
+msgstr ""
+
+#: ckanext/dgu/authorize.py:87
+msgid "You must be logged in to view the user list"
+msgstr ""
+
+#: ckanext/dgu/authorize.py:90
+msgid "Only publishers may view this page"
+msgstr ""
+
+#: ckanext/dgu/authorize.py:99
+msgid "Only logged in users can post feedback"
+msgstr ""
+
+#: ckanext/dgu/authorize.py:110
+msgid "Only logged in admins can update feedback"
+msgstr ""
+
+#: ckanext/dgu/authorize.py:113
+msgid "Only sysadmins can update feedback"
+msgstr ""
+
+#: ckanext/dgu/authorize.py:125
+msgid "Only sysadmins can delete publishers"
+msgstr ""
+
+#: ckanext/dgu/controllers/commitment.py:48
+msgid "Unauthorized to read commitments"
+msgstr ""
+
+#: ckanext/dgu/controllers/commitment.py:50
+#: ckanext/dgu/controllers/commitment.py:118
+#: ckanext/dgu/controllers/publisher.py:148
+msgid "Publisher not found"
+msgstr ""
+
+#: ckanext/dgu/controllers/commitment.py:116
+msgid "Unauthorised to read commitments"
+msgstr ""
+
+#: ckanext/dgu/controllers/data.py:21 ckanext/dgu/controllers/publisher.py:46
+#: ckanext/dgu/controllers/publisher.py:375
+#: ckanext/dgu/controllers/publisher.py:392
+#: ckanext/dgu/controllers/publisher.py:408
+#: ckanext/dgu/controllers/publisher.py:429
+msgid "Not authorized to see this page"
+msgstr ""
+
+#: ckanext/dgu/controllers/data.py:29
+msgid "This site is currently off-line. Database is not initialised."
+msgstr ""
+
+#: ckanext/dgu/controllers/feedback.py:39
+#: ckanext/dgu/controllers/inventory.py:51
+#: ckanext/dgu/controllers/inventory.py:87
+msgid "Dataset not found"
+msgstr ""
+
+#: ckanext/dgu/controllers/feedback.py:41
+#: ckanext/dgu/controllers/inventory.py:85
+#, python-format
+msgid "Unauthorized to read package %s"
+msgstr ""
+
+#: ckanext/dgu/controllers/inventory.py:53
+#: ckanext/dgu/controllers/package.py:65
+msgid "Integrity Error"
+msgstr ""
+
+#: ckanext/dgu/controllers/inventory.py:59
+#: ckanext/dgu/controllers/package.py:67
+msgid "Unable to update search index."
+msgstr ""
+
+#: ckanext/dgu/controllers/inventory.py:94
+#: ckanext/dgu/controllers/publisher.py:254
+#, python-format
+msgid "User %r not authorized to edit %s"
+msgstr ""
+
+#: ckanext/dgu/controllers/package.py:61
+#, python-format
+msgid "Unauthorized to delete package %s"
+msgstr ""
+
+#: ckanext/dgu/controllers/package.py:63
+msgid "Package not found"
+msgstr ""
+
+#: ckanext/dgu/controllers/package.py:69
+msgid "Unable to delete package."
+msgstr ""
+
+#: ckanext/dgu/controllers/package.py:78
+msgid "Unauthorized to delete package."
+msgstr ""
+
+#: ckanext/dgu/controllers/publisher.py:72
+#: ckanext/dgu/controllers/publisher.py:172
+msgid ""
+"There was a problem with your submission,                              "
+"please correct it and try again"
+msgstr ""
+
+#: ckanext/dgu/controllers/publisher.py:92
+msgid "There is a problem with the system configuration"
+msgstr ""
+
+#: ckanext/dgu/controllers/publisher.py:139
+msgid "You must be logged in to apply for membership"
+msgstr ""
+
+#: ckanext/dgu/controllers/publisher.py:243
+#: ckanext/dgu/controllers/publisher.py:308
+msgid "Group not found"
+msgstr ""
+
+#: ckanext/dgu/controllers/publisher.py:310
+#, python-format
+msgid "Unauthorized to read group %s"
+msgstr ""
+
+#: ckanext/dgu/controllers/tag.py:28
+msgid "Not found"
+msgstr ""
+
+#: ckanext/dgu/controllers/tag.py:53
+#: ckanext/dgu/theme/templates/report/feedback.html:22
+msgid "Other"
+msgstr ""
+
+#: ckanext/dgu/forms/validators.py:26
+msgid "Missing value"
+msgstr ""
+
+#: ckanext/dgu/forms/validators.py:242
+#, python-format
+msgid "Invalid resource type: %s"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:90
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:35
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:55
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:61
+#: ckanext/dgu/theme/templates/commitment/edit.html:37
+#: ckanext/dgu/theme/templates/commitment/edit.html:71
+#: ckanext/dgu/theme/templates/commitment/edit.html:107
+#: ckanext/dgu/theme/templates/commitment/read.html:56
+#: ckanext/dgu/theme/templates/commitment/read.html:97
+#: ckanext/dgu/theme/templates/commitment/read.html:140
+#: ckanext/dgu/theme/templates/package/read_common.html:284
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:19
+#: ckanext/dgu/theme/templates/report/feedback.html:15
+#: ckanext/dgu/theme/templates/report/nii.html:26
+#: ckanext/dgu/theme/templates/report/publisher_activity.html:18
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:15
+#: ckanext/dgu/theme/templates/report/unpublished.html:16
+msgid "Dataset"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:93
+#: ckanext/dgu/theme/templates/package/search.html:69
+#: ckanext/dgu/theme/templates/tag/index.html:34
+msgid "Search Error"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:101
+msgid "Preview on Map"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:119
+msgid "(unpublished)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:132
+msgid "This dataset is part of the National Information Infrastructure"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:132
+#: ckanext/dgu/theme/templates/package/read_common.html:188
+msgid "NII"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:149
+msgid "Add to Preview List"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:154
+msgid "Remove from List"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:161
+msgid "View Data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:174
+msgid "Feedback:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:175
+#: ckanext/dgu/theme/templates/feedback/add_form.html:49
+#: ckanext/dgu/theme/templates/report/feedback.html:18
+msgid "Economic growth"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:176
+#: ckanext/dgu/theme/templates/report/feedback.html:19
+msgid "Social growth"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:177
+msgid "Effective public services"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:178
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:107
+msgid "Potential links to other datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:179
+msgid "Other key data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:215
+msgid "more"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:218
+msgid "less"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:336
+#: ckanext/dgu/theme/templates/_dgu_util.html:342
+#: ckanext/dgu/theme/templates/package/edit_form.html:400
+#: ckanext/dgu/theme/templates/package/edit_form.html:423
+#: ckanext/dgu/theme/templates/package/edit_form.html:444
+#: ckanext/dgu/theme/templates/package/edit_form.html:468
+msgid "Email:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:339
+msgid "Web contact form:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:346
+#: ckanext/dgu/theme/templates/package/edit_form.html:401
+#: ckanext/dgu/theme/templates/package/edit_form.html:427
+#: ckanext/dgu/theme/templates/package/edit_form.html:446
+#: ckanext/dgu/theme/templates/package/edit_form.html:476
+msgid "Phone:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:349
+#: ckanext/dgu/theme/templates/package/edit_form.html:445
+#: ckanext/dgu/theme/templates/package/edit_form.html:472
+msgid "Web:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/_dgu_util.html:352
+msgid "No details supplied"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:29
+msgid "| data.gov.uk"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:104
+#: ckanext/dgu/theme/templates/layout_base.html:133
+msgid "Home"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:109
+msgid "User account"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:109
+msgid "Hello"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:112
+msgid "Log out"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:117
+msgid "My Workbench area"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:118
+msgid "Manage my content"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:134
+#: ckanext/dgu/theme/templates/publisher/users_form.html:53
+msgid "Data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:135
+msgid "Apps"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:136
+msgid "Interact"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:157
+msgid "Tools"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:158
+#: ckanext/dgu/theme/templates/package/new.html:6
+#: ckanext/dgu/theme/templates/package/new.html:10
+msgid "Add a Dataset"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:159
+msgid "Add a Publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:160
+msgid "Dataset Harvesting"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:162
+msgid "My publishers"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:175
+#: ckanext/dgu/theme/templates/not_authorized.html:11
+#: ckanext/dgu/theme/templates/ckanext/qa/index.html:17
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:15
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:17
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:18
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:20
+#: ckanext/dgu/theme/templates/commitment/edit.html:17
+#: ckanext/dgu/theme/templates/commitment/index.html:16
+#: ckanext/dgu/theme/templates/commitment/read.html:15
+#: ckanext/dgu/theme/templates/data/openspending_publisher_report.html:11
+#: ckanext/dgu/theme/templates/data/openspending_report.html:11
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:21
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:103
+#: ckanext/dgu/theme/templates/feedback/add.html:15
+#: ckanext/dgu/theme/templates/feedback/moderate.html:12
+#: ckanext/dgu/theme/templates/feedback/view.html:12
+#: ckanext/dgu/theme/templates/inventory/edit_item.html:18
+#: ckanext/dgu/theme/templates/package/delete.html:11
+#: ckanext/dgu/theme/templates/package/edit.html:9
+#: ckanext/dgu/theme/templates/package/history.html:9
+#: ckanext/dgu/theme/templates/package/new.html:9
+#: ckanext/dgu/theme/templates/package/read.html:19
+#: ckanext/dgu/theme/templates/package/resource_read.html:23
+#: ckanext/dgu/theme/templates/package/search.html:13
+#: ckanext/dgu/theme/templates/revision/diff.html:15
+#: ckanext/dgu/theme/templates/user/read.html:72
+#: ckanext/dgu/theme/templates/user/read.html:76
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:9
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:9
+msgid "Datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:176
+msgid "Map Search"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:177
+msgid "Data Requests"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:178
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:18
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:15
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:73
+#: ckanext/dgu/theme/templates/inventory/edit.html:22
+#: ckanext/dgu/theme/templates/inventory/status.html:22
+#: ckanext/dgu/theme/templates/inventory/upload.html:12
+#: ckanext/dgu/theme/templates/publisher/apply.html:9
+#: ckanext/dgu/theme/templates/publisher/edit.html:9
+#: ckanext/dgu/theme/templates/publisher/index.html:6
+#: ckanext/dgu/theme/templates/publisher/index.html:9
+#: ckanext/dgu/theme/templates/publisher/index.html:13
+#: ckanext/dgu/theme/templates/publisher/index.html:66
+#: ckanext/dgu/theme/templates/publisher/new.html:9
+#: ckanext/dgu/theme/templates/publisher/read.html:9
+#: ckanext/dgu/theme/templates/publisher/users.html:8
+#: ckanext/dgu/theme/templates/user/read.html:57
+msgid "Publishers"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:179
+msgid "Public Roles & Salaries"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:181
+#: ckanext/dgu/theme/templates/data/openspending_publisher_report.html:12
+#: ckanext/dgu/theme/templates/data/openspending_report.html:12
+msgid "Spend Reports"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:184
+msgid "Site Analytics"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:186
+#: ckanext/dgu/theme/templates/ckanext/qa/index.html:18
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:44
+#: ckanext/dgu/theme/templates/publisher/read.html:81
+msgid "Reports"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:190
+msgid "Sys Admin:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:191
+#: ckanext/dgu/theme/templates/admin/index.html:11
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:6
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:9
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:14
+#: ckanext/dgu/theme/templates/feedback/moderate.html:13
+#: ckanext/dgu/theme/templates/publisher/report_groups_without_admins.html:10
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:10
+#: ckanext/dgu/theme/templates/publisher/report_users.html:10
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:10
+msgid "System Dashboard"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:192
+msgid "Harvest Sources"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:193
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:38
+msgid "Feedback moderation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:198
+msgid "Location"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:199
+#: ckanext/dgu/theme/templates/data/ukgovld.html:12
+msgid "Linked Data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:200
+msgid "All Blogs"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:201
+msgid "All Forums"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:202
+msgid "Library"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:203
+msgid "Open data glossary"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:204
+msgid "Search content"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:248
+msgid "FAQ"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:249
+msgid "Code of conduct"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:250
+msgid "Accessibility"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:251
+msgid "Cookies policy"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:252
+msgid "Privacy"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:253
+msgid "Moderation policy"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:254
+#: ckanext/dgu/theme/templates/inventory/edit.html:78
+msgid "Contact"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:255
+msgid "Terms and conditions"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:256
+msgid "API"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:257
+#: ckanext/dgu/theme/templates/user/read.html:41
+msgid "About"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:261
+msgid "Powered by:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:264
+msgid "Powered By CKAN"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:269
+msgid "Map tool by:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/layout_base.html:270
+msgid "UK Location Programme"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/not_authorized.html:8
+#: ckanext/dgu/theme/templates/not_authorized.html:12
+msgid "Not Authorized"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/not_authorized.html:17
+msgid "This action is not authorized"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/not_authorized.html:20
+msgid "You may"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/not_authorized.html:20
+msgid "log-in"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/not_authorized.html:20
+msgid "and try again."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/not_authorized.html:23
+msgid "You are logged in as:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/admin/index.html:6
+#: ckanext/dgu/theme/templates/admin/index.html:7
+msgid "Administration Dashboard"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/admin/index.html:12
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:92
+msgid "Sysadmins"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/admin/index.html:18
+msgid "System administrators"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/admin/index.html:23
+#: ckanext/dgu/theme/templates/publisher/users_form.html:49
+msgid "User"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/admin/index.html:24
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:148
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:175
+#: ckanext/dgu/theme/templates/publisher/report_users.html:22
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:22
+#: ckanext/dgu/theme/templates/user/read.html:29
+msgid "Email"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/admin/index.html:25
+#: ckanext/dgu/theme/templates/user/read.html:38
+msgid "Registered since"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/admin/index.html:33
+msgid "System account"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/index.html:8
+#: ckanext/dgu/theme/templates/ckanext/qa/index.html:10
+#: ckanext/dgu/theme/templates/ckanext/qa/index.html:19
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:8
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:8
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:8
+msgid "Quality Assurance"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/index.html:9
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:9
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:10
+#: ckanext/dgu/theme/templates/commitment/edit.html:8
+#: ckanext/dgu/theme/templates/commitment/index.html:6
+#: ckanext/dgu/theme/templates/commitment/read.html:6
+msgid "no-sidebar"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:16
+msgid "Broken links by dataset"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:23
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:26
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:23
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:26
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:29
+msgid "Download as CSV"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:28
+msgid "Datasets with broken resources"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:29
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:33
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:32
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:35
+#: ckanext/dgu/theme/templates/commitment/read.html:23
+msgid "Last generated:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:36
+msgid "Resource URL"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:37
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:60
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:66
+#: ckanext/dgu/theme/templates/publisher/apply_form.html:39
+msgid "Reason"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/dataset/broken_resource_links/index.html:51
+msgid "No datasets with at least one broken resource found."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:19
+msgid "Broken links by publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:31
+msgid "Publishers with broken resource links"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:39
+msgid ""
+"No organizations that have published datasets with broken resource links "
+"found."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:46
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:43
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:43
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:47
+msgid "Include results from sub-publishers"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:55
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:56
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:52
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:62
+#: ckanext/dgu/theme/templates/commitment/index.html:28
+#: ckanext/dgu/theme/templates/package/edit_form.html:53
+#: ckanext/dgu/theme/templates/package/edit_form.html:379
+#: ckanext/dgu/theme/templates/publisher/report_groups_without_admins.html:19
+#: ckanext/dgu/theme/templates/report/feedback.html:17
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:14
+msgid "Publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:56
+msgid "Number of datasets with broken links"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/index.html:57
+msgid "Total broken links"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:17
+msgid "Broken links"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:27
+msgid "Broken resource links"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:29
+msgid "Report updated:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:33
+msgid "No results found for this publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:34
+msgid "and its subpublishers"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:38
+msgid "results"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:57
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:63
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:17
+msgid "Index/position of the resource in the dataset"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:57
+msgid "Resource (number)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:58
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:64
+#: ckanext/dgu/theme/templates/package/edit_form.html:674
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:49
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:18
+msgid "URL"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:59
+msgid "Status"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:61
+msgid "Failed download attempts"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:61
+msgid "No. of fails"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:62
+msgid "First failed attempt"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:62
+msgid "First fail"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:63
+msgid "Most recent failed attempt"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:63
+msgid "Latest fail"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:64
+msgid "The last time it was successfully obtained"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:64
+msgid "Last success"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:65
+msgid "Where the data was harvested from"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/broken_resource_links/organisation.html:65
+msgid "Via"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:8
+msgid "Organisation scores - QA"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:19
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:22
+msgid "Openness Scores"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:31
+msgid "Publisher openness scores"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:36
+msgid "No results found."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:48
+msgid ""
+"Note: Results are calculated using the search index, which may not always"
+" agree 100% with the results given in the individual publishers. For the "
+"definitive scores, click on a publisher."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:53
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:22
+msgid "Number of datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:54
+msgid "Score TBC"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:55
+msgid "Score 0"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:56
+msgid "Score 1"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:57
+msgid "Score 2"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:58
+msgid "Score 3"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:59
+msgid "Score 4"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:60
+msgid "Score 5"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:61
+msgid "Total stars"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/index.html:62
+msgid "Average score"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:9
+msgid "scores - QA"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:33
+msgid "Openness scores"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:40
+msgid "No results found for this publisher."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:52
+msgid "Notes:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:54
+msgid "Missing from this list are datasets with no resources, which will score 0."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:55
+msgid ""
+"Note: Where a dataset has multiple resources, the highest scoring one is "
+"shown."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:63
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:17
+msgid "Index"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:65
+msgid "Score"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/ckanext/qa/organisation/scores/organisation.html:67
+msgid "Updated"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:12
+msgid "Editing PM Commitments"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:19
+#: ckanext/dgu/theme/templates/commitment/index.html:17
+#: ckanext/dgu/theme/templates/commitment/read.html:17
+msgid "Data Publication Commitments"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:20
+#: ckanext/dgu/theme/templates/inventory/edit.html:12
+#: ckanext/dgu/theme/templates/inventory/edit_item.html:20
+#: ckanext/dgu/theme/templates/inventory/status.html:12
+#: ckanext/dgu/theme/templates/package/edit.html:11
+#: ckanext/dgu/theme/templates/package/edit_form.html:407
+#: ckanext/dgu/theme/templates/package/edit_form.html:453
+#: ckanext/dgu/theme/templates/publisher/edit.html:11
+msgid "Edit"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:25
+msgid "Edit PM Commitments"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:30
+#: ckanext/dgu/theme/templates/commitment/read.html:44
+msgid "Prime Minister's Letter May 2010"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:35
+#: ckanext/dgu/theme/templates/commitment/edit.html:69
+#: ckanext/dgu/theme/templates/commitment/edit.html:105
+#: ckanext/dgu/theme/templates/commitment/read.html:55
+#: ckanext/dgu/theme/templates/commitment/read.html:96
+#: ckanext/dgu/theme/templates/commitment/read.html:139
+msgid "Commitment"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:36
+#: ckanext/dgu/theme/templates/commitment/edit.html:70
+#: ckanext/dgu/theme/templates/commitment/edit.html:106
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:21
+#: ckanext/dgu/theme/templates/report/nii.html:27
+#: ckanext/dgu/theme/templates/report/publisher_activity.html:19
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:16
+msgid "Notes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:53
+#: ckanext/dgu/theme/templates/commitment/edit.html:87
+#: ckanext/dgu/theme/templates/commitment/edit.html:122
+msgid "Add row"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:64
+#: ckanext/dgu/theme/templates/commitment/read.html:85
+msgid "Prime Minister's Letter July 2011"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:98
+#: ckanext/dgu/theme/templates/commitment/edit.html:99
+#: ckanext/dgu/theme/templates/commitment/read.html:127
+#: ckanext/dgu/theme/templates/commitment/read.html:128
+msgid "Open data strategy"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/edit.html:135
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:155
+#: ckanext/dgu/theme/templates/package/edit_form.html:852
+#: ckanext/dgu/theme/templates/publisher/apply_form.html:52
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:230
+#: ckanext/dgu/theme/templates/publisher/users_form.html:62
+msgid "Cancel"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/index.html:10
+msgid "Reports - Data publication commitments"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/index.html:23
+#: ckanext/dgu/theme/templates/commitment/read.html:21
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:53
+#: ckanext/dgu/theme/templates/publisher/read.html:93
+msgid "Data publication commitments"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/index.html:29
+msgid "Commitments made"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/index.html:30
+msgid "Commitments reported"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/index.html:40
+#: ckanext/dgu/theme/templates/report/feedback.html:23
+msgid "Total"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/read.html:8
+msgid "Reports - Data publication commitments -"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/read.html:27
+msgid "Administrator tools"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/read.html:29
+msgid "Edit publisher commitments »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/read.html:35
+msgid ""
+"This page lists the public commitments to the release of further datasets"
+" by the Department along with links to the data where is has been "
+"released or identified as an unpublished dataset. These commitments are "
+"only those which have been made to the release of data and Departments "
+"may have made public commitments in terms of further activity. This page "
+"does not list links to the corporate commitments which all central "
+"government Departments and ALBs have been committed to release from the "
+"Coalition Agreement and letters from the Prime Minister of May 2010 and "
+"July 2011."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/read.html:38
+msgid ""
+"This page is a beta release – it does not yet list all of the commitment "
+"which the Department has made. Further additions will be made on an "
+"ongoing basis."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/read.html:46
+#: ckanext/dgu/theme/templates/commitment/read.html:87
+#: ckanext/dgu/theme/templates/commitment/read.html:131
+msgid "No data provided"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/util.html:13
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:75
+msgid "Dataset name"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/util.html:15
+msgid "Actual text"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/util.html:24
+msgid "Please select"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/commitment/util.html:30
+msgid "or non-data.gov.uk URL"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/api.html:8
+#: ckanext/dgu/theme/templates/package/resource_read.html:70
+#: ckanext/dgu/theme/templates/package/resource_read.html:73
+msgid "Data API"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/api.html:9
+msgid "Data Catalogue API"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/api.html:12
+msgid "CKAN API"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/api.html:16
+msgid "CKAN API Notes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/api.html:17
+msgid ""
+"Developers can access the data catalogue with an API, as an alternative "
+"to the data.gov.uk web interface. The API provides both RESTful and "
+"functional interfaces, all in JSON format, making it suitable for a wide "
+"range of clients."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/api.html:19
+msgid "The base URL for the API is:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/api.html:21
+msgid ""
+"The API is provided by the CKAN software and full instructions are "
+"provided here:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/api.html:21
+msgid "http://docs.ckan.org/en/ckan-2.0.2/api.html"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/cache_header.html:31
+msgid "This page is cached at"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/cache_header.html:32
+msgid "data.gov.uk"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/cache_header.html:32
+msgid "and may be not be up to date. Please visit the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/cache_header.html:32
+msgid "original page"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/openspending_publisher_report.html:8
+#: ckanext/dgu/theme/templates/data/openspending_report.html:8
+msgid "Open Spending Report"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/openspending_publisher_report.html:13
+msgid "Publisher Report"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/openspending_publisher_report.html:19
+#: ckanext/dgu/theme/templates/data/openspending_report.html:20
+msgid "Created by:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/openspending_publisher_report.html:21
+#: ckanext/dgu/theme/templates/data/openspending_report.html:22
+msgid "Open Knowledge Foundation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:15
+msgid ""
+"This page includes reports and administration tools for use by "
+"data.gov.uk System Administrators."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:24
+msgid "Create a dataset"
+msgstr "Kreiraj dataset"
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:25
+msgid "Edit a dataset by"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:25
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:77
+msgid "navigating to it"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:25
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:77
+msgid "and clicking 'Edit'"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:34
+msgid "Feedback (related to NII/inventory)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:37
+#: ckanext/dgu/theme/templates/publisher/read.html:87
+msgid "Feedback report"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:54
+msgid "Publisher Editors/Admins"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:55
+msgid "Publishers without Editors/Admins"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:61
+msgid "Harvesting"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:64
+msgid "Harvest sources"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:76
+msgid "Create a new publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:77
+msgid "Edit a publisher by"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:78
+msgid "Report - Publishers and their editors/admins"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:79
+msgid "Report - Publishers without editors/admins"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:85
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:88
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:199
+msgid "Users"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:89
+msgid "Appoint a Publisher Admin or Publisher Editor by"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:89
+msgid "navigating to the publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:89
+msgid "and clicking 'Edit User Permissions'"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:90
+msgid "Report - Users who are admins/editors for publishers"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:91
+msgid "Report - Users not assigned to a publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:98
+msgid "Site Usage"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:101
+msgid "Site-wide"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:102
+msgid "Publishers leaderboard"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/system_dashboard.html:104
+msgid "Google Analytics"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:8
+#: ckanext/dgu/theme/templates/data/ukgovld.html:9
+#: ckanext/dgu/theme/templates/data/ukgovld.html:17
+msgid "Linked-Data pages admin"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:13
+#: ckanext/dgu/theme/templates/publisher/users_form.html:33
+msgid "Admin"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:19
+msgid "This is a tool to update the Linked-Data pages at"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:19
+msgid "http://data.gov.uk/linked-data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:19
+msgid "according to the latest markdown in GitHub."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:34
+msgid "GitHub status"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:37
+msgid "GitHub repository"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:43
+#: ckanext/dgu/theme/templates/data/ukgovld.html:54
+msgid "Version"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:47
+msgid "data.gov.uk publish status"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:50
+msgid "Last deployed"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:60
+msgid "Publish latest version"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/data/ukgovld.html:65
+msgid "Publish results (Jekyll output)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:12
+msgid "(no comment)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:17
+msgid "Flag as offensive"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:20
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:120
+#: ckanext/dgu/theme/templates/feedback/moderate.html:32
+#: ckanext/dgu/theme/templates/publisher/users_form.html:35
+msgid "Delete"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:25
+msgid "Submitted by:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:25
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:79
+msgid "on"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:27
+msgid "Responding as:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:28
+msgid "A Private Individual"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:29
+msgid "An Organisation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:35
+msgid "(Unnamed)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:68
+msgid "Response to"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:75
+msgid "This feedback is currently visible - it was flagged as offensive"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:76
+msgid "This feedback is not currently visible."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:79
+msgid "Submitted by"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:82
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:87
+msgid "Organisation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:85
+msgid "Response type"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:86
+msgid "Private individual"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:90
+msgid "Full Responses:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:91
+msgid "Economic Growth"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:95
+#: ckanext/dgu/theme/templates/feedback/add_form.html:62
+msgid "Social Growth"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:99
+#: ckanext/dgu/theme/templates/feedback/add_form.html:75
+msgid "Effective Public Services"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:103
+#: ckanext/dgu/theme/templates/feedback/add_form.html:88
+msgid "Other Benefits"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:119
+#: ckanext/dgu/theme/templates/feedback/moderate.html:31
+msgid "Publish"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/_feedback_util.html:123
+msgid "Delete and ban"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add.html:6
+msgid "- Add Feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add.html:17
+#: ckanext/dgu/theme/templates/feedback/add.html:22
+msgid "Add Feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:32
+msgid ""
+"Please complete this form to submit your views on this dataset and its "
+"potential impact if published. Your input will be reviewed as part of the"
+" process of prioritising datasets to be part of the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:32
+#: ckanext/dgu/theme/templates/feedback/add_form.html:35
+#: ckanext/dgu/theme/templates/package/read_common.html:187
+msgid "National Information Infrastructure"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:34
+msgid ""
+"Please complete this form to submit your views on this dataset and its "
+"impact. Your input will be reviewed as part of the process of "
+"prioritising datasets to be part of the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:39
+#: ckanext/dgu/theme/templates/package/new.html:27
+#: ckanext/dgu/theme/templates/user/logout_first.html:13
+msgid "Error"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:40
+#: ckanext/dgu/theme/templates/feedback/add_form.html:212
+msgid "There are errors in the form, please correct them before re-submitting."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:44
+msgid "1. State the benefits of releasing this dataset as open data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:52
+msgid ""
+"i.e. releasing this dataset as open data means you or your organisation "
+"are able to provide a commercial product or service or has other positive"
+" economic impacts such as better functioning of markets."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:55
+#: ckanext/dgu/theme/templates/feedback/add_form.html:68
+#: ckanext/dgu/theme/templates/feedback/add_form.html:81
+#: ckanext/dgu/theme/templates/feedback/add_form.html:94
+msgid "Please give details for selection below"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:65
+msgid ""
+"i.e. releasing this dataset as open data means you or your organisation "
+"are able to more easily undertake social action, deliver the services of "
+"a community group or charity or has a positive environmental impact."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:78
+msgid ""
+"i.e. releasing this dataset as open data means that a public service is "
+"able to run more effectively by giving greater transparency of its "
+"operation to citizens, allowing greater choice or supporting new models "
+"of provision of services."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:91
+msgid "Add your own comments..."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:102
+msgid "2. Potential links to other datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:106
+msgid ""
+"Does this dataset contain data which could be used to link it to other "
+"datasets?"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:109
+#: ckanext/dgu/theme/templates/feedback/add_form.html:203
+#: ckanext/dgu/theme/templates/report/publisher_activity.html:31
+msgid "No"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:113
+#: ckanext/dgu/theme/templates/feedback/add_form.html:199
+#: ckanext/dgu/theme/templates/report/publisher_activity.html:30
+msgid "Yes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:117
+msgid "Don't know"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:122
+msgid "Please explain further"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:130
+msgid "3. Information about you"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:133
+msgid "Are you responding:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:135
+msgid "As a private individual"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:139
+msgid "On behalf of an organisation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:145
+msgid "A central government department"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:149
+msgid "Another public sector organisation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:153
+msgid "A start-up business"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:157
+msgid "A small to medium sized business (less than 250 employees)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:161
+msgid "A large business (250 employees or above)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:165
+msgid "A voluntary / not-for-profit organisation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:169
+msgid "An academic or research organisations"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:173
+msgid "Organisation name"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:194
+msgid "4. Future contact"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:197
+msgid "We will use the email contact in your data.gov.uk profile."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:211
+#: ckanext/dgu/theme/templates/inventory/status.html:48
+msgid "Errors"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/add_form.html:216
+msgid "Submit feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:9
+msgid "Moderate feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:14
+#: ckanext/dgu/theme/templates/feedback/moderate.html:19
+msgid "Feedback Moderation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:25
+msgid ""
+"This is the moderation queue.  Items here have been reported as "
+"abusive/spam by\n"
+"      users and require attention."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:27
+msgid "Please use the buttons underneath each element to moderate each comment"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:31
+msgid "will mark the item as moderated and make it visible, if it is not"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:32
+msgid "will remove the comments from the systems"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:33
+msgid "Delete and Ban"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:33
+msgid ""
+"will remove the comments and stop the user who posted it from\n"
+"          posting again"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/moderate.html:38
+msgid "Nothing to moderate yet."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/view.html:9
+msgid "- View Feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/view.html:14
+msgid "View Feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/view.html:20
+msgid "Feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/view.html:22
+msgid "Add feedback »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/view.html:23
+msgid "Login to Add feedback »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/feedback/view.html:26
+msgid "(No feedback yet)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/group/edit.html:5
+#: ckanext/dgu/theme/templates/group/edit.html:6
+msgid "Edit -"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/group/new.html:5
+#: ckanext/dgu/theme/templates/group/new.html:6
+msgid "Add A Publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/group/new.html:9
+msgid "tata"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:11
+#: ckanext/dgu/theme/templates/inventory/status.html:11
+msgid "Manage Unpublished Datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:24
+#: ckanext/dgu/theme/templates/inventory/status.html:24
+#: ckanext/dgu/theme/templates/inventory/upload.html:14
+msgid "Manage inventory"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:30
+msgid "Inventory Management"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:31
+msgid "Take part in the data.gov.uk inventory:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:31
+msgid "Manage and Update us on forthcoming datasets."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:32
+msgid ""
+"Use this inventory tool to download an inventory of all the datasets and "
+"inventory items you have published on data.gov.uk to date. This tool "
+"allows you to give us prior knowledge of pending datasets including those"
+" that are not currently under Open Government Licence. Read the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:32
+msgid "full guidance"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:32
+msgid ""
+"to find out more about the background to this inventory. Follow the 3 "
+"steps below to get started."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:40
+msgid ""
+"Step 1: Download the read-only dataset list to review your existing open "
+"data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:41
+msgid ""
+"Download a list of all the datasets and inventory items you have "
+"published on data.gov.uk to date. By regularly reviewing this list you "
+"can give us prior knowledge of pending datasets including any other "
+"datasets that may not be currently published for specific reasons."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:44
+msgid "You can download your latest 'read only' dataset list anytime"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:45
+msgid ""
+"You can complete the inventory template and upload at any time if you "
+"have frequent updates"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:46
+msgid ""
+"Download templates are in an Excel file that will be readable in "
+"Microsoft Excel, or Open Office, and can then be uploaded to update your "
+"inventory"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:47
+msgid "You may wish to store local copies of this download for your own record."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:52
+msgid "Include sub-departments"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:55
+msgid ""
+"Tick the sub-department box if you need a complete list of datasets held "
+"by other parties under your authority, whom with you may wish to delegate"
+" the review of ‘data held’ to."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:60
+msgid "Step 2: Download the inventory template"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:61
+msgid "Create new entries to inform us about datasets not yet published."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:64
+msgid ""
+"Firstly, review your existing lists of datasets and inventory items "
+"available from step 1"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:65
+msgid "See specific guidance"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:65
+msgid "on completing the template."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:66
+msgid ""
+"As a publisher administrator you can share this spreadsheet with other "
+"colleagues to complete and send to you for upload."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:67
+msgid ""
+"Save the completed template on your PC or local network once complete "
+"ready for upload and always keep a local copy as backup."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:68
+msgid ""
+"Please include datasets that at present may not be available on Open "
+"Licence"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:70
+msgid "Download inventory template"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:75
+msgid "Step 3: Upload the completed inventory template"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:77
+msgid ""
+"Upload your saved and completed template, taking care that you have not "
+"changed the structure of the template e.g. don't change the styling or "
+"location of columns. You will get an on screen acknowledgement if this is"
+" successful."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:78
+msgid "team@data.gov.uk"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit.html:78
+msgid "if  you have any queries about this process."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:53
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:59
+#: ckanext/dgu/theme/templates/package/edit_form.html:35
+#: ckanext/dgu/theme/templates/publisher/apply_form.html:9
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:14
+#: ckanext/dgu/theme/templates/publisher/users_form.html:9
+msgid "Errors in form"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:54
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:60
+#: ckanext/dgu/theme/templates/package/edit_form.html:36
+#: ckanext/dgu/theme/templates/publisher/apply_form.html:10
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:15
+#: ckanext/dgu/theme/templates/publisher/users_form.html:10
+msgid "The form contains invalid entries:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:69
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:33
+msgid "Basic Information"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:76
+#: ckanext/dgu/theme/templates/package/edit_form.html:68
+msgid ""
+"The main subject of the data should be clear. For cross-government data "
+"requirements, such as spend data, specify the public body the data "
+"belongs to or its geographical coverage, in order to distinguish your "
+"data from other similar datasets in data.gov.uk. If the data relates to a"
+" period of time, include that in the name, although this would not be "
+"appropriate for data which is updated over time. This field is not a full"
+" description - save that for the Description field. Do not put a trailing"
+" full stop."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:84
+#: ckanext/dgu/theme/templates/inventory/inventory_util.html:23
+#: ckanext/dgu/theme/templates/inventory/status.html:69
+#: ckanext/dgu/theme/templates/package/edit_form.html:51
+#: ckanext/dgu/theme/templates/package/edit_form.html:330
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:19
+#: ckanext/dgu/theme/templates/report/unpublished.html:18
+msgid "Description"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:86
+#: ckanext/dgu/theme/templates/package/edit_form.html:331
+msgid ""
+"Please add a description of the data set.  What does the data "
+"contain/show?  Why was it produced?"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:87
+msgid ""
+"It is often displayed with the package title. In particular, it should "
+"start with a short sentence that describes the data set succinctly, "
+"because the first few words alone may be used in some views of the data "
+"sets. Here is the place to state if there are any limitations or "
+"deficiencies to the data in order to enable users to evaluate the "
+"information; even incomplete data may be adequate for some users."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:99
+#: ckanext/dgu/theme/templates/package/edit_form.html:493
+msgid "Primary Theme"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:100
+msgid ""
+"1. Please choose a primary theme which this data falls under from the "
+"options below."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:105
+msgid "Secondary Themes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:106
+#: ckanext/dgu/theme/templates/package/edit_form.html:499
+msgid "2. If there are other themes in this data, select them here:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:118
+msgid "Publishing Information"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:121
+#: ckanext/dgu/theme/templates/inventory/inventory_util.html:26
+#: ckanext/dgu/theme/templates/report/unpublished.html:19
+msgid "Publish date"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:124
+msgid "Please enter the release date for this dataset as dd/mm/yyyy"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:126
+msgid "Please enter the date as dd/mm/yyyy"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:130
+msgid "Please check this box if the dataset will"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:132
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:157
+#: ckanext/dgu/theme/templates/inventory/read.html:28
+#: ckanext/dgu/theme/templates/inventory/read.html:71
+#: ckanext/dgu/theme/templates/package/edit_form.html:831
+msgid "not"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:132
+msgid "be released and complete the Release notes section below."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:138
+#: ckanext/dgu/theme/templates/inventory/inventory_util.html:29
+#: ckanext/dgu/theme/templates/inventory/status.html:72
+#: ckanext/dgu/theme/templates/report/unpublished.html:21
+msgid "Release notes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:140
+msgid "Please add information about the release of this data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:157
+#: ckanext/dgu/theme/templates/package/edit_form.html:831
+msgid "Important:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:157
+#: ckanext/dgu/theme/templates/package/edit_form.html:831
+msgid "By submitting content, you agree to release your contributions under the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:157
+#: ckanext/dgu/theme/templates/package/edit_form.html:831
+msgid "terms & conditions"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:157
+#: ckanext/dgu/theme/templates/package/edit_form.html:831
+msgid "of the site.  Please"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:157
+#: ckanext/dgu/theme/templates/package/edit_form.html:831
+msgid "refrain"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:157
+#: ckanext/dgu/theme/templates/package/edit_form.html:831
+msgid "from editing this page if you are"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_form.html:157
+#: ckanext/dgu/theme/templates/package/edit_form.html:831
+msgid "happy to do this."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_item.html:6
+msgid "- Edit - Inventory"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/edit_item.html:25
+msgid "Unpublished dataset editor"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/inventory_util.html:12
+#: ckanext/dgu/theme/templates/viz/front_page.html:161
+msgid "unpublished datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/inventory_util.html:14
+msgid "There are no items to show"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/inventory_util.html:44
+msgid "Recent Inventory Uploads"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/inventory_util.html:46
+msgid "There are no recent uploads"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:18
+#: ckanext/dgu/theme/templates/inventory/status.html:34
+#: ckanext/dgu/theme/templates/inventory/upload.html:19
+#: ckanext/dgu/theme/templates/package/read_common.html:215
+#: ckanext/dgu/theme/templates/publisher/read.html:147
+msgid "State:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:24
+msgid ""
+"The tools available on this page will allow you to download your current "
+"inventory as a\n"
+"        CSV file that will be readable in Microsoft Excel, or Open "
+"Office, and then also upload a\n"
+"        modified file to update your inventory.  Modifications uploaded"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:27
+msgid "will only"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:27
+msgid "update the inventory items, and"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:28
+msgid "existing published datasets."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:33
+msgid "Download inventory"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:37
+msgid ""
+"You may download your inventory file here and load it into Microsoft "
+"Office, or Open Office\n"
+"          to view the list of current datasets that"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:39
+msgid ""
+"currently holds on data.gov.uk\n"
+"          as well as inventory items that have previously been added."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:47
+msgid "Include subdepartments"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:58
+msgid "Upload inventory"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:62
+msgid ""
+"To upload a file that contains new inventory items, you should first use "
+"the download tool\n"
+"          above and add the new records to that file."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:68
+msgid "New entries should not contain a"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:68
+#: ckanext/dgu/theme/templates/inventory/read.html:69
+msgid "short-name"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:69
+msgid "Existing inventory items will be updated should any field other than the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:69
+msgid "have changed."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:70
+msgid "Existing datasets will be ignored"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:71
+msgid "Existing datasets removed from the file will"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/read.html:71
+msgid "be removed from data.gov.uk"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:40
+msgid "Inventory upload"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:43
+msgid "Status:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:49
+msgid "No errors."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:63
+msgid "Items processed"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:64
+msgid "No items processed"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:68
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:21
+msgid "Title"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:70
+msgid "Department"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:71
+#: ckanext/dgu/theme/templates/report/feedback.html:16
+msgid "Publish Date"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/status.html:73
+msgid "Action"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/upload.html:15
+#: ckanext/dgu/theme/templates/inventory/upload.html:29
+msgid "Upload results"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/upload.html:31
+msgid "Your Inventory document has been successfully uploaded to data.gov.uk"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/upload.html:35
+msgid ""
+"These items will appear in a list of your uploaded inventory items within"
+" 2-4 hours.  To track of the status of Your Inventory uploads go to"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/upload.html:35
+msgid "or click the '"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/inventory/upload.html:35
+msgid "' link from the 'Recent Inventory Uploads' section of the side-bar."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/delete.html:18
+msgid "Confirm"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/delete.html:24
+msgid "Are you sure you want to delete this dataset?"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/delete.html:26
+msgid "Are you sure you want to withdraw this"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/delete.html:26
+msgid "record?"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/delete.html:27
+#: ckanext/dgu/theme/templates/package/delete.html:28
+msgid "Reminder:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/delete.html:27
+msgid ""
+"Ensure any dataset or series records that are related to this record "
+"(e.g. by Coupled Resource) are also considered for withdrawal."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/delete.html:28
+msgid ""
+"Ensure any service records that point to this record (e.g. by Coupled "
+"Resource) are also withdrawn."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit.html:6
+msgid "- Edit"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit.html:26
+msgid "Dataset Editor"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:49
+#: ckanext/dgu/theme/templates/package/edit_form.html:68
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:142
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:169
+#: ckanext/dgu/theme/templates/publisher/report_users.html:21
+msgid "Name"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:50
+#: ckanext/dgu/theme/templates/package/edit_form.html:101
+msgid "Data Files"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:52
+#: ckanext/dgu/theme/templates/package/edit_form.html:338
+msgid "Licence"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:54
+msgid "Theme & tags"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:55
+#: ckanext/dgu/theme/templates/package/edit_form.html:518
+msgid "Additional resources"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:56
+#: ckanext/dgu/theme/templates/package/edit_form.html:617
+msgid "Temporal coverage"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:57
+#: ckanext/dgu/theme/templates/package/edit_form.html:631
+msgid "Geographic coverage"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:58
+#: ckanext/dgu/theme/templates/package/edit_form.html:671
+msgid "Extras"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:59
+#: ckanext/dgu/theme/templates/package/edit_form.html:803
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:105
+msgid "State"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:66
+msgid "Please name your data record."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:86
+msgid ""
+"A public unique identifier for the dataset.  It should be roughly "
+"readable, with dashes separating words.  Format: Two or more lowercase "
+"alphanumeric, dash (-) or underscore (_) characters. e.g. uk-road-"
+"traffic-statistics-2008 or local-authority-spend-over-500-harlow"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:86
+msgid "Create a URL:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:92
+msgid "/dataset/"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:102
+msgid ""
+"In this tab you enter the links to the files containing the actual data "
+"at the heart of this record."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:104
+msgid ""
+"Your record may be creating a single file record (a record which points "
+"to just one file) or you may be creating a timeseries record (where "
+"multiple files are released over time, for example the £25k spend data, "
+"where a new data file is added to the record monthly)."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:105
+msgid "If your data comes in multiple formats, use a line for each."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:106
+msgid "NB: Do not put links to web pages here."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:106
+msgid ""
+"These and other useful documents that are not actually the data should go"
+" in the 'Additional Resources' section."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:108
+msgid "This record is:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:112
+msgid "A single file record"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:118
+msgid "A timeseries record"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:126
+msgid ""
+"How frequently new data files are published.  For one-off data, use "
+"'never'. For those once updated but now discontinued, use 'discontinued'."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:126
+msgid "Update frequency"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:135
+msgid "discontinued"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:137
+#: ckanext/dgu/theme/templates/package/edit_form.html:753
+#: ckanext/dgu/theme/templates/package/edit_form.html:772
+msgid "Other:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:148
+#: ckanext/dgu/theme/templates/package/edit_form.html:709
+#: ckanext/dgu/theme/templates/package/edit_form.html:719
+#: ckanext/dgu/theme/templates/package/edit_form.html:729
+msgid "Format: DD/MM/YYYY"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:148
+#: ckanext/dgu/theme/templates/package/read_common.html:179
+msgid "Date:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:149
+#: ckanext/dgu/theme/templates/package/edit_form.html:241
+msgid "Text that is displayed next to the link on the dataset record"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:149
+#: ckanext/dgu/theme/templates/package/edit_form.html:241
+msgid "File Title:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:150
+#: ckanext/dgu/theme/templates/package/edit_form.html:242
+msgid "Where the file is already hosted"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:150
+#: ckanext/dgu/theme/templates/package/edit_form.html:242
+msgid "URL:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:151
+#: ckanext/dgu/theme/templates/package/edit_form.html:243
+#: ckanext/dgu/theme/templates/package/edit_form.html:526
+msgid "The file format of the linked resource"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:151
+#: ckanext/dgu/theme/templates/package/edit_form.html:243
+#: ckanext/dgu/theme/templates/package/edit_form.html:323
+#: ckanext/dgu/theme/templates/package/edit_form.html:526
+#: ckanext/dgu/theme/templates/package/resource_read.html:111
+msgid "Format:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:198
+#: ckanext/dgu/theme/templates/package/edit_form.html:289
+#: ckanext/dgu/theme/templates/package/edit_form.html:574
+msgid "Check"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:226
+#: ckanext/dgu/theme/templates/package/edit_form.html:315
+#: ckanext/dgu/theme/templates/package/edit_form.html:597
+msgid "Add Row"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:228
+#: ckanext/dgu/theme/templates/package/edit_form.html:317
+#: ckanext/dgu/theme/templates/package/edit_form.html:598
+msgid "Row(s) partially filled."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:229
+#: ckanext/dgu/theme/templates/package/edit_form.html:599
+msgid "Check all URLs"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:230
+#: ckanext/dgu/theme/templates/package/edit_form.html:319
+#: ckanext/dgu/theme/templates/package/edit_form.html:600
+msgid "Checking, please wait..."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:318
+msgid "Check all URLs..."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:323
+msgid ""
+"This should give the file format in which the data is supplied. You may "
+"supply the data in a form not listed here, but still constrained by the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:323
+msgid "Public Sector Transparency Board's principles"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:323
+msgid ""
+"that require that all data is available in an 'open and standardised "
+"format' that can be read by a machine. Data can also be released in "
+"formats that are not machine-processable (e.g. PDF) alongside this."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:324
+msgid "Format choices:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:324
+msgid "CSV | RDF | XML | XBRL | SDMX | HTML+RDFa | Other as appropriate"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:332
+msgid ""
+"(It is often displayed with the package title. In particular, it should "
+"start with a short sentence that describes the data set succinctly, "
+"because the first few words alone may be used in some views of the data "
+"sets. Here is the place to state if there are any limitations or "
+"deficiencies to the data in order to enable users to evaluate the "
+"information; even incomplete data may be adequate for some users)."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:340
+msgid "Licence:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:360
+msgid "Harvested license..."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:361
+msgid "Specify other..."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:365
+msgid "The licence under which the dataset is released."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid ""
+"The 'Open Government Licence' is the default licence for all publications"
+" in the UK public sector, for greater transparency and reuse. Central "
+"Departments and Agencies are"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid "mandated"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid ""
+"to use the OGL by the HMSO. Local Authorities are recommended to use the "
+"OGL by the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid "LGA"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid "and"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid "DCLG"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid ". Other public bodies are"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid "invited"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:367
+msgid ""
+"to use it, such as universities, police forces or hospitals. Other "
+"licenses are also lists which are open and are suitable for data. For any"
+" other licence, please select \"Specify other\" and enter the name of the"
+" licence in the \"Licence (other)\" box provided."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:370
+msgid "Licence (other):"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:381
+msgid "Published by:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:384
+msgid "Please select a publisher..."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:392
+msgid "Please select a publisher."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:394
+msgid "Contact details"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:395
+msgid ""
+"Here are the contact details that will be displayed for this dataset.  "
+"The default Contact and FOI information is taken from the selected "
+"publisher, but you may edit it for this dataset."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:398
+msgid "Publisher Contact Details"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:399
+#: ckanext/dgu/theme/templates/package/edit_form.html:419
+#: ckanext/dgu/theme/templates/package/edit_form.html:443
+#: ckanext/dgu/theme/templates/package/edit_form.html:464
+msgid "Name:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:412
+#: ckanext/dgu/theme/templates/package/edit_form.html:458
+msgid "x"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:414
+msgid "Edit Contact Information"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:417
+msgid "Edit any of the contact details below."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:432
+#: ckanext/dgu/theme/templates/package/edit_form.html:481
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:228
+msgid "Save Changes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:433
+#: ckanext/dgu/theme/templates/package/edit_form.html:482
+msgid "Close"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:441
+msgid "FOI Request Contact Details"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:459
+msgid "Edit FOI Information"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:462
+msgid "Edit any of the FOI details below."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:494
+msgid ""
+"1. Please choose a primary theme which this data record falls under from "
+"the options below."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:498
+msgid "Secondary Theme"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:507
+#: ckanext/dgu/theme/templates/tag/index.html:6
+#: ckanext/dgu/theme/templates/tag/index.html:8
+msgid "Tags"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:508
+msgid ""
+"Please list tags which describe the subject of this data in commonly used"
+" terms abstract terms e.g. \"air quality, pollution, roads\". For "
+"government spend transactions, include the special tag \"spend-"
+"transactions\". Put commas between each tag."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:519
+msgid ""
+"You can add links to additional resources here.  Use a link for each "
+"resource.  This could be PDFs of files explaining the data or links to a "
+"website with more information."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:524
+msgid "Description:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:525
+msgid ""
+"This is the Internet link directly to the data - by selecting this link "
+"in a web browser, the user will immediately download the full data set. "
+"Note that datasets are not hosted by data.gov.uk, but by the responsible "
+"department."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:525
+msgid "Link:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:527
+msgid ""
+"Name of ScraperWiki scraper to create resources from the webpage this "
+"resource describes. Only available when Format is 'HTML'."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:527
+msgid "Scraper name:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:604
+msgid "Mandate"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:608
+msgid ""
+"An Internet link to the enabling legislation that serves as the mandate "
+"for the collection or creation of this data, if appropriate."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:609
+msgid "For example Public Record Act s.2 would be:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:609
+msgid "http://www.legislation.gov.uk/id/ukpga/Eliz2/6-7/51/section/2"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:610
+msgid ""
+"This should be taken from The National Archives' Legislation website, and"
+" where possible be a link directly to the relevant section of the Act."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:616
+msgid "Time & date"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:626
+msgid "e.g. 21/03/2007 - 03/10/2009 or 07:45 31/03/2006"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:627
+msgid ""
+"If available, please indicate the time as well as the date. Where data "
+"covers only a single day, the second box can be left blank."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:638
+msgid "England"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:643
+msgid "Scotland"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:648
+msgid "Wales"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:653
+msgid "Northern Ireland"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:658
+msgid "Overseas"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:663
+msgid "Global"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:666
+msgid ""
+"Where a dataset covers multiple areas, the system will automatically "
+"group these (e.g. 'England', 'Scotland' and 'Wales' all being selected "
+"would be shown as 'Great Britain')."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:677
+msgid "The Internet link to a web page discussing the dataset."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:678
+msgid "e.g. http://www.somedept.gov.uk/growth-figures.html"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:684
+msgid "Taxonomy URL"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:687
+msgid ""
+"An Internet link to a web page describing the taxonomies used in the "
+"dataset, if any, to ensure they understand any terms used."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:688
+msgid "e.g. http://www.somedept.gov.uk/growth-figures-technical-details.html"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:694
+msgid "National Statistic"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:698
+msgid "This dataset is a National Statistic."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:701
+msgid "This is so that it can be highlighted."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:706
+msgid "Date released"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:710
+msgid ""
+"This is probably not the date that it is uploaded to data.gov.uk. Be "
+"careful not to confuse a new 'version' of some data with a new dataset "
+"covering another time period or geographic area."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:716
+msgid "Date updated"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:720
+msgid ""
+"This is not necessarily the date when it was updated on data.gov.uk. As "
+"with 'Date released', this is for updates to a particular dataset, such "
+"as corrections or refinements, not for that of a new time period."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:726
+msgid "Date to be published"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:735
+msgid "Precision"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:738
+msgid "e.g. 'per cent to two decimal places' or 'as supplied by respondents'"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:743
+msgid "Temporal granularity"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:756
+msgid ""
+"This should give the lowest level of temporal detail given in the dataset"
+" if it is aggregated, expressed as an interval of time. If the data is "
+"not aggregated over time, and so the dataset goes down to the instants "
+"that reported events occurred (such as the timings of high and low "
+"tides), use 'point'. If none of the choices is appropriate or the "
+"granularity varies, please specify in the 'other' element."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:761
+msgid "Geographic granularity"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:776
+msgid ""
+"This should give the lowest level of geographic detail given in the "
+"dataset if it is aggregated. If the data is not aggregated, and so the "
+"dataset goes down to the level of the entities being reported on (such as"
+" school, hospital, or police station), use 'point'. If none of the "
+"choices is appropriate or the granularity varies, please specify in the "
+"'other' element."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:783
+msgid "Extra Fields not in the Schema"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:795
+msgid "(None)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:805
+msgid "NB: Dangerous operation! (Available to sysadmins only)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:806
+#: ckanext/dgu/theme/templates/package/read_common.html:287
+msgid "This dataset is"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:809
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:110
+msgid "active"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:810
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:111
+msgid "deleted"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:846
+msgid "Discard date information?"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:849
+msgid ""
+"Changing from a 'timeseries record' to a 'single file record' will "
+"discard the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:849
+msgid "date"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:849
+msgid "information for each resource. Continue?"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/edit_form.html:853
+#: ckanext/dgu/theme/templates/package/resource_qa.html:29
+msgid "OK"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:6
+msgid "History -"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:11
+#: ckanext/dgu/theme/templates/revision/diff.html:9
+#: ckanext/dgu/theme/templates/revision/diff.html:17
+msgid "History"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:17
+msgid "History of Changes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:23
+msgid "Error:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:30
+#: ckanext/dgu/theme/templates/package/history.html:34
+msgid "Compare"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:34
+msgid "Timestamp"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:34
+msgid "Author"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:34
+msgid "Description of Change"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:46
+#, python-format
+msgid "Read dataset as of %s"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/history.html:57
+msgid "Dataset History"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:14
+#: ckanext/dgu/theme/templates/package/read_common.html:14
+msgid "- Datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:26
+msgid "Viewing Dataset Revision"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:27
+msgid "This is an old revision of this dataset, as edited at"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:28
+msgid ". It may differ significantly from the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:28
+msgid "current revision"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:30
+msgid "This is the current revision of this dataset, as edited at"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:50
+msgid "Dataset Extent"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:53
+msgid "Latitude:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:54
+#: ckanext/dgu/theme/templates/package/read.html:58
+msgid "° to"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:57
+msgid "Longitude:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:77
+#: ckanext/dgu/theme/templates/package/read.html:81
+msgid "Data Resources ("
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:81
+msgid "in a time series)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:94
+msgid "Additional Links ("
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:99
+#: ckanext/dgu/theme/templates/package/read.html:133
+msgid "(none)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:105
+msgid "Additional Information"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:110
+msgid "Added to data.gov.uk"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:126
+msgid "Coupled"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:142
+msgid "Add Feedback »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:143
+msgid "Login to Add Feedback »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:147
+msgid "Related Applications"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:155
+msgid "Dataset Feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:158
+msgid "View all feedback »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:207
+#: ckanext/dgu/theme/templates/package/resource_qa.html:9
+msgid "There is an error with this resource"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:238
+#: ckanext/dgu/theme/templates/package/resource_read.html:50
+msgid "Download"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:239
+msgid "Direct Link"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:245
+#: ckanext/dgu/theme/templates/package/resource_read.html:63
+msgid "Cached"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read.html:252
+msgid "(no cache available)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:30
+#: ckanext/dgu/theme/templates/publisher/read.html:21
+msgid "Contacts"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:33
+#: ckanext/dgu/theme/templates/publisher/read.html:23
+msgid "Enquiries:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:40
+#: ckanext/dgu/theme/templates/publisher/read.html:32
+msgid ""
+"Use the Freedom of Information Act to request more information from the "
+"body holding the data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:40
+#: ckanext/dgu/theme/templates/publisher/read.html:32
+msgid "FOI requests"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:56
+msgid "Do More With This Data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:61
+msgid "Share your app »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:62
+msgid "Request new data »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:63
+msgid ""
+"The information on this page (the dataset metadata) is also available in "
+"JSON format."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:68
+msgid "API:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:73
+msgid "Read more about this site's CKAN API »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:89
+msgid "(Unpublished)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:94
+msgid "Published by"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:100
+msgid "No publisher specified."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:105
+msgid "No licence specified."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:108
+msgid "Licensed under"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:118
+msgid "[Open Government Licence]"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:118
+msgid "Open Government Licence"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:144
+msgid "Openness rating:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:149
+msgid "Reason:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:155
+msgid "Score updated:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:169
+msgid "Open Data Certificate:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:172
+msgid "Level"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:177
+msgid "This dataset is awarded an Open Data Certificate"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:178
+msgid "Level:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:180
+msgid "Source:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:181
+msgid "Full details ›"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:206
+msgid "Provider:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:209
+msgid "Responsible Party:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:212
+msgid "Publish date:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:240
+msgid "Release Notes:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:243
+msgid "Read More"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:249
+#: ckanext/dgu/theme/templates/publisher/read.html:169
+msgid "Administrator Tools"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:254
+msgid "Edit dataset properties »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:265
+msgid "Convert to published dataset"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:278
+msgid "Unpublished Dataset"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:279
+msgid "This is a record for data which is not published."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/read_common.html:287
+msgid ". Only administrators can view it in this state."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_qa.html:22
+#: ckanext/dgu/theme/templates/package/resource_qa.html:33
+msgid "Warning"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_qa.html:22
+msgid "URL does not appear to be open data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_qa.html:29
+msgid "URL works"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_qa.html:30
+msgid "Detected format:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_qa.html:33
+msgid "Detected format \""
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_qa.html:33
+msgid "\" does not match the format described by the publisher \""
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_qa.html:35
+msgid "Last checked:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_qa.html:37
+msgid "URL redirects to:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:29
+msgid "- Resources"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:35
+msgid "Deleted resource"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:37
+msgid "This resource is"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:44
+#: ckanext/dgu/theme/templates/package/resource_read.html:45
+msgid "View"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:46
+msgid "API Endpoint"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:53
+msgid "Link"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:73
+msgid "Data API is unavailable for this resource as DataStore is disabled"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:81
+msgid "Resource:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:97
+#: ckanext/dgu/theme/templates/package/resource_read.html:303
+#: ckanext/dgu/theme/templates/package/search.html:29
+msgid "Preview"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:98
+msgid ""
+"Preview is currently available for files such as CSV, spreadsheets and "
+"plain text."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:107
+msgid "Last updated:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:116
+msgid "Resource Openness:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:120
+msgid "Quality Check:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:158
+msgid "CKAN Data API"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:163
+msgid ""
+"Access resource data via a web API with powerful query\n"
+"          support"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:164
+msgid ". Further information in the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:165
+msgid ""
+"main\n"
+"          CKAN Data API and DataStore documentation"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:170
+msgid "Endpoints »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:174
+msgid ""
+"The Data API builds directly on ElasticSearch, with a resource API\n"
+"              endpoint being equivalent to a single index 'type' in "
+"ElasticSearch.\n"
+"              This means you can directly re-use"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:178
+msgid ""
+"ElasticSearch\n"
+"                client libraries"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:179
+msgid "when connecting to the API endpoint."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:184
+msgid "Base"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:188
+msgid "Query"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:190
+msgid "/_search"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:194
+msgid "Query example"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:196
+#: ckanext/dgu/theme/templates/package/resource_read.html:220
+msgid "/_search?size=5&pretty=true"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:200
+#: ckanext/dgu/theme/templates/package/resource_read.html:229
+msgid "Schema (Mapping)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:202
+#: ckanext/dgu/theme/templates/package/resource_read.html:231
+msgid "/_mapping?pretty=true"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:213
+msgid ""
+"Querying\n"
+"              »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:218
+msgid "Query example (first 5 results)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:223
+msgid "Query example (results with 'jones' in"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:223
+msgid "title"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:223
+msgid "field)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:226
+msgid "/_search?q=title:jones&size=5&pretty=true"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:234
+msgid "Endpoint (for clients)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:244
+msgid "Example: Javascript"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:248
+msgid "A simple ajax (JSONP) request to the data API using jQuery."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:249
+msgid ""
+"var data = {\n"
+"        size: 5 // get 5 results\n"
+"        q: 'title:jones' // query on the title field for 'jones'\n"
+"      };\n"
+"      $.ajax({\n"
+"        url: '"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:255
+msgid ""
+"/_search',\n"
+"        data: data,\n"
+"        dataType: 'jsonp',\n"
+"        success: function(data) {\n"
+"          alert('Total results found: ' + data.hits.total)\n"
+"        }\n"
+"      });"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:268
+msgid "Example: Python"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:272
+msgid ""
+"import urllib\n"
+"      url = '"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:274
+msgid ""
+"/_search?size=5&q=title:jones'\n"
+"      fileobj = urllib.urlopen(url)\n"
+"      print fileobj.read()"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:289
+msgid "Embed Data Viewer"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:295
+msgid "Embed this view"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:295
+msgid "by copying this into your webpage:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:297
+msgid "Choose width and height in pixels:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:298
+msgid "Width:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/resource_read.html:300
+msgid "Height:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:10
+msgid "Data Search"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:20
+msgid "or"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:20
+msgid "conduct map based search"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:27
+msgid "Map Preview List"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:38
+msgid "Show Search Facets »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:42
+msgid "There was an error while searching."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:43
+msgid "Please try again."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:51
+msgid "Sort by:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/package/search.html:66
+msgid "Results"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/apply.html:5
+msgid "Apply"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/apply.html:6
+#: ckanext/dgu/theme/templates/publisher/apply.html:11
+#: ckanext/dgu/theme/templates/publisher/apply.html:15
+msgid "Apply for membership"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/apply_form.html:21
+msgid "Publisher:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/apply_form.html:43
+msgid ""
+"Please explain the reason for you to publish on data.gov.uk. To help us "
+"authenticate you, mention your position if it includes responsibily to "
+"publish data, or name a more senior person that has delegated the "
+"responsibility."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/apply_form.html:50
+msgid "Send request"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit.html:6
+msgid "- Edit - Publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit.html:15
+msgid "Edit Publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:36
+msgid "Publisher name"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:58
+msgid "2+ characters, lowercase, using only 'a-z0-9' and '-_'"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:65
+msgid "Name Abbreviation (optional)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:76
+msgid "Further Information"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:79
+msgid "Publisher Description"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:81
+msgid "Start with a summary sentence ..."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:86
+msgid "Parent publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:90
+msgid "No parent (top level)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:117
+msgid "Category"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:138
+msgid "Contact Details"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:139
+msgid ""
+"These provide the default contact details for datasets from this "
+"publisher. Each dataset may also include more specific contact details, "
+"which are then used instead of the details here."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:142
+msgid "e.g. Barnsley Council Data Enquiries Helpline"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:154
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:187
+msgid "Telephone"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:165
+msgid "FOI Request Details"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:166
+msgid ""
+"These provide the default Freedom of Information request contact details "
+"for datasets from this publisher. Each dataset may also include more "
+"specific contact details, which are then used instead of the details "
+"here."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:169
+msgid "e.g. DfT FOI Enquiry Service"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:181
+msgid "Web"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/edit_form.html:209
+#: ckanext/dgu/theme/templates/publisher/users_form.html:42
+msgid "There are no users currently in this publisher."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/index.html:14
+msgid ""
+"Datasets are 'published' on data.gov.uk by a range of organisations, "
+"mainly from the public sector. On this page you can browse and search for"
+" them by name or place in a notional hierarchy."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/index.html:16
+msgid "Adding New Publishers"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/index.html:17
+msgid "If you are from a public sector body not listed yet, please"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/index.html:17
+msgid "get in touch with Cabinet Office data.gov.uk team"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/index.html:17
+msgid "to request the addition of your publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/index.html:65
+msgid "All"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/new.html:6
+msgid "New - Publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/new.html:10
+#: ckanext/dgu/theme/templates/publisher/new.html:14
+msgid "New Publisher"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/publisher_util.html:27
+#: ckanext/dgu/theme/templates/publisher/report_groups_without_admins.html:6
+#: ckanext/dgu/theme/templates/publisher/report_groups_without_admins.html:7
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:6
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:6
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:7
+msgid "Publisher report"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/publisher_util.html:29
+#: ckanext/dgu/theme/templates/publisher/publisher_util.html:35
+msgid "(details)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/publisher_util.html:30
+msgid "Broken Links:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/publisher_util.html:36
+msgid "Openness:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:49
+msgid "Publisher Hierarchy"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:84
+msgid "Broken links report"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:90
+msgid "Openness report"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:96
+msgid "Dataset analytics"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:111
+msgid "Administrators:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:117
+msgid "administrator"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:118
+#: ckanext/dgu/theme/templates/publisher/read.html:128
+msgid "No-one assigned"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:121
+msgid "Editors:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:127
+msgid "editor"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:132
+msgid "Request to become an"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:132
+#: ckanext/dgu/theme/templates/publisher/users_form.html:34
+msgid "Editor"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:157
+msgid "Category:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:160
+msgid "Spending data published by:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:173
+msgid "Edit publisher properties »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:176
+msgid "Manage unpublished datasets »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:179
+msgid "Add a new dataset »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:182
+msgid "Edit user permissions »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:193
+msgid "Include datasets from sub-publishers"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/read.html:205
+msgid "Popular Datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_groups_without_admins.html:11
+msgid "Publishers without admins"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_groups_without_admins.html:16
+msgid "Publishers without admins ("
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:7
+msgid "Publishers and Admins/Editors ("
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:11
+msgid "Publishers and users"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:23
+msgid "Approval status"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:24
+msgid "Administrators"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:25
+msgid "Editors"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_publishers_and_users.html:26
+#: ckanext/dgu/theme/templates/publisher/report_users.html:26
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:23
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:21
+msgid "Created"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users.html:6
+msgid "User report"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users.html:7
+msgid "Users ("
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users.html:11
+msgid "Users report"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users.html:23
+msgid "Datasets created (in CKAN)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users.html:24
+msgid "Edits made (in CKAN)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users.html:25
+msgid "Rights"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users.html:35
+msgid "Sysadmin"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:11
+msgid "Users not assigned to groups"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:17
+msgid "Users not attached to a publisher ("
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:20
+#: ckanext/dgu/theme/templates/user/read.html:27
+msgid "Full Name"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/report_users_not_assigned_to_groups.html:21
+msgid "Username"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/users.html:5
+msgid "Users in"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/users.html:10
+msgid "Edit User Permissions"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/users_form.html:22
+msgid "Admins and Editors"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/users_form.html:45
+msgid "Add editors"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/users_form.html:53
+msgid ""
+"NB: A user might not appear on this list until that user has logged in "
+"and clicked on a page in the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/users_form.html:53
+msgid "part of data.gov.uk."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/publisher/users_form.html:60
+msgid "Save"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:9
+msgid "Number of datasets without resources:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:12
+msgid ""
+"NB: \"Last resource deleted\" is blank if there is no history of any "
+"resources for the dataset."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:20
+#: ckanext/dgu/theme/templates/report/unpublished.html:17
+msgid "Organization"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:22
+msgid "Date created on DGU"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:23
+msgid "Date modified on DGU"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:24
+msgid "Date last resource deleted"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/datasets_without_resources.html:25
+msgid "Last resource URL"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/feedback.html:9
+msgid "unpublished"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/feedback.html:9
+msgid "datasets /"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/feedback.html:9
+msgid "with feedback"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/feedback.html:20
+msgid "Effective services"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/feedback.html:21
+msgid "Linked data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/feedback.html:43
+msgid "View all publishers"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:9
+msgid "NII totals:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:10
+msgid "resources in"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:10
+msgid "datasets across"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:10
+#: ckanext/dgu/theme/templates/report/nii.html:13
+msgid "organizations"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:12
+msgid "Broken:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:13
+msgid "broken resources in"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:13
+msgid "broken datasets across"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:28
+msgid "Broken resource count"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/nii.html:29
+msgid "Broken resources"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/option_include_published.html:6
+msgid "Include published datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/publisher_activity.html:9
+msgid ""
+"Quarter\n"
+"            ("
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/publisher_activity.html:21
+msgid "By"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/publisher_activity.html:22
+msgid "Published data"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/publisher_activity.html:36
+msgid "None"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:7
+msgid "Datasets:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:8
+msgid "Resources:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/publisher_resources.html:20
+msgid "Format"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/unpublished.html:9
+msgid "Number of unpublished datasets:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/report/unpublished.html:20
+msgid "Will not be released"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:5
+msgid "Differences - Revisions"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:10
+msgid "Revision Differences"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:21
+msgid "Viewing Dataset Diff"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:22
+msgid "From"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:24
+#: ckanext/dgu/theme/templates/revision/diff.html:29
+msgid "ID:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:25
+#: ckanext/dgu/theme/templates/revision/diff.html:30
+msgid "Timestamp:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:27
+msgid "To"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:36
+msgid "Field"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:36
+msgid "Difference"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/revision/diff.html:44
+msgid "No differences"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/tag/index.html:17
+msgid "Search Tags..."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:6
+#: ckanext/dgu/theme/templates/themed/index.html:9
+msgid "Themes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:19
+msgid ""
+"Employment, benefits, household finances, poverty, population, "
+"demography, lifestyles, surveys and opinions."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:22
+msgid "Society"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:22
+#: ckanext/dgu/theme/templates/themed/index.html:37
+#: ckanext/dgu/theme/templates/themed/index.html:52
+#: ckanext/dgu/theme/templates/themed/index.html:67
+#: ckanext/dgu/theme/templates/themed/index.html:84
+#: ckanext/dgu/theme/templates/themed/index.html:99
+#: ckanext/dgu/theme/templates/themed/index.html:114
+#: ckanext/dgu/theme/templates/themed/index.html:129
+#: ckanext/dgu/theme/templates/themed/index.html:146
+#: ckanext/dgu/theme/templates/themed/index.html:161
+#: ckanext/dgu/theme/templates/themed/index.html:176
+#: ckanext/dgu/theme/templates/themed/index.html:191
+msgid "datasets »"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:34
+msgid ""
+"Government transaction data. Mandated for public bodies (transactions "
+"above £25k & GPC card) and local authorities (transactions above £500). "
+"Includes grants."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:34
+#: ckanext/dgu/theme/templates/themed/index.html:64
+#: ckanext/dgu/theme/templates/themed/index.html:143
+#: ckanext/dgu/theme/templates/themed/index.html:173
+msgid "Excludes"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:34
+msgid "budgets & staff pay."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:37
+msgid "Government Spending"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:49
+msgid "Data collected from schools, universities and libraries."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:49
+msgid "Students, training, qualifications and the National Curriculum."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:52
+msgid "Education"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:64
+msgid ""
+"Administrative boundaries, property addresses, land ownership, aerial "
+"photographs, the shape of the seabed and land terrain, general-purpose "
+"maps."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:64
+msgid "maps of any specific topic."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:67
+msgid "Mapping"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:81
+msgid ""
+"Statistics on crimes, policing, justice, courts, prisons, offenders, "
+"borders, and immigration."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:84
+msgid "Crime & Justice"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:96
+msgid ""
+"Management and measurement of the natural environment. For example: "
+"weather, flooding, rivers, air quality, living creatures, geology and "
+"agriculture."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:99
+msgid "Environment"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:111
+msgid ""
+"Housing, urban planning, leisure, waste, energy production, energy "
+"consumption (macroscopic)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:114
+msgid "Towns & Cities"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:126
+msgid ""
+"Measurement of health, health care and social care. Includes medicine "
+"performance, hospitals, safety, mortality rates and data on smoking, "
+"drugs and alcohol."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:129
+msgid "Health"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:143
+msgid ""
+"Organograms, staff numbers, expenses, staff pay, senior staff meetings, "
+"hospitality & gifts, lists of local councillors, department business "
+"plans, government buildings."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:143
+msgid "spending."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:146
+msgid "Government"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:158
+msgid ""
+"Statistics on the armed forces, Ministry of Defence, workforce, health & "
+"safety and search & rescue."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:161
+msgid "Defence"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:173
+msgid ""
+"Industry and small businesses. Statistics, surveys, economic indicators, "
+"import/exports and trade."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:173
+msgid "government spending & salaries."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:173
+msgid "household finances."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:176
+msgid "Business & Economy"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:188
+msgid ""
+"Airports, roads, freight, electric vehicles, parking, buses, footpaths "
+"and travel statistics."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/index.html:191
+msgid "Transport"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/themed/theme.html:10
+msgid "(not implemented)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/login.html:5
+#: ckanext/dgu/theme/templates/user/login.html:21
+msgid "CKAN login"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/login.html:7
+msgid "Log In"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/login.html:16
+msgid "Login Error"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/login.html:26
+msgid "Username:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/login.html:30
+msgid "Password:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/login.html:35
+msgid "Remember me:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout.html:5
+msgid "CKAN logout"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout.html:7
+msgid "Logged Out"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout.html:12
+msgid "CKAN log out"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout.html:13
+msgid "You are now logged out."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout_first.html:5
+msgid "CKAN logout first"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout_first.html:8
+msgid "You must log out"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout_first.html:14
+msgid "You must"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout_first.html:15
+msgid "log out"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/logout_first.html:15
+msgid "before you can login."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:5
+msgid "- Users"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:7
+msgid "User Profile"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:25
+msgid "ID"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:34
+msgid "No email"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:46
+msgid "API Key"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:50
+msgid "– Note: your API key is visible only to you!"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:58
+msgid "Add a publisher to your account"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:80
+msgid "Edits"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/user/read.html:88
+msgid "Public Activity"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/front_page.html:6
+msgid "Main"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/front_page.html:8
+msgid "front-page"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/front_page.html:158
+msgid "Data Catalogue"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/front_page.html:165
+msgid "published datasets"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/front_page.html:176
+msgid "(resources pie chart)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/front_page.html:184
+msgid "resources"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:6
+msgid "Exploring: Investment Readiness Programme"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:10
+msgid "Investment Readiness Programme"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:11
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:11
+msgid "Data Explorer"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:37
+msgid "Social Incubator Fund (SIF)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:40
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:41
+msgid "View the code"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:40
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:41
+msgid ""
+"to see how we used the CKAN API to fetch and process the data for this "
+"visualisation."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:42
+msgid ""
+"The visualisations shows incubator level summary detail about the Social "
+"Incubator Fund, a £10m fund administered by BIG, which supports social "
+"incubators to help them provide investment and support to early stage "
+"social ventures in the UK. Click on the incubator icons below to show a "
+"sector and beneficiary breakdown of the current ventures."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:43
+msgid ""
+"The data is available for all live incubators and is updated by the "
+"incubators themselves:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:45
+msgid "Social Incubator Fund Data (Bethnal Green Ventures)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:46
+msgid "Social Incubator Fund Data (The Hub Launchpad)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:47
+msgid "Social Incubator Fund Data (Social Incubator North)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:48
+msgid "Social Incubator Fund Data (Wayra UnLtd)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:53
+msgid "Primary Sectors:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:53
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:54
+msgid "Bethnal Green Ventures"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:54
+msgid "Primary Beneficiaries:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:57
+msgid "Investment Contract Readiness Fund (ICRF)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:59
+msgid "ICRF logo"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:60
+msgid ""
+"This visualisation shows investments made by the Investment and Contract "
+"Readiness Fund into high growth potential social ventures. The Investment"
+" and Contract Readiness Fund pays for business support to help social "
+"ventures raise investment of over £500k or win bids to deliver public "
+"services contracts valued at over £1m. Hover your mouse over the lines "
+"below to view links to the ventures supported and the grant amount "
+"received."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:61
+msgid "The data is available for the"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:61
+msgid "ICRF investments"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/investment_readiness_programme.html:61
+msgid ""
+". The data shows: the venture supported, the grant amount, and the "
+"postcode where the venture is headquartered."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:6
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:36
+msgid "Exploring: Social Investment and Foundations"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:10
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:43
+msgid "Social Investment and Foundations"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:43
+msgid ""
+"Alongside established grant making, foundations are using social "
+"investment as a tool to help them achieve their social mission. This open"
+" dataset ("
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:43
+msgid ""
+") and accompanying visualisations showcases where and how a number of "
+"Foundations are investing. This early stage dataset is just a snapshot of"
+" the current market and over time we anticipate more Foundations will "
+"contribute data to this resource."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:44
+msgid ""
+"The data fields are aligned to the EngagedX Investment reporting "
+"STandards (EXIST)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:44
+msgid "© 2013 Engaged Investment Ltd"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:48
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:66
+msgid "View data for:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:49
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:67
+msgid "All Foundations"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:56
+msgid "Investment To Date"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:60
+msgid "Year-On-Year Cash Investment"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:60
+msgid ""
+"A summary of cash invested by foundations from 2010 to 2013. The donut "
+"charts beneath this show the cash invested per sector and the investment "
+"product types."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:62
+msgid "Data Fields: Cash Invested, Sector, Product Type"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:75
+msgid "Sector Summary"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:81
+msgid "Product Type"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:91
+msgid "Investment Strategies"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:92
+msgid ""
+"The chart shows where and how investments have been made by foundations "
+"between four categories. Hover your mouse over the threads to show the "
+"amount invested between each data field and move the coloured bars on a "
+"vertical axis to change the structure."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:93
+msgid ""
+"Data Fields: Cash Invested, Type of Organisation, Product Type, Purpose "
+"of Investment, Sector"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:97
+msgid "CoInvestment Contributions"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:99
+msgid "CoInvestment To Date"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:101
+msgid ""
+"Foundations are collaborative investors in the sector. This visualisation"
+" shows that by investing £6.2m, these three foundations have contributed "
+"towards wider a total investments of £105.6m."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:101
+msgid ""
+"For example, the total investment of £12m has included co-investment by "
+"The LankellyChase Foundation (£600k), The Barrow Cadbury Trust (£600k) "
+"and other investors (£10.8m)."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:101
+msgid ""
+"The outer segments show specific investments by foundations and the inner"
+" segments show the investment totals."
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:102
+msgid "(Graph segments not to scale:"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:103
+msgid "Logarithmic sizes are used for clarity)"
+msgstr ""
+
+#: ckanext/dgu/theme/templates/viz/social_investment_and_foundations.html:104
+msgid "Data fields: Cash Invested, Total Value, Foundation"
+msgstr ""
+

@@ -1,0 +1,161 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">Detalji prikupljenog izvora</py:def>
+
+  <py:def function="optional_head">
+    <link type="text/css" rel="stylesheet" media="all" href="/ckanext/harvest/style.css" />
+  </py:def>
+
+<py:match path="breadcrumbs">
+    <li><a href="/data/search">Skupovi podataka</a></li>
+    <li><a href="/harvest">Prikupljeni izvori</a></li>
+    <li><a href="/harvest/${c.source.id}">${c.source.title}</a></li>
+  </py:match>
+
+<div py:match="content">
+  <div class="harvest-content boxed">
+  <py:if test="c.source">
+  <h1>Prikupljeni izvor</h1>
+  <div id="harvest-source-actions">
+  <a py:if="h.check_access('harvest_source_update', {'id':c.source.id})" class="btn btn-primary" href="/harvest/edit/${c.source.id}">
+    <i class="icon-edit"></i>
+    Uredi izvor
+  </a>
+  <a py:if="h.check_access('harvest_job_create', {'source_id':c.source.id})" class="btn btn-primary" href="/harvest/refresh/${c.source.id}">
+    <i class="icon-refresh"></i>
+    Osvje&#382;i izvor
+  </a>
+
+    </div>
+    <div py:if="not c.source.active" class="alert alert-block">NB: Prikupljeni izvor je neaktivan. Zbog toga Gemini XML ne&#263;e biti prikupljrn ponovno. Me&#273;utim, sve bilje&#353;ke koje su prethodno prikupljene ostaju u katalogu.</div>
+    <table id="harvest-source-details" class="table table-bordered table-condensed" py:with="job_detail = h.check_access('harvest_job_create', {'source_id':c.source.id})">
+        <tr py:if="job_detail">
+            <th>ID</th>
+            <td>${c.source.id}</td>
+        </tr>
+        <tr>
+            <th>URL</th>
+            <td>${c.source.url}</td>
+        </tr>
+        <tr>
+            <th>Tip</th>
+            <td>${c.source.type}</td>
+        </tr>
+        <tr py:if="job_detail">
+            <th>Aktivan</th>
+            <td>${c.source.active}</td>
+        </tr>
+        <tr py:if="c.source.title">
+            <th>Naslov</th>
+            <td>${c.source.title}</td>
+        </tr>
+
+        <tr>
+            <th>Opis</th>
+            <td>${c.source.description}</td>
+        </tr>
+        <tr>
+            <th>Konfiguracija</th>
+            <py:if test="c.source.config">
+            <td>${c.source.config}</td>
+            </py:if>
+            <py:if test="not c.source.config">
+            <td>-</td>
+            </py:if>
+        </tr>
+        <tr py:if="job_detail">
+            <th>Korisnik</th>
+            <td>${c.source.user_id}</td>
+        </tr>
+        <tr>
+            <th>Izdava&#269;</th>
+            <py:if test="c.source.publisher_title">
+            <td>${c.source.publisher_title}</td>
+            </py:if>
+            <py:if test="not c.source.publisher_title">
+            <td>${c.source.publisher_id}</td>
+            </py:if>
+        </tr>
+        <tr>
+            <th>Kreirano</th>
+            <td>${c.source.created}</td>
+        </tr>
+        <py:if test="job_detail">
+        <tr>
+            <th>Ukupno prikupljanja</th>
+            <td>${c.source.status.job_count}</td>
+        </tr>
+        <tr class="harvest-status">
+            <th>Status</th>
+            <td>
+                <a name="errors"/>Zadnja pogre&#353;ka prikupljanja: ${c.source.status.last_harvest_statistics.errors}<br/>
+                <py:choose>
+                    <py:when test="len(c.source.status.last_harvest_errors.gather)>0">
+                        <i>Prikupljanje gre&#353;aka</i>
+                        <ul>
+                        <li py:for="error in c.source.status.last_harvest_errors.gather">
+                            <?python
+                                lines = error.split('\n')
+                            ?>
+                            <div py:for="line in lines" class="message">${line}</div>
+                        </li>
+                        </ul>
+                    </py:when>
+                </py:choose>
+                <py:choose>
+                    <py:when test="len(c.source.status.last_harvest_errors.object)>0">
+                       <i>Pogre&#353;ke objekata</i>
+                        <ul>
+                        <li py:for="error in c.source.status.last_harvest_errors.object">
+                            <div class="message">Prikupljeni GUID <a href="${g.site_url}/harvest/object/${error.object_id}">${error.object_guid}</a></div>
+                            <div py:for="section in error['message'].split('\n\n')" class="message-section">
+                              <div py:for="line in section.split('\n')" class="message">
+                                ${line}
+                              </div>
+                            </div>
+                        </li>
+                        </ul>
+                    </py:when>
+                </py:choose>
+
+                Posljednje prikupljanje dodano: ${c.source.status.last_harvest_statistics.added}<br/>
+                Posljednje prikupljanje a&#382;urirano: ${c.source.status.last_harvest_statistics.updated}<br/>
+                Posljednje prikupljanje: ${c.source.status.last_harvest_request} <br/>
+                Sljede&#263;e prikupljanje : ${c.source.status.next_harvest}
+            </td>
+        </tr>
+        <tr>
+            <th>Ukupno pogre&#353;aka (u svim prikupljanjima)</th>
+            <td>${c.source.status.overall_statistics.errors}</td>
+        </tr>
+        <tr>
+            <th>Ukupno skupova podataka (u svim prikupljanjima)</th>
+            <td>${c.source.status.overall_statistics.added}</td>
+        </tr>
+        </py:if>
+        <tr>
+            <th>Skupovi podataka</th>
+            <td>
+                <a name="datasets"/>
+                <div py:if="job_detail">Mo&#382;e do&#263;i do 10 minutnog ka&#353;njenja prije nego se skupovi podataka pojave na stranicama ili kao rezultat pretrage.</div>
+
+                <p i18n:msg="item_count">Ima <strong>${c.page.item_count}</strong> skupova podataka.</p>
+
+                <py:for each="item in c.page.items">
+                <div>
+                <a href="/dataset/${item}">${item}</a>
+                </div>
+                </py:for>
+                ${paginator(c.page)}
+
+            </td>
+        </tr>
+    </table>
+    </py:if>
+  </div>
+</div>
+<xi:include href="../layout.html" />
+</html>

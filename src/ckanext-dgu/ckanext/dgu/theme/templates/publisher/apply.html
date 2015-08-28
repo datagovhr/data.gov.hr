@@ -1,0 +1,27 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">Prijavite se</py:def>
+  <py:def function="page_heading">Prijavite se za &#269;lanstvo</py:def>
+
+ <py:match path="breadcrumbs">
+    <li><a href="/publisher">Izdava&#269;i</a></li>
+    <py:if test="not c.group">
+      <li><a href="/publisher/apply}">Prijavite se za &#269;lanstvo</a></li>
+    </py:if>
+    <py:if test="c.group">
+      <li><a href="/publisher/${c.group.name}">${c.group.display_name}</a></li>
+      <li><a href="/publisher/apply/${c.group.name}">Prijavite se za &#269;lanstvo</a></li>
+    </py:if>
+  </py:match>
+
+  <div py:match="content" class="group-edit-form">
+    <div class="boxed">
+      ${Markup(c.form)}
+    </div>
+  </div>
+
+  <xi:include href="../layout.html" />
+</html>
+

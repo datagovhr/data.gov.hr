@@ -1,0 +1,148 @@
+.panels-flexible-region {
+  padding: 0;
+}
+
+.panels-flexible-region-inside {
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+}
+
+.panels-flexible-region-inside-first {
+  padding-left: 0;
+}
+
+.panels-flexible-region-inside-last {
+  padding-right: 0;
+}
+
+.panels-flexible-column {
+  padding: 0;
+}
+
+.panels-flexible-column-inside {
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+}
+
+.panels-flexible-column-inside-first {
+  padding-left: 0;
+}
+
+.panels-flexible-column-inside-last {
+  padding-right: 0;
+}
+
+.panels-flexible-row {
+  padding: 0 0 0.5em 0;
+  margin: 0;
+}
+
+.panels-flexible-row-last {
+  padding-bottom: 0;
+}
+
+.panels-flexible-column-12-main {
+  float: left;
+  width: 99.0000%;
+}
+
+.panels-flexible-12-inside {
+  padding-right: 0px;
+}
+
+.panels-flexible-12 {
+  width: auto;
+}
+
+.panels-flexible-column-12-12 {
+  float: left;
+  width: 32.9756%;
+}
+
+.panels-flexible-column-12-11 {
+  float: left;
+  width: 33.0226%;
+}
+
+.panels-flexible-column-12-10 {
+  float: left;
+  width: 33.0018%;
+}
+
+.panels-flexible-row-12-9-inside {
+  padding-right: 0px;
+}
+
+.panels-flexible-region-12-gore_lijevo {
+  float: left;
+  width: 99.0000%;
+}
+
+.panels-flexible-row-12-13-inside {
+  padding-right: 0px;
+}
+
+.panels-flexible-region-12-gore_sredina {
+  float: left;
+  width: 99.0000%;
+}
+
+.panels-flexible-row-12-14-inside {
+  padding-right: 0px;
+}
+
+.panels-flexible-region-12-gore_desno {
+  float: left;
+  width: 99.0000%;
+}
+
+.panels-flexible-row-12-15-inside {
+  padding-right: 0px;
+}
+
+.panels-flexible-column-12-19 {
+  float: left;
+  width: 32.9937%;
+}
+
+.panels-flexible-column-12-5 {
+  float: left;
+  width: 32.9939%;
+}
+
+.panels-flexible-column-12-3 {
+  float: left;
+  width: 33.0124%;
+}
+
+.panels-flexible-row-12-2-inside {
+  padding-right: 0px;
+}
+
+.panels-flexible-region-12-sredina_lijevo {
+  float: left;
+  width: 99.0000%;
+}
+
+.panels-flexible-row-12-20-inside {
+  padding-right: 0px;
+}
+
+.panels-flexible-region-12-gore_sredina_ {
+  float: left;
+  width: 99.0000%;
+}
+
+.panels-flexible-row-12-16-inside {
+  padding-right: 0px;
+}
+
+.panels-flexible-region-12-sredina_desno {
+  float: left;
+  width: 99.0000%;
+}
+
+.panels-flexible-row-12-18-inside {
+  padding-right: 0px;
+}
+

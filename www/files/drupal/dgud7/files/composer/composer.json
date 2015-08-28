@@ -1,0 +1,1 @@
+{"require":{"silex\/ckan_client":"dev-master","php":">=5.3.0"},"config":{"autoloader-suffix":"ComposerManager","vendor-dir":"..\/..\/..\/..\/..\/drupal\/dgu\/sites\/all\/vendor"},"minimum-stability":"dev"}

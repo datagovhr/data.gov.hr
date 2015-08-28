@@ -1,0 +1,29 @@
+--- apachesolr_stats.module
++++ apachesolr_stats.module
+@@ -10,7 +10,7 @@
+  */
+ function apachesolr_stats_menu() {
+   return array(
+-    'admin/config/apachesolr/stats' => array(
++    'admin/config/search/apachesolr/stats' => array(
+       'title' => 'Statistics',
+       'description' => 'Apache Solr Statistics settings to measure usage and performance.',
+       'page callback' => 'drupal_get_form',
+@@ -356,7 +356,7 @@
+ function apachesolr_stats_report($picked_granularity = "minute") {
+   drupal_set_title(t("Apache Solr statistics report"));
+   if (! variable_get('apachesolr_stats_enabled', 0)) {
+-    return t('Logging is disabled in the !link. Enable it to log Apache Solr queries.', array('!link' => l('module configuration page', 'admin/config/apachesolr/stats')));
++    return t('Logging is disabled in the !link. Enable it to log Apache Solr queries.', array('!link' => l('module configuration page', 'admin/config/search/apachesolr/stats')));
+   }
+ 
+   $granularities = apachesolr_stats_get_granularities();
+@@ -394,7 +394,7 @@
+     // Report description
+     $output .= t('This is an overview of Apache Solr usage and performance.');
+     $output .= ' ' . t('You can also visit the !settingslink.',
+-      array('!settingslink' => l(t('settings page'), 'admin/config/apachesolr/stats'))
++      array('!settingslink' => l(t('settings page'), 'admin/config/search/apachesolr/stats'))
+     );
+ 
+     // Add Google Gadgets embedding link

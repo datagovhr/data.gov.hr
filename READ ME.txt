@@ -1,0 +1,5 @@
+run 'sudo .deploydghr' from /tmp/data.gov.hr/
+
+cd /tmp/data.gov.hr/
+
+sudo ./deploydghr.sh

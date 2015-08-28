@@ -1,0 +1,269 @@
+<?php 
+/**
+ * Implements hook_block_info()
+ */
+function md_wordcloud_block_info() {
+  $blocks = array();
+
+  $taxonomy_vocabularies = taxonomy_get_vocabularies();
+  if (is_array($taxonomy_vocabularies) && !empty($taxonomy_vocabularies)) {
+    foreach ($taxonomy_vocabularies as $voc) {
+      $blocks[$voc->vid]['info'] = 'Word Cloud in ' . $voc->name;
+      $blocks[$voc->vid]['cache'] = DRUPAL_NO_CACHE;
+    }
+  }
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view()
+ */
+function md_wordcloud_block_view($delta = '') {
+  $blocks_configure = variable_get('md_wordcloud_blocks_configure');
+  if ($blocks_configure == NULL || !array_key_exists('block_' . $delta, $blocks_configure)) {
+    return ;
+  }
+
+  $block_data = $blocks_configure['block_' . $delta];
+
+  $number_words = $block_data['max_word'];
+  $width = $block_data['width'];
+  $height = $block_data['height'];
+  $angle_from = $block_data['angle_from'];
+  $angle_to = $block_data['angle_to'];
+  $angle_count = $block_data['angle_count'];
+  $words_scale = $block_data['words_scale'];
+  $result = get_terms(array($delta), $number_words);
+
+  global $base_url;
+
+  drupal_add_js(drupal_get_path('module', 'md_wordcloud') . '/js/md_wordcloud.js');
+  drupal_add_js(array('blocks_data' => array(array('block_id' => $delta, 'width' => $width, 'height' => $height, 'angle_from' => $angle_from, 'angle_to' => $angle_to, 'angle_count' => $angle_count, 'words_scale' => $words_scale, 'terms_url' => $result->terms_url, 'words' => $result->words, 'counts' => $result->counts))), 'setting');
+
+  $blocks = array();
+  if ($voc = taxonomy_vocabulary_load($delta)) {
+    $blocks['subject'] = variable_get('md_wordcloud_block_title_' . $delta, t('Tags in @voc', array('@voc' => $voc->name)));
+    $blocks['content'] = '<div id="terms-cloud-' . $delta . '" class="cloud-block"><svg></svg><div><a href="' . $base_url . '/md-taxonomy/page/' . $voc->vid . '"></a></div></div>';
+  }
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_configure()
+ */
+function md_wordcloud_block_configure($delta = '') {
+  $form = array();
+  static $default_configure = array(
+      'max_word' => 100,
+      'width' => 300,
+      'height' => 300,
+      'angle_from' => -90,
+      'angle_to' => 90,
+      'angle_count' => 5,
+      'words_scale' => 'linear',
+  );
+
+  $result = get_terms(array($delta));
+  $blocks_configure = variable_get('md_wordcloud_blocks_configure');
+  if ($blocks_configure == NULL || !array_key_exists('block_' . $delta, $blocks_configure)) {
+    $block_data = $default_configure;
+  }
+  else {
+    $block_data = $blocks_configure['block_' . $delta];
+  }
+
+  drupal_add_css(drupal_get_path('module', 'md_wordcloud') . '/css/md_wordcloud_preview.css');
+  drupal_add_js(drupal_get_path('module', 'md_wordcloud') . '/js/md_wordcloud_preview.js');
+  drupal_add_js(array('words' => $result->words, 'counts' => $result->counts), 'setting');
+
+  $form['block_preview'] = array(
+      '#markup' => '<div id="md-preview-wrap"><h3 class="preview-label">Preview</h3><div id="preview-md-taxonomy" class="cloud-preview"></div></div>',
+  );
+
+  $form['max_words'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Max words to display'),
+      '#default_value' => $block_data['max_word'],
+  );
+
+  $form['block_size'] = array(
+      '#type' => 'label',
+      '#title' => 'Block size',
+  );
+
+  $form['width'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Width:',
+      '#default_value' => $block_data['width'],
+      '#prefix' => '<div class="md-angle">',
+      '#field_suffix' => 'px',
+  );
+
+  $form['height'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Height:',
+      '#default_value' => $block_data['height'],
+      '#suffix' => '</div><!-- /.md-angle -->',
+      '#field_suffix' => 'px',
+  );
+
+  $form['words_scale'] = array(
+      '#type' => 'radios',
+      '#title' => t('Words scale'),
+      '#options' => array('log' => t('log n'), 'sqrt' => t('√n'), 'linear' => t('n')),
+      '#default_value' => $block_data['words_scale'],
+  );
+
+  $form['angle_count'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Words orientation'),
+      '#default_value' => $block_data['angle_count'],
+      '#attributes' => array('min' => 0, 'max' => 100, ),
+      '#prefix' => '<div class="md-angle">',
+  );
+
+  $form['angle_from'] = array(
+      '#type' => 'textfield',
+      '#title' => t('From:'),
+      '#default_value' => $block_data['angle_from'],
+      '#attributes' => array('min' => -90, 'max' => 90, ),
+      '#field_suffix' => '&deg; to ',
+  );
+
+  $form['angle_to'] = array(
+      '#type' => 'textfield',
+      '#title' => t('to:'),
+      '#attributes' => array('min' => -90, 'max' => 90, ),
+      '#default_value' => $block_data['angle_to'],
+      '#suffix' => '</div><!-- /.md-angle -->',
+      '#field_suffix' => '&deg;',
+  );
+
+  $form['angle'] = array(
+      '#markup' => '<div id="angles"></div>',
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_block_save()
+ */
+function md_wordcloud_block_save($delta = '', $edit = array()) {
+  $blocks_configure = variable_get('md_wordcloud_blocks_configure', array());
+
+  $block = array();
+  $block['max_word'] = is_numeric($edit['max_words'])? $edit['max_words'] : 100;
+  $block['width'] = is_numeric($edit['width']) ? $edit['width'] : 300;
+  $block['height'] = is_numeric($edit['height']) ? $edit['height'] : 300;
+  $block['angle_from'] = is_numeric($edit['angle_from']) ? $edit['angle_from'] : -90;
+  $block['angle_to'] = is_numeric($edit['angle_to']) ? $edit['angle_to'] : 90;
+  $block['angle_count'] = is_numeric($edit['angle_count']) ? $edit['angle_count'] : 5;
+  $block['words_scale'] = $edit['words_scale'];
+
+  $blocks_configure['block_' . $delta] = $block;
+  variable_set('md_wordcloud_blocks_configure', $blocks_configure);
+}
+
+/**
+ * Implements hook_menu()
+ */
+function md_wordcloud_menu() {
+  $items = array();
+  $items['md-taxonomy/page/%md_wordcloud_vocs'] = array(
+      'title' => 'Word Cloud ',
+      'page callback' => 'md_wordcloud_page_list',
+      'page arguments' => array(2),
+      'access callback' => 'user_access',
+      'access arguments' => array('access content'),
+      'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Generate page to display cloud tags
+ * @param array $vocs_id - list vocabularies id
+ * @return string block contains cloud data
+ */
+function md_wordcloud_page_list($vocs_id) {
+  if (is_array($vocs_id)) {
+    $results = get_terms($vocs_id);
+    $blocks_configure = variable_get('md_wordcloud_blocks_configure');
+    if ($blocks_configure == NULL || !array_key_exists('block_' . $vocs_id[0], $blocks_configure)) {
+      return '<div id="page-terms"></div>';
+    }
+
+    $block_data = $blocks_configure['block_' . $vocs_id[0]];
+    $setting = array(
+        'terms_url' => $results->terms_url,
+        'words' => $results->words,
+        'counts' => $results->counts,
+        'words_scale' => $block_data['words_scale'],
+        'angle_count' => $block_data['angle_count'],
+        'angle_from' => $block_data['angle_from'],
+        'angle_to' => $block_data['angle_to'],
+    );
+
+    drupal_add_js(array('page_data' => $setting), 'setting');
+  }
+
+  drupal_add_js(drupal_get_path('module', 'md_wordcloud') . '/js/md_wordcloud_page.js');
+  $term = taxonomy_vocabulary_load($vocs_id[0]);
+  if ($term) {
+    drupal_set_title(t('Word Cloud in ' . $term->name));
+  }
+
+  return '<div id="page-terms"></div>';
+}
+
+/**
+ * Menu wildcard loader.
+ */
+function  md_wordcloud_vocs_load($vocs) {
+  if (is_numeric($vocs)) {
+    $vocs = array($vocs);
+  }
+  elseif (preg_match('/^([0-9]+,){1,5}[0-9]+$/', $vocs)) {
+    $vocs = explode(',', $vocs);
+  }
+  return $vocs;
+}
+
+/**
+ * Query to get terms  in database
+ * Parameters: $vids - Array id of vocabularies
+ * 						 $size - Number terms to get. Default is 100.
+ * Return: Object contains terms, url's term, count's term.
+ */
+function get_terms($vids, $size = NULL) {
+  global $base_url;
+  $terms_url = array();
+  $words = array();
+  $counts = array();
+
+  if (is_array($vids) && count($vids) > 0) {
+    $string_query = 'SELECT COUNT(*) AS num, ttd.tid, ttd.vid, ttd.name, ttd.description FROM {taxonomy_term_data} ttd INNER JOIN {taxonomy_index} tind ON ttd.tid = tind.tid INNER JOIN {node} nod ON tind.nid = nod.nid WHERE ttd.vid IN (' . implode(',', array_fill(0, count($vids), '?')) . ') GROUP BY ttd.tid, ttd.vid, ttd.name, ttd.description HAVING COUNT(*) > 0 ORDER BY num DESC';
+
+    if ($size) {
+      $results = db_query_range($string_query, 0, $size, $vids);
+    }
+    else {
+      $results = db_query($string_query, $vids);
+    }
+
+    foreach ($results as $tag) {
+      $counts[] = $tag->num;
+      $words[] =  $tag->name;
+      $term_id = (object)array('tid' => $tag->tid);
+      $org_url = taxonomy_term_uri($term_id);
+      $url_alias = drupal_get_path_alias($org_url['path']);
+      $terms_url[$tag->name] = $base_url . '/' . $url_alias;
+    }
+
+    $result = (object) array('terms_url' => $terms_url, 'words' => $words, 'counts' => $counts);
+    return $result;
+  }
+}

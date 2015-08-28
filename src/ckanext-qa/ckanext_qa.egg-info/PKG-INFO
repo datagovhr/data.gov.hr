@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: ckanext-qa
+Version: 0.4
+Summary: Quality Assurance plugin for CKAN
+Home-page: http://ckan.org/wiki/Extensions
+Author: Open Knowledge Foundation
+Author-email: info@okfn.org
+License: mit
+Description: UNKNOWN
+Platform: UNKNOWN

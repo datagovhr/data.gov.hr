@@ -1,0 +1,214 @@
+<?php
+
+/**
+ * @file
+ * Basic tests for sweaver frontend editor.
+ */
+
+class sweaverEditor extends DrupalWebTestCase {
+  /**
+   * Implementation of getInfo().
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('Sweaver editor'),
+      'description' => t('Tests for the frontend editor.'),
+      'group' => t('Sweaver'),
+    );
+  }
+
+  /**
+   * Implementation of setUp().
+   */
+  function setUp() {
+    parent::setUp('ctools', 'sweaver');
+    $this->admin_user = $this->drupalCreateUser(array('use editor', 'configure sweaver'));
+    $this->drupalLogin($this->admin_user);
+  }
+
+  /**
+   * Debug helper function. Writes values away to a text file in the files directory.
+   */
+  function _debugHelper($value, $writetype = 'a+') {
+    $debug = fopen($this->originalFileDirectory .'/simpletestdebug.txt', 'a+');
+    fwrite($debug, print_r($value, TRUE) ."\n");
+    fclose($debug);
+  }
+
+  /**
+   * Return public path helper function.
+   */
+  function sweaver_public_path() {
+    return variable_get('file_public_path', conf_path() . '/files');
+  }
+
+  /**
+   * Test frontend editor.
+   */
+  function testFrontendEditor() {
+    variable_set('sweaver_styles_delete_tab', TRUE);
+    variable_set('sweaver_plugin_status_sweaver_plugin_themeswitch', TRUE);
+    drupal_flush_all_caches();
+
+    $editor_tests = t('Editor testing');
+
+    // Enable minelli.
+    db_query("UPDATE {system} set status = 1 where type = 'theme' AND name = 'garland'");
+
+    // Assert custom css plugin is disabled.
+    $this->drupalGet('user');
+    $this->assertNoRaw('Custom css', t('Custom css tab not found'), $editor_tests);
+
+    // Enable custom css plugin.
+    $edit = array(
+      'sweaver_plugin_customcss[status]' => 1,
+    );
+    $this->drupalPost('admin/config/user-interface/sweaver/plugins', $edit, t('Save configuration'));
+    $this->assertRaw('The configuration options have been saved.', t('Plugins have been saved'), $editor_tests);
+    $this->drupalGet('user');
+    $this->assertRaw('Custom css', t('Custom css tab found'), $editor_tests);
+
+    // Switch to minnelli.
+    $this->assertNoRaw('sweaver_themeswitch/bartik', t('Can not switch to bartik'), $editor_tests);
+    $this->drupalGet('sweaver_themeswitch/garland');
+    $this->assertRaw(t('You have switched to Garland.'), t('Switch to garland success.'), $editor_tests);
+
+    // Switch back to bartik.
+    $this->assertNoRaw('sweaver_themeswitch/garland', t('Can not switch to garland'), $editor_tests);
+    $this->drupalGet('sweaver_themeswitch/bartik');
+    $this->assertRaw(t('You have switched to Bartik.'), t('Switch to bartik success.'), $editor_tests);
+
+    // Set some styling for bartik.
+    $edit = array(
+      'sweaver-css' => '{"#center ":{"font-size":30}}',
+      'css-rendered' => '<style type="text/css">#center { font-size: 30px; } </style>',
+      'sweaver_plugin_custom_css' => '#header { background-color: blue; }',
+      'save_style' => 'Bartik 1',
+    );
+
+    // Save style and assert it's saved and we can keep working on it. The draft file should be saved, the live file not.
+    $this->drupalPost('node', $edit, t('Save and continue'));
+    $this->assertRaw(t('The style Bartik 1 has been saved. You can keep working on your style.'), t('Style has been saved'), $editor_tests);
+    $css = db_query("SELECT * FROM {sweaver_style_draft} where style_id = 1 AND theme = 'bartik'")->fetchObject();
+    $this->assertEqual($edit['sweaver-css'], $css->css, t('Css has been saved'), $editor_tests);
+    $this->assertEqual($edit['sweaver_plugin_custom_css'], $css->customcss, t('Custom css saved'), $editor_tests);
+    $this->assertTrue(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_draft.css'), 'Draft filename written', $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_live.css'), 'Live filename not written', $editor_tests);
+    $this->assertNoRaw('sweaver/sweaver_bartik_'. $css->style_id .'_draft.css', t('The style Bartik 1 has not been loaded in the HTML.'), $editor_tests);
+
+    // Set styling for bartik 2.
+    $edit = array(
+      'sweaver-css' => '{"#center ":{"font-size":40}}',
+      'css-rendered' => '<style type="text/css">#center { font-size: 40px; } </style>',
+      'sweaver_plugin_custom_css' => '#header { background-color: red; }',
+      'save_style' => 'Bartik 2',
+      'save_type' => '0',
+    );
+
+    // Save style and assert it's saved. We'll look for the message, the entry
+    // into the database and the css file in the sweaver directory.
+    $this->drupalPost('node', $edit, t('Save and continue'));
+    $this->assertRaw(t('The style Bartik 2 has been saved. You can keep working on your style.'), t('Style has been saved'), $editor_tests);
+    $css = db_query("SELECT * FROM {sweaver_style_draft} where style_id = 2 AND theme = 'bartik'")->fetchObject();
+    $this->assertEqual($edit['sweaver-css'], $css->css, t('Css has been saved'), $editor_tests);
+    $this->assertEqual($edit['sweaver_plugin_custom_css'], $css->customcss, t('Custom css saved'), $editor_tests);
+    $this->assertTrue(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_draft.css'), 'Draft filename written', $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_live.css'), 'Live filename not written', $editor_tests);
+    $this->assertNoRaw('sweaver/sweaver_bartik_'. $css->style_id .'_draft.css', t('The style Bartik 2 has not been loaded in the HTML.'), $editor_tests);
+    $this->assertEqual($css->style_id, 2, t('New style saved in database with id 2'), $editor_tests);
+
+    // Load style.
+    $edit = array(
+      'load_style' => 1,
+    );
+    $this->drupalPost('user', $edit, t('Load style'));
+    $this->assertRaw(t('The style Bartik 1 has been loaded. It is only visible for you.'), t('Style loaded'), $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_1_live.css'), 'Live filename not written', $editor_tests);
+
+    // Publish style.
+    $this->drupalPost('user', $edit, t('Publish style'));
+    $this->assertRaw(t('The style Bartik 1 has been published.'), t('Style published'), $editor_tests);
+    $this->assertTrue(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_1_live.css'), 'Live filename written', $editor_tests);
+
+    // Delete styles
+    $edit = array(
+      'delete_style' => 1,
+    );
+    $this->drupalPost('user', $edit, t('Delete style'));
+    $this->assertRaw(t('The style Bartik 1 has been deleted.'), t('Style deleted'), $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_1_draft.css'), 'Draft filename gone', $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_1_live.css'), 'Live filename gone', $editor_tests);
+
+    // Assert we don't see the publish button.
+    $this->assertNoRaw('<h2>Publish style</h2>', t('Publish button not found.'));
+
+    $edit = array(
+      'delete_style' => 2,
+    );
+    $this->drupalPost('user', $edit, t('Delete style'));
+    $this->assertRaw(t('The style Bartik 2 has been deleted.'), t('Delete style'), $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_2_draft.css'), 'Draft filename gone', $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_2_live.css'), 'Live filename gone', $editor_tests);
+
+    // Set styling for bartik 3.
+    $edit = array(
+      'sweaver-css' => '{"#center ":{"font-size":40}}',
+      'css-rendered' => '<style type="text/css">#center { font-size: 40px; } </style>',
+      'sweaver_plugin_custom_css' => '#header { background-color: red; }',
+      'save_style' => 'Bartik 3',
+    );
+
+    // Save style and assert it's saved. We'll look for the message, the entry
+    // into the database and the css file in the sweaver directory.
+    $this->drupalPost('node', $edit, t('Save and continue'));
+    $this->assertRaw(t('The style Bartik 3 has been saved. You can keep working on your style.'), t('Style has been saved'), $editor_tests);
+    $css = db_query("SELECT * FROM {sweaver_style_draft} where style_id = 3 AND theme = 'bartik'")->fetchObject();
+    $this->assertEqual($edit['sweaver-css'], $css->css, t('Css has been saved'), $editor_tests);
+    $this->assertEqual($edit['sweaver_plugin_custom_css'], $css->customcss, t('Custom css saved'), $editor_tests);
+    $this->assertTrue(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_draft.css'), 'Draft filename written', $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_live.css'), 'Live filename not written', $editor_tests);
+    $this->assertNoRaw('sweaver/sweaver_bartik_'. $css->style_id .'_draft.css', t('The style Bartik 3 has not been loaded in the HTML.'), $editor_tests);
+    $this->assertEqual($css->style_id, 3, t('New style saved in database with id 3'), $editor_tests);
+
+    // Load style.
+    $edit = array(
+      'load_style' => 3,
+    );
+    $this->drupalPost('user', $edit, t('Load style'));
+    $this->assertRaw(t('The style Bartik 3 has been loaded. It is only visible for you.'), t('Style loaded'), $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_3_live.css'), 'Live filename not written', $editor_tests);
+
+    // Assert we see the publish button.
+    $this->assertRaw('<h2>Publish style</h2>', t('Publish button found.'));
+
+    // Resave this style as Bartik 4.
+    $edit = array(
+      'sweaver-css' => '{"#center ":{"font-size":30}}',
+      'css-rendered' => '<style type="text/css">#center { font-size: 30px; } </style>',
+      'sweaver_plugin_custom_css' => '#header { background-color: blue; }',
+      'save_style' => 'Bartik 4',
+      'save_type' => '0',
+    );
+    $this->drupalPost('node', $edit, t('Save and continue'));
+    $this->assertRaw(t('The style Bartik 4 has been saved. You can keep working on your style.'), t('New styles saved and working in draft.'), $editor_tests);
+    $css = db_query("SELECT * FROM {sweaver_style_draft} where style_id = 4 AND theme = 'bartik'")->fetchObject();
+    $this->assertTrue(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_draft.css'), 'Draft filename written', $editor_tests);
+    $this->assertFalse(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_live.css'), 'Live filename written', $editor_tests);
+    $this->assertEqual($css->style_id, 4, t('New style saved in database with id 4'), $editor_tests);
+
+    // Save and publish button style.
+    $edit = array(
+      'sweaver-css' => '{"#center ":{"font-size":30}}',
+      'css-rendered' => '<style type="text/css">#center { font-size: 30px; } </style>',
+      'sweaver_plugin_custom_css' => '#header { background-color: blue; }',
+      'save_style' => 'Bartik 5',
+      'save_type' => '0',
+    );
+    $this->drupalPost('node', $edit, t('Save and publish'));
+    $this->assertRaw(t('The style Bartik 5 has been saved and published. You can keep working on your style.'), t('New styles saved and published.'), $editor_tests);
+    $css = db_query("SELECT * FROM {sweaver_style_draft} where style_id = 5 AND theme = 'bartik'")->fetchObject();
+    $this->assertTrue(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_draft.css'), 'Draft filename written', $editor_tests);
+    $this->assertTrue(file_exists($this->sweaver_public_path() .'/sweaver/sweaver_bartik_'. $css->style_id .'_live.css'), 'Live filename written', $editor_tests);
+    $this->assertEqual($css->style_id, 5, t('New style saved and published in database with id 5'), $editor_tests);
+  }
+}

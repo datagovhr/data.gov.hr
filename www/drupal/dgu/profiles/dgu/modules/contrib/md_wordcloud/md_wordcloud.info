@@ -1,0 +1,16 @@
+name = MD WorldCloud
+description = Use D3 layout cloud to display tags. Module by <a href="http://megadrupal.com" target="_blank">MegaDrupal</a>
+core = 7.x
+package = Taxonomy
+dependencies[] = taxonomy
+files[] = md_wordcloud.module
+scripts[] = js/d3.min.js
+scripts[] = js/d3.layout.cloud.js
+stylesheets[all][] = css/md_wordcloud.css
+version = 7.x-1.0
+; Information added by drupal.org packaging script on 2013-01-03
+version = "7.x-1.0"
+core = "7.x"
+project = "md_wordcloud"
+datestamp = "1357210954"
+

@@ -1,0 +1,14 @@
+name = Event Calendar Colors
+description = Manage colors for events.
+package = Event Calendar
+
+dependencies[] = event_calendar
+configure = admin/config/date/eventcolors
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2014-04-14
+version = "7.x-1.9"
+core = "7.x"
+project = "event_calendar"
+datestamp = "1397468354"
+

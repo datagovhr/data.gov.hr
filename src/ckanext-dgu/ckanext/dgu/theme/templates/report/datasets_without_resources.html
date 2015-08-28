@@ -1,0 +1,42 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+
+    <div class="widget-container">
+
+        <p>
+          Broj skupova podataka bez resursa: ${len(c.data['table'])}
+        </p>
+          
+        <table class="table table-bordered table-condensed tablesorter" id="report-table" style="width: 100%;table-layout:fixed; margin-top: 8px;">
+              <thead>
+                <tr>
+		 <th style="width: 80px">Skupovi podataka</th>
+                  <th style="width: 80px">Organizacija</th>
+                  <th style="width: 50px">Bilje&#353;ke</th>
+                  <th style="width: 50px">Datum kreiranja</th>
+                  <th style="width: 50px">Datum modificiranja</th>
+                  <th style="width: 50px">Datum brisanja zadnjeg resursa</th>
+                  <th style="width: 100px">URL zadnjeg resursa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <py:for each="dataset in c.data['table']">
+                    <tr>
+                        <td><a href="/dataset/${dataset['name']}">${dataset['title']}</a></td>
+                        <td><a href="/publisher/${dataset['organization name']}">${dataset['organization title']}</a></td>
+                        <td>${dataset['dataset_notes']}</td>
+                        <td>${h.render_datetime(dataset['metadata created'], date_format='%d.%m.%Y.')}</td>
+                        <td>${h.render_datetime(dataset['metadata modified'], date_format='%d.%m.%Y.')}</td>
+                        <td>${h.render_datetime(dataset['last resource deleted'], date_format='%d.%m.%Y.')}</td>
+                        <td style="overflow: hidden; text-overflow: ellipsis"><a href="${dataset['last resource url']}">${dataset['last resource url']}</a></td>
+                    </tr>
+                </py:for>
+              </tbody>
+        </table>
+
+    </div>
+
+</html>

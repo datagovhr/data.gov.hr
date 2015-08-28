@@ -1,0 +1,31 @@
+﻿<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip="">
+
+  <py:def function="page_title">Neautorizirano</py:def>
+
+  <py:match path="breadcrumbs">
+    <li><a href="/data/search">Skupovi podataka</a></li>
+    <li><i>Neautorizirano</i></li>
+  </py:match>
+
+  <div py:match="content">
+    <div class="panel panel-danger">
+      <div class="panel-heading">Akcija nije autorizirana</div>
+      <div class="panel-body">
+        <div py:if="not c.user">
+          <p>Mo&#382;ete se <a href="${'/user' if 'dgu_drupal_auth' in config['ckan.plugins'] else h.url_for(controller='user',action='me')}?destination=${request.path[1:]}">ulogirati</a> i poku&#353;ati ponovno.</p>
+        </div>
+        <div py:if="c.user">
+          <p>Ulogirani ste kao: ${h.dgu_linked_user(c.user, maxlength=100)}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <xi:include href="layout_base.html" />
+
+</html>

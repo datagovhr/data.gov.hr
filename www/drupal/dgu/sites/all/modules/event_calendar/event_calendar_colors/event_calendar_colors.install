@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the event calendar color module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function event_calendar_colors_install() {
+  $color_options = array(
+    'background' => '#3366cc',
+    'border' => '#3366cc',
+    'text' => '#ffffff',
+  );
+}
+/**
+ * Implements hook_schema().
+ */
+function event_calendar_colors_schema() {
+  $schema['event_colors'] = array(
+    'description' => 'Stores selectors and their matching colors.',
+    'fields' => array(
+      'selector' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Unique selector name.',
+        'translatable' => TRUE,
+      ),
+      'color' => array(
+        'type' => 'blob',
+        'not null' => TRUE,
+        'description' => 'Color configuration array.',
+        'size' => 'big',
+        'serialize' => TRUE,
+      ),
+      'module' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => 'colors',
+        'description' => 'Module that created the color configuration.',
+        'translatable' => TRUE,
+      ),
+    ),
+    'primary key' => array('selector'),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function event_calendar_colors_uninstall() {
+  // Create css folder and add write css.
+  $dir_path = $_SERVER['DOCUMENT_ROOT'] . base_path() . variable_get('file_public_path', conf_path() . '/files/') . 'event_calendar_colors';
+  file_unmanaged_delete_recursive($dir_path);
+}

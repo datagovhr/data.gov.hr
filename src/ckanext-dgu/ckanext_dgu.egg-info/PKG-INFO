@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: ckanext-dgu
+Version: 0.4
+Summary: CKAN DGU extensions
+Home-page: http://data.gov.uk/
+Author: Cabinet Office, Open Knowledge Foundation
+Author-email: david.read@hackneyworkshop.com
+License: AGPL
+Description:     
+Keywords: data packaging component tool server
+Platform: UNKNOWN

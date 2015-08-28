@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: ckanext-harvest
+Version: 0.2
+Summary: Harvesting interface plugin for CKAN
+Home-page: http://ckan.org/wiki/Extensions
+Author: CKAN
+Author-email: ckan@okfn.org
+License: mit
+Description: 	
+Platform: UNKNOWN

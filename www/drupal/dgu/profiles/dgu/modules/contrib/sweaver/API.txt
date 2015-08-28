@@ -1,0 +1,426 @@
+
+Table of contents
+------------------
+
+1. Hook for cTools.
+2. Hooks for registering selectors, properties and types.
+3. Plugins hook.
+4. Plugin class example.
+5. sweaver_get_plugin().
+6. Images handler.
+7. Session handling
+8. Sweaver popups.
+9. General functions.
+10. General JS functions.
+11. General CSS styles.
+12. Skins
+13. Theme extensions.
+14. hook_sweaver_action().
+
+------------------------------------------------------
+1. Hook for cTools
+------------------------------------------------------
+
+/**
+ * Implementation of hook_ctools_plugin_api().
+ */
+function hook_ctools_plugin_api($owner, $api) {
+  if ($owner == 'sweaver' && $api == 'sweaver') {
+    return array('version' => 1);
+  }
+}
+
+---------------------------------------------------------
+2. Hooks for registering selectors, properties and types
+---------------------------------------------------------
+
+/**
+ * Implementation of hook_default_sweaver_selector().
+ */
+function hook_default_sweaver_selector() {
+
+  $selectors = array();
+
+  $selector = new stdClass;
+  $selector->api_version = 1;
+  $selector->disabled = FALSE; // Set this to true if you want to disable this by default.
+  $selector->name = 'machine_name';
+  $selector->description = 'Description';
+  $selector->selector_selector = '.selector'; // css selector.
+  $selector->selector_highlight = FALSE; // Whether to highlight the selector in the active path. 
+  $selectors['machine_name'] = $selector;
+  
+  return $selectors;
+}
+
+/**
+ * Implementation of hook_default_sweaver_property().
+ */
+function hook_default_sweaver_property() {
+
+  $propertys = array();
+
+  // Font.
+  $property = new stdClass;
+  $property->api_version = 1;
+  $property->disabled = FALSE; // Set this to true if you want to disable this by default.
+  $property->name = 'machine_name';
+  $property->description = 'Description';
+  $property->property = '';  // The actual css property. Seperate multiple values by spaces.
+  $property->property_parent = ''; // Wether this property has a parent.
+  $property->property_type = 'select'; // Can be select, slider, image, color or parent.
+  // Prefix or suffix: eg: padding has suffix 'px', url has prefix 'url(' and suffix ');'
+  $property->property_prefix = '';
+  $property->property_suffix = '';
+  // Slider min & max - only applicable for slider.
+  $property->property_slider_min = ''; // Minimum for slider  , usually 1.
+  $property->property_slider_max = ''; // Maximum for slider
+  // Options are only applicable for select.
+  $property->property_options = array(
+        'option_1' => 'Readable option 1',
+        'option_2' => 'Readable option 2',
+        'option_2' => 'Readable option 3',
+      );
+  $propertys['font-machine_name'] = $property;
+
+  // Yes you need to return propertys, that's the way Ctools works :)
+  return $propertys;
+}
+
+/**
+ * Implementation of hook_sweaver_type().
+ */
+function sweaver_default_sweaver_type() {
+
+  $types = array();
+
+  $type = new stdClass;
+  $type->api_version = 1;
+  $type->disabled = FALSE;
+  $type->name = 'machine_name';
+  $type->description = 'Description';
+  $type->type_options = array(
+    'property_1' => 'property_1',
+    'property_2' => 'property_2',
+    'property_3' => 'property_2',
+  );
+  $types['machine_name'] = $type;
+  
+  return $types;
+}
+
+
+---------------------------------------------------------
+3. Plugins hook.
+---------------------------------------------------------
+
+/**
+ * Implementation of hook_sweaver_plugins().
+ */
+function hook_sweaver_plugins() {
+  $plugins = array();
+  
+  $plugins['yourpluginname'] = array(
+    'handler' => array(
+      'tab' => t('Tab name'), // If you want to do something in the frontend.
+      'tab_description' => t('Description of your plugin in frontend'),
+      'path' => drupal_get_path('module', 'yourmodulename') .'/plugins/yourpluginname',
+      'file' => 'yourpluginname.inc',
+      'class' => 'yourclassnameusuallythesameasyourpluginname',
+      'parent' => 'sweaver_plugin', // This is required.
+    ),
+  );
+  
+  return $plugins;
+}
+
+---------------------------------------------------------
+4. Plugin class example.
+---------------------------------------------------------
+
+/**
+ * Your plugin
+ *
+ * All methods are optional.
+ */
+class pluginname extends sweaver_plugin {
+
+  /**
+   * Return module dependencies.
+   */
+  function sweaver_dependencies() {
+    return array('module');
+  }
+
+  /**
+   * Menu registry.
+   */
+  function sweaver_menu(&$weight, $page_arguments, $base) {
+    // $page_arguments = array('plugin' => 'name_of_your_plugin'); 
+    //  $base = array(
+    //    'access arguments' => array('configure sweaver'),
+    //    'page callback' => 'sweaver_menu_callback',
+    //  );
+    // You can use these to add to your menu items.
+    // Other stuff you can return in page arguments:
+    // callback_method: defaults to sweaver_menu_callback - optional.
+    // return_method : default to drupal_get_form - optional
+    // Return menu items for Drupal.
+  }
+
+  /**
+   * Theme registry.
+   */
+  function sweaver_theme() {
+    // Return theming functions for Drupal.
+  }
+
+  /**
+   * Init function.
+   */
+  function sweaver_init() {
+    // Do stuff during hook_init() of Drupal.
+  }
+
+  /**
+   * Sweaver objects alter.
+   */
+  function sweaver_objects_alter(&$objects) {}
+
+  /**
+   * Sweaver form.
+   */
+  function sweaver_form() {
+    return array();
+  }
+
+  /**
+   * Sweaver form render.
+   */
+  function sweaver_form_render(&$vars, &$form, $plugin) {
+    // Do some extra rendering on the form.
+  }
+
+  /**
+   * Frontend css and js.
+   */
+  function sweaver_form_css_js(&$inline_settings) {
+    // Add css, js and manipulate the inline settings of sweaver.
+  }
+
+  /**
+   * Frontend form submit.
+   */
+  function sweaver_form_submit($form, &$form_state) {
+    // Do something with the submitted values.
+  }
+  
+  /**
+   * Default menu callback.
+   */
+  function sweaver_menu_callback() {
+    // Return a form or simply some other output.
+    // Must return a form array() by default. This
+    // is the default method you need to implement.
+    // This makes is possible to have menu callbacks in your
+    // class without having to create a new file.
+    // All plugins - except for editor.admin.inc' use this
+    // technique. See sweaver_menu_callback() for options.
+  }
+
+  /**
+   * Default sweaver menu callback validate.
+   */
+  function sweaver_menu_callback_validate($form, &$form_state) {
+    // Validate the submission.
+  }
+
+  /**
+   * Default sweaver menu callback submit
+   */
+  function sweaver_menu_callback_submit($form, &$form_state) {
+    // Do something with the submitted values.
+  }
+  
+  /**
+   * Return false to not show editor.
+   */
+  public function show_editor() {
+  }
+
+  /**
+   * Return true to allow access and false to deny.
+   */
+  public function sweaver_menu_access_callback($args) {
+  }  
+}
+
+------------------------------------------------------
+5. sweaver_get_plugin().
+------------------------------------------------------
+
+.You can use sweaver_get_plugin to get an object. This function will
+load the plugin and return the class if found.
+
+$object = sweaver_get_plugin('plugin_name');
+$object->do_some_method();
+
+------------------------------------------------------
+6. Images handler.
+------------------------------------------------------
+
+The editor searches for a class which implements a method called sweaver_images_handler.
+By default, the images plugin which comes in the sweaver module provides extra images.
+You can change this by setting the variable 'sweaver_plugin_handle_images' to the name
+of the plugin you want. The plugin itself must implement following method:
+
+myclass extends sweaver_plugin {
+  function sweaver_images_handler(&$images) {
+    $images['file_path_1'] = 'Real name 1'; 
+    $images['file_path_2'] = 'Real name 2'; 
+  }
+}
+
+------------------------------------------------------
+7. Session handling
+------------------------------------------------------
+
+sweaver_session($value = NULL, $session_key = 'sweaver_editor_messages', $remove = FALSE, $return = 'string')
+
+Set or return session variables which you can easily use througout the plugin system.
+Much easier than using $_SESSION variables. This function does it all for you.
+Use it as much as you can.
+
+------------------------------------------------------
+8. Sweaver popups.
+------------------------------------------------------
+
+You can put forms in a sweaver popup, which we do for example in the themesettings plugin.
+Following things in the sweaver_form method will make sure this happens:
+
+    $form['#popups'] = array(); // Initialize the popups array.
+    $form['#popups'][] = $key; // Put a FAPI key in the popups array.
+    // Link class: popup-link This will trigger the popup.
+    // The link needs an id with at least 'link' in the name. The form
+    // it has to show needs the same id, but with 'link' replaced as 'data'.
+    
+For inspiration, take a look at plugins/sweaver_plugin_themesettings/sweaver_plugin_themesettings.inc.
+
+------------------------------------------------------
+9. General functions.
+------------------------------------------------------
+
+- sweaver_get_current_style($reset = FALSE) {}
+  Returns the css for the theme.
+- sweaver_get_theme_info($theme) {}
+  Returns the theme info for the theme.
+
+------------------------------------------------------
+10. General JS functions.
+------------------------------------------------------
+
+There are a couple of JS functions you can use in your plugins.
+
+- Drupal.Sweaver.invokes.processCSS()
+  Must a return CSS definitions to write for the editor.
+  Implemented in editor and custom css plugin. 
+- Drupal.Sweaver.switchTab(remove_tab, show_tab) {}
+  Switch to a tab in the editor
+- Drupal.Sweaver.setMessage(messages) {}
+  Sets a message above the editor. Times out after 5 seconds.
+- Drupal.Sweaver.showPopup(message) {}
+  Shows a popup screen with any content you like. 
+  Gets a close button.
+- Drupal.Sweaver.hidePopup() {}
+  Closes the popup screen.
+
+------------------------------------------------------
+11. General CSS styles.
+------------------------------------------------------
+
+There are several css classes which you can use which will do all kinds of stuff
+
+- popup-link: put this on a link and this will trigger a sweaver popup
+- sweaver-switch-to-style: adds a brush icon
+- container: lets a div float
+- container-1 to container-4: determines the width (from 25% to 100%)
+- float-left: floats to left
+- form-floater: makes form items and submits float
+
+------------------------------------------------------
+12. Skins.
+------------------------------------------------------
+You can create new skins for the editor if you like. Simply
+create a new directory with your name and copy the files which
+are found in default, rename them to the name of your new skin
+and adjust them to your likings. On the general configuration screen, 
+you can select the skin you like.
+
+The variable in the database is 'sweaver_skin'.
+
+------------------------------------------------------
+13. Theme extensions.
+------------------------------------------------------
+
+1. Palettes
+
+Every theme can define color palettes. These palettes are
+extra css files that can be added to your theme and that
+overwrite the default css.
+
+You can add a palette and 5 preview colors in your .info file, e.g.:
+
+sweaver[palettes][pink][name] = Pink
+sweaver[palettes][pink][file] = palettes/pink.css
+sweaver[palettes][pink][colors][] = #f98cf0
+sweaver[palettes][pink][colors][] = #af63a9
+sweaver[palettes][pink][colors][] = #af63a9
+sweaver[palettes][pink][colors][] = #cbb2c9
+sweaver[palettes][pink][colors][] = #cbb2c9 
+
+2. Selectors
+
+You can also define selectors per theme in the info file, eg:
+
+sweaver[selectors][body] = Body
+sweaver[selectors][h1] = Heading 1
+...
+
+The order is how you define it in the info file.
+In the backend you can select if these selectors
+are to be used instead of those in the database.
+
+Those selectors will be exclusive. Which means that the
+user will only be able to select and modify those defined selectors
+
+To define inclusive selectors (which will be added to others 
+created in the regestry) you need to add options to your selectors
+
+sweaver[selectors][h4][name] = h4
+sweaver[selectors][h4][description] = Heading 4
+sweaver[selectors][h4][selector_highlight] = TRUE
+sweaver[selectors][h4][weight] = 20
+sweaver[selectors][h4][type] = add
+
+ - The name must contain only lowercase letters, numbers, underscores or hyphens
+ and must be unique.
+ - The selector description is the text shown to the Sweaver front end user
+ - The selector_highlight property define weither or not the selector should be
+ highlighted by default
+ - The weight is a very important element as it define the priority of this
+ selector on others. A value between 20 and 50 is advisable for major selectors
+ and a value between 70 and 100 for minors ones.
+ - The type is either set as add for inclusive or replace f r excluse selector
+
+Note: if you add new theme extensions but they don't show up,
+then you need to clear the theme registry.
+
+------------------------------------------------------
+14. hook_sweaver_action($action, $arguments).
+------------------------------------------------------
+
+If you want other modules to act on certain actions happening in sweaver use
+module_invoke_all('sweaver', 'action_name', $arguments);
+
+Currently the Theme switch plugin is the first plugin calling this
+so other modules can perform actions when switching theme.
