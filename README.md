@@ -9,4 +9,4 @@ Go to /data.gov.hr (cd /tmp/data.gov.hr/)
 
 Run sudo ./deploydghr.sh
 
-Thats all!
+That's all!
